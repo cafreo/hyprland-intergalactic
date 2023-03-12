@@ -1,0 +1,338 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Ubuntu, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #BCBCBC;
+    border-radius: 3px;
+    transition-property: background-color, background-image;
+    transition-duration: .5s;
+}
+
+window#waybar {
+    background-color: rgba(30, 30, 32, 0.85);
+    border-bottom: 3px solid red;
+    /*color: #BCBCBC;*/
+    transition-property: background-color;
+    transition-duration: .5s;
+    border-radius: 3px;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    font-weight: bold;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+*/
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 3px;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+    /*box-shadow: inset 0 -3px #ffffff;*/
+}
+
+#workspaces button {
+    padding: 8px 10px;
+    margin: 0px;
+    background-color: transparent;
+    /*color: #BCBCBC;*/
+}
+
+#workspaces button:hover {
+    background: rgba(245, 184, 58, 0.2);
+}
+
+#workspaces button.active {
+    background-image: linear-gradient(rgba(208, 35, 17, 0.6), rgba(245, 184, 58, 0.6));
+    /*box-shadow: inset 0 -3px #ffffff;*/
+    color: rgb(30, 30, 32);
+}
+
+#workspaces button.urgent {
+    background-color: rgba(245, 184, 58, 0.2);
+}
+
+#mode {
+    background-color: #64727D;
+    /*border-bottom: 3px solid #ffffff;*/
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#image,
+#mpris,
+#mpd {
+    padding: 0 8px;
+    margin: 0;
+    color: #BCBCBC;
+    background-color: transparent;
+}
+
+#clock:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#backlight:hover,
+#network:hover,
+#pulseaudio:hover,
+#wireplumber:hover,
+#custom-media:hover,
+#tray:hover,
+#mode:hover,
+#idle_inhibitor:hover,
+#scratchpad:hover,
+#image:hover,
+#mpris:hover,
+#mpd:hover {
+    background-color: rgba(245, 184, 58, 0.3);
+}
+
+#clock:hover {
+    background-color: rgba(245, 184, 58, 0.6);
+}
+
+#window {
+    margin: 0;
+}
+#workspaces {
+    margin: 0;
+    padding: 0;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#clock {
+    background-image: linear-gradient(rgba(208, 35, 17, 0.3), rgba(245, 184, 58, 0.3));
+}
+
+#battery {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#cpu {
+    
+}
+
+#memory {
+    background-color: #9b59b6;
+}
+
+#disk {
+    background-color: #964B00;
+}
+
+#backlight {
+    background-color: #90b1b1;
+}
+
+#network {
+
+}
+
+#network.disconnected {
+    background-color: #f53c3c;
+}
+
+#pulseaudio {
+
+}
+
+#pulseaudio.muted {
+    background-image: linear-gradient(90deg, rgba(208, 35, 17, 0) 40%, rgba(208, 35, 17, 0.3) 40%);
+}
+
+#pulseaudio.source-muted {
+    background-image: linear-gradient(90deg, rgba(208, 35, 17, 0.3) 50%, rgba(208, 35, 17, 0) 50%);
+}
+
+#pulseaudio.muted.source-muted {
+    background-image: none;
+    background-color: rgba(208, 35, 17, 0.3);
+}
+
+#wireplumber {
+    background-color: #fff0f5;
+    color: #000000;
+}
+
+#wireplumber.muted {
+    background-color: #f53c3c;
+}
+
+#custom-media {
+    background-color: #66cc99;
+    color: #2a5c45;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    background-color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+    background-color: #ffa000;
+}
+
+#temperature {
+    background-color: #f0932b;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#tray {
+
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}
+
+#idle_inhibitor {
+    background-color: #2d3436;
+}
+
+#idle_inhibitor.activated {
+    background-color: #ecf0f1;
+    color: #2d3436;
+}
+#mpris,
+#mpd {
+    background-color: #66cc99;
+    color: #2a5c45;
+}
+#mpris.disconnected,
+#mpd.disconnected {
+    background-color: #f53c3c;
+}
+#mpris.stopped,
+#mpd.stopped {
+    background-color: #90b1b1;
+}
+#mpris.paused,
+#mpd.paused {
+    background-color: #51a37a;
+}
+
+#language {
+    background: #00b093;
+    color: #740864;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state {
+    background: #97e1ad;
+    color: #000000;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scratchpad {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#scratchpad.empty {
+	background-color: transparent;
+}
+
+#image {
+    margin: 3px;
+    padding: 3px;
+    border: 0px solid;
+    border-color: transparent;
+    border-radius: 40px;
+    background-image: linear-gradient(rgba(208, 35, 17, 0.5), rgba(245, 184, 58, 0.5));
+}

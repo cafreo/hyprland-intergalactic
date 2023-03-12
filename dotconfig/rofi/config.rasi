@@ -1,0 +1,178 @@
+/**
+ * A floating box version of the paper theme.
+ *
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+
+configuration {
+    drun-display-format: "{icon} {name}";
+    font: "Ubuntu 14";
+    modi: "window,run,drun";
+    show-icons: true;
+    icon-theme: "Papirus";
+}
+
+@theme "/dev/null"
+
+* {
+    accent:  rgba(208, 35, 17, 0.8);
+    bg: rgba(30, 30, 32, 0.8);
+    text: #bcbcbc;
+    bg2:  rgba(30, 35, 17, 0.8);
+    gradient: linear-gradient(90deg, rgba(208, 35, 17, 0.9), rgba(245, 184, 58, 0.9));
+    gradient2: linear-gradient(90deg, rgba(208, 35, 17, 0.6), rgba(245, 184, 58, 0.6));
+
+    spacing: 2;
+    background-color: @bg;
+    border-image: @gradient;
+    anchor: north;
+    location: center;
+}
+window {
+    width: 25%;
+    height: 45%;
+    background-image: @gradient;
+    border: 0px solid;
+    border-radius: 3px;
+    padding: 3px;
+    margin: 0px;
+    x-offset: 0;
+    y-offset: -10%;
+}
+mainbox {
+    padding: 0px;
+    border: 0px solid;
+    border-color: green;
+    background-color: rgba(30, 30, 32, 1);
+    spacing: 1%;
+}
+message {
+    border: 2px;
+    padding: 1em;
+    background-color: red;
+    text-color: @text;
+}
+textbox normal {
+    text-color: @text;
+    padding: 0;
+    border: 0;
+}
+listview {
+    fixed-height: 1;
+    border: 3px;
+    padding: 1em;
+    reverse: false;
+
+    columns: 1;
+    background-image: @bg;
+}
+element {
+    border: 0px;
+    border-radius: 3px;
+    padding: 8px;
+    margin: 2px;
+    highlight: bold;
+}
+element-text {
+    background-color: transparent;
+    text-color: @text;
+    font-weight: bold;
+    padding: 2px 0;
+}
+element-icon {
+    background-color: transparent;
+    size: 28px;
+    margin: 0px 6px;
+}
+element normal.normal {
+    text-color: red;
+    background-color: transparent;
+}
+element normal.urgent {
+    text-color: red;
+    background-color: transparent;
+}
+element normal.active {
+    text-color: red;
+    background-color: transparent;
+}
+element selected.normal {
+    text-color: red;
+    background-image: @gradient2;
+}
+element selected.urgent {
+    text-color: red;
+    background-color: transparent;
+}
+element selected.active {
+    text-color: red;
+    background-color: transparent;
+}
+/*element alternate.normal {
+    text-color: #002B36FF;
+    background-color: #D0D0D0FF;
+}
+element alternate.urgent {
+    text-color: #D75F00FF;
+    background-color: #D0D0D0FF;
+}
+element alternate.active {
+    text-color: #005F87FF;
+    background-color: #D0D0D0FF;
+}*/
+scrollbar {
+    border: 0;
+    padding: 0;
+}
+inputbar {
+    spacing: 0;
+    border: 0px solid;
+    border-color: red;
+    border-radius: 3px;
+    padding: 3px;
+    margin: 14px 12px;
+    background-image: @gradient;
+    index: 0;
+}
+inputbar normal {
+    foreground-color: red;
+    background-color: green;
+    text-color: red;
+}
+overlay {
+    background-color: green;
+}
+prompt {
+    text-color: @text;
+    padding: 10px 6px;
+}
+entry {
+    text-color: @text;
+    padding: 10px 6px;
+    background-color: @bg;
+}
+mode-switcher {
+    border: 2px;
+    padding: 0.5em 1em;
+    background-color: red;
+    index: 10;
+}
+button selected {
+    text-color: red;
+}
+inptbar {
+    children: [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+textbox-prompt-colon {
+    expand:     true;
+    str:        ":";
+    margin:     0px 0.3em 0em 0em ;
+    text-color: @text;
+}
+error-message {
+    border: 2px;
+    padding: 1em;
+    background-color: #FF8888;
+    text-color: @text;
+}
