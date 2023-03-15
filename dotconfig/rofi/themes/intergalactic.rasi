@@ -1,0 +1,96 @@
+* {
+    accent:  rgba(208, 35, 17, 0.8);
+    bg: rgba(30, 30, 32, 0.8);
+    text: #bcbcbc;
+    bg2:  rgba(30, 35, 17, 0.8);
+    gradient: linear-gradient(90deg, rgba(208, 35, 17, 0.9), rgba(245, 184, 58, 0.9));
+    gradient2: linear-gradient(90deg, rgba(208, 35, 17, 0.6), rgba(245, 184, 58, 0.6));
+
+    spacing: 2;
+    background-color: @bg;
+    anchor: north;
+}
+window {
+    width: 25%;
+    height: 41%;
+    background-image: @gradient;
+    border: 0px solid;
+    border-radius: 3px;
+    padding: 3px;
+    margin: 0px;
+    x-offset: 0;
+    y-offset: -10%;
+    location: center;
+}
+mainbox {
+    padding: 0px;
+    background-color: rgba(30, 30, 32, 1);
+    spacing: 1%;
+}
+message {
+    border: 2px;
+    padding: 1em;
+    background-color: red;
+    text-color: @text;
+}
+textbox normal {
+    text-color: @text;
+    padding: 0;
+    border: 0;
+}
+listview {
+    fixed-height: 1;
+    border: 3px;
+    padding: 10px;
+    columns: 1;
+    background-color: @bg;
+}
+element {
+    border-radius: 3px;
+    padding: 8px;
+    margin: 2px;
+    highlight: bold;
+    text-color: @text;
+    background-color: transparent;
+}
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 3px;
+}
+element-icon {
+    background-color: transparent;
+    size: 28px;
+    margin: 0px 6px;
+}
+element selected {
+    text-color: @text;
+    font-weight: bold;
+    background-image: @gradient2;
+    font: "Ubuntu Bold 14";
+}
+scrollbar {
+    border: 0;
+    padding: 0;
+}
+inputbar {
+    spacing: 0;
+    border: 0px solid;
+    border-color: red;
+    border-radius: 3px;
+    padding: 3px;
+    margin: 16px 14px;
+    background-image: linear-gradient(90deg, rgba(208, 35, 17, 0.7), rgba(245, 184, 58, 0.70));
+    index: 0;
+}
+entry {
+    text-color: @text;
+    padding: 10px 6px;
+    background-color: rgba(30, 30, 32, 1);
+    placeholder: "search...";
+    placeholder-color: #bcbcbc80;
+}
+inputbar {
+    children: [entry];
+    background-color: rgba(30, 30, 32, 0.9);
+}

@@ -10,10 +10,10 @@
     "modules-right": ["cpu", "pulseaudio", "network", "clock", "tray"],
     // Modules configuration
     "wlr/workspaces": {
-         "disable-scroll": true,
          "all-outputs": true,
          "format": "{name}  {icon}",
-	 "onclick": "activate",
+	 "on-click": "activate",
+	 "on-click-right": "close",
 	 "sort-by-number": true,
          "format-icons": {
              "1": "",
@@ -203,6 +203,9 @@
             "car": "",
             "default": ["", "", ""]
         },
+	"tooltip": true,
+	"tooltip-format": "{icon} {volume}%",
+	"scroll-step": 5,
         "on-click": "pactl set-sink-port 0 analog-output-lineout",
 	"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
 	"on-click-middle": "pavucontrol",

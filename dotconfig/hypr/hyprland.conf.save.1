@@ -21,7 +21,7 @@ monitor=,preferred,auto,auto
 # Execute your favorite apps at launch
 exec-once = systemctl --user import-environment
 exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-exec-once = waybar & hyprpaper & dunst & cliphist & gammastep
+exec-once = waybar & hyprpaper & mako & cliphist & gammastep
 exec-once = wl-paste --type text --watch cliphist store & wl-paste --type image --watch cliphist store
 
 # Source a file (multi-file configs)
@@ -51,7 +51,7 @@ general {
 
     gaps_in = 4
     gaps_out = 12
-    border_size = 4
+    border_size = 3
     col.active_border = rgba(D02311cc) rgba(F5B83Acc) 90deg
     col.inactive_border = rgba(302103e5) rgba(2f0804e5) 90deg
 
@@ -84,18 +84,13 @@ animations {
     # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
     bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-    bezier = easeInOutQuint, 0.4, 0, 0.2, 1.16
-    bezier = easeOutCirc, 0, 0.55, 0.45, 1
-    bezier = easeOutBack, 0.34, 1.56, 0.64, 1.8
-    bezier = easeOutQuint, 0.25, 0.8, 0.5, 1
-    bezier = easeInOutCubic, 0.65, 0, 0.35, 1
-    animation = windows, 1, 4, easeInOutQuint, popin 85%
-    animation = windowsOut, 1, 4, easeOutCirc, popin 92%
-    animation = windowsMove, 1, 2.3, easeOutCirc
-    animation = border, 1, 14, easeOutBack
-    animation = borderangle, 1, 36, easeInOutCubic, loop
-    animation = fade, 1, 3.5, easeInOutQuint
-    animation = workspaces, 1, 4, easeOutQuint
+
+    animation = windows, 1, 7, myBezier
+    animation = windowsOut, 1, 7, default, popin 80%
+    animation = border, 1, 10, default
+    animation = borderangle, 1, 8, default
+    animation = fade, 1, 7, default
+    animation = workspaces, 1, 6, default
 }
 
 dwindle {
@@ -141,27 +136,21 @@ bind = $mainMod, D, exec, discord
 bind = $mainMod, S, exec, sonixd
 bind = $mainMod, F, exec, librewolf
 bind = $mainMod, G, exec, qutebrowser
-bind = $mainMod, P, exec, hyprpicker -f hex -a
+bind = $mainMod, C, exec, hyprpicker -f hex -a
 #bind = $mainMod, P, exec, bash /home/cafreo/Scrits/gayming.sh
 bind = $mainMod, R, exec, raven-reader
 bind = $mainMod, K, exec, keeweb
 bind = $mainMod, T, exec, sleek
-bind = $mainMod, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
-bind = $mainMod, I, exec, grim -g "$(slurp)" /tmp/grim/Screenshot-$(date '+%d-%m-%y_%H-%M-%S').png | wl-copy
-bind = $mainMod, U, exec, grim -g "$(slurp)" /home/cafreo/Screenshots/Screenshot-$(date '+%d-%m-%y_%H-%M-%S').png | wl-copy
 #bind = $mainMod, V, togglefloating, 
 #bind = $mainMod, P, pseudo, # dwindle
 #bind = $mainMod, J, togglesplit, # dwindle
 
 # Media Keys + Audio
 bind =, XF86AudioPlay, exec, playerctl play-pause
-binde =, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-binde =, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+binde=, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+binde=, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bind =, XF86AudioMute, exec, pactl set-sink-mute 0 toggle
 bindl = $mainMod, M, exec, pactl set-source-mute 0 toggle
-
-bind = $mainMod, XF86AudioRaiseVolume, exec, playerctl next
-bind = $mainMod, XF86AudioLowerVolume, exec, playerctl previous
 
 # Move focus with mainMod + arrow keys
 bind = $mainMod, left, movefocus, l

@@ -1,6 +1,6 @@
 * {
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, Ubuntu, Roboto, Helvetica, Arial, sans-serif;
+    font-family: Ubuntu, Roboto, Helvetica, sans-serif, "Font Awesome 6 Free Solid";
     font-size: 16px;
     color: #BCBCBC;
     border-radius: 3px;
