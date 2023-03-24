@@ -214,15 +214,14 @@ label:focus {
 }
 
 #pulseaudio.muted {
-    background-image: linear-gradient(90deg, rgba(208, 35, 17, 0) 40%, rgba(208, 35, 17, 0.3) 40%);
+    background-color: rgba(208, 35, 17, 0.3);
 }
 
-#pulseaudio.source-muted {
-    background-image: linear-gradient(90deg, rgba(208, 35, 17, 0.3) 50%, rgba(208, 35, 17, 0) 50%);
+#pulseaudio.microphone {
+    background-color: transparent;
 }
 
-#pulseaudio.muted.source-muted {
-    background-image: none;
+#pulseaudio.microphone.source-muted {
     background-color: rgba(208, 35, 17, 0.3);
 }
 

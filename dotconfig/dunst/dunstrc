@@ -24,10 +24,10 @@
     # dynamic width from 0 to 300
     # width = (0, 300)
     # constant width of 300
-    width = (260, 360)
+    width = (260, 380)
 
     # The maximum height of a single notification, excluding the frame.
-    height = 80
+    height = 100
 
     # Position the notification in the top right corner
     origin = top-right
@@ -123,7 +123,7 @@
 
     ### Text ###
 
-    font = Ubuntu 12
+    font = Ubuntu 13
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -163,7 +163,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "%s\n%b"
+    format = "%s\n<b>%b</b>\n%p"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".

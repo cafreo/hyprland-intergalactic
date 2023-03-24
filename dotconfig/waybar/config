@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["image#caf", "hyprland/window"],
     "modules-center": ["wlr/workspaces"],
-    "modules-right": ["cpu", "pulseaudio", "network", "clock", "tray"],
+    "modules-right": ["cpu", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
     // Modules configuration
     "wlr/workspaces": {
          "all-outputs": true,
@@ -187,12 +187,12 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{format_source}   {icon}",
+        "format": "{icon}",
         /*"format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",*/
-        "format-muted": "{format_source}    ",
-        "format-source": "",
-        "format-source-muted": "",
+        "format-muted": "",
+        //"format-source": "",
+        //"format-source-muted": "",
         "format-icons": {
 	    "muted": "",
             "headphone": "",
@@ -206,10 +206,27 @@
 	"tooltip": true,
 	"tooltip-format": "{icon} {volume}%",
 	"scroll-step": 5,
-        "on-click": "pactl set-sink-port 0 analog-output-lineout",
+    "on-click": "pactl set-sink-port 0 analog-output-lineout",
+	"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
+	"on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    },
+
+    "pulseaudio#microphone": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{format_source}",
+        /*"format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",*/
+        //"format-muted": "{format_source}    ",
+        "format-source": "",
+        "format-source-muted": "",
+	"tooltip": true,
+	"tooltip-format": "{format_source} {volume}%",
+	"scroll-step": 5,
+    "on-click": "pactl set-source-mute 0 toggle",
 	"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
 	"on-click-middle": "pavucontrol",
     },
+
     "custom/media": {
         "format": "{icon}",
         "return-type": "json",
