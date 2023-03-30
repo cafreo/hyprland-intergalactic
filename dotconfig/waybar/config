@@ -176,7 +176,7 @@
         "format-ethernet": "  {bandwidthUpBits} | {bandwidthDownBits}",
         "tooltip-format": "  {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": " down",
+        "format-disconnected": "  down",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "jack": {
