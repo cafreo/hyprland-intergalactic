@@ -117,24 +117,24 @@
     "clock": {
         // "timezone": "America/New_York",
         "interval": 60,
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "tooltip-format": "<big>Calendar</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%d.%m.%Y}",
         "calendar": {
         	"mode": "month",
         	"weeks-pos": "left",
 		"format": {
-			"months":     "<span color='#ffead3'><b>{}</b></span>",
-			"days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                        "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                        "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                        "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+			//"months":     "<span color='#C8CACC'><b>{}</b></span>",
+			"days":       "<span color='#C8CACC'><b>{}</b></span>",
+                        "weeks":      "<span color='#E9862D'><b>W{}</b></span>",
+                        "weekdays":   "<span color='#F5B83A'><b>{}</b></span>",
+                        "today":      "<span color='#D02311' ><b>{}</b></span>"
 			  }
 		    }    
     },
     "cpu": {
         "format": "  {usage}%",
         "tooltip": true,
-	"on-click": "alacritty -e 'bashtop'"
+	"on-click": "kitty -e 'bashtop'"
     },
     "memory": {
         "format": "{}% "

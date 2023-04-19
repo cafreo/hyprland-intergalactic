@@ -128,16 +128,18 @@ button:hover {
     background-color: rgba(245, 184, 58, 0.3);
 }
 
-#clock:hover {
-    background-color: rgba(245, 184, 58, 0.6);
-}
-
 #window {
     margin: 0;
 }
 #workspaces {
     margin: 0;
     padding: 0;
+}
+
+tooltip {
+    border-radius: 3px;
+    background-color: #201C24;
+    border: 2px solid #808284;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -152,6 +154,10 @@ button:hover {
 
 #clock {
     background-image: linear-gradient(rgba(208, 35, 17, 0.3), rgba(245, 184, 58, 0.3));
+}
+
+#clock:hover {
+    background-color: rgba(245, 184, 58, 0.6);
 }
 
 #battery {
@@ -206,7 +212,7 @@ label:focus {
 }
 
 #network.disconnected {
-    background-color: #f53c3c;
+    background-color: #D02311;
 }
 
 #pulseaudio {
