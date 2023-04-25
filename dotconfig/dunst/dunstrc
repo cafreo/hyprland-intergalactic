@@ -313,7 +313,7 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#201C24f2"
+    background = "#201c28f2"
     foreground = "#C8CACCf2"
     highlight = "#C8CACCf2"
     #frame_color = "FFFFFF"
@@ -322,14 +322,14 @@
     #default_icon = /path/to/icon
 
 [urgency_normal]
-    background = "#28242Cf2"
+    background = "#201c28f2"
     foreground = "#C8CACCf2"
     timeout = 8
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_critical]
-    background = "#28242Cf2"
+    background = "#201c28f2"
     foreground = "#D02311f2"
     frame_color = "#D02311cc"
     timeout = 0
@@ -394,7 +394,9 @@
     format = "<b>%s</b>"
     timeout = 1
 
-
+[player]
+    appname="playerctl"
+    word_wrap = false
 
 # Disable the transient hint so that idle_threshold cannot be bypassed from the
 # client
