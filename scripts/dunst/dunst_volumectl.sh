@@ -20,11 +20,11 @@ if [[ $volume == 0 || "$mute" == "yes" ]]; then
 
 elif [[ $volume < 75 && $volume > 25 ]]; then
  Show the volume notification
-    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/dunst/volume_medium.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
+    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/dunst/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
 
 elif [[ $volume < 25 && $volume > 0 ]]; then
  Show the volume notification
-    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/dunst/volume_low.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
+    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/dunst/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
 
 elif [[ $volume > 75 ]]; then
     # Show the volume notification

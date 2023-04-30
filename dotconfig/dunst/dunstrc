@@ -27,7 +27,7 @@
     width = (260, 380)
 
     # The maximum height of a single notification, excluding the frame.
-    height = 100
+    height = 120
 
     # Position the notification in the top right corner
     origin = top-right
@@ -95,7 +95,7 @@
     frame_width = 3
 
     # Defines color of the frame around the notification window.
-    frame_color = "#808284cc"
+    frame_color = "#C8CACCf2"
 
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
@@ -214,7 +214,7 @@
     min_icon_size = 32
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 64
+    max_icon_size = 80
 
     # Paths to default icons (only neccesary when not using recursive icon lookup)
     icon_path = /usr/share/icons/Papirus/32x32/status/:/usr/share/icons/gnome/32x32/devices/
@@ -313,6 +313,7 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
+    format = "%s\n%b\n%p"
     background = "#201c28f2"
     foreground = "#C8CACCf2"
     highlight = "#C8CACCf2"

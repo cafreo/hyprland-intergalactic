@@ -1,0 +1,17 @@
+/**
+ *
+ * Author : Aditya Shakya (adi1090x)
+ * Github : @adi1090x
+ * 
+ * Colors
+ **/
+
+* {
+    font: "Ubuntu Nerd Font Bold 11";
+    background:     #201c28ff;
+    background-alt: linear-gradient(to bottom, #d02311, #f5b83a);
+    foreground:     #bcbcbcff;
+    selected:       linear-gradient(0deg, rgba(208, 35, 17, 0.54), rgba(245, 184, 58, 0.54));
+    active:         linear-gradient(90deg, rgba(208, 35, 17, 0.72), rgba(245, 184, 58, 0.72));
+    urgent:         #E06C75FF;
+}

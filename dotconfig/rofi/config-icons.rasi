@@ -17,7 +17,6 @@ configuration {
 
 /*****----- Global Properties -----*****/
 @import                          "~/.config/rofi/colors/intergalactic.rasi"
-@import                          "~/.config/rofi/fonts/ubuntu.rasi"
 
 /*****----- Main Window -----*****/
 window {
@@ -25,7 +24,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       440px;
+    width:                       600px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -48,6 +47,7 @@ mainbox {
     border:                      0px solid;
     border-radius:               0px 0px 12px 12px;
     border-color:                transparent;
+    background-color:            @background;
     background-image:            @selected;
     children:                    [ "inputbar", "listview" ];
 }
@@ -91,10 +91,10 @@ entry {
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
-    columns:                     1;
-    lines:                       8;
+    columns:                     4;
+    lines:                       3;
     cycle:                       true;
-    dynamic:                     true;
+    dynamic:                     false;
     scrollbar:                   false;
     layout:                      vertical;
     reverse:                     false;
@@ -103,7 +103,7 @@ listview {
     
     spacing:                     5px;
     margin:                      0px;
-    padding:                     14px 12px;
+    padding:                     20px;
     border:                      0px solid;
     border-radius:               12px;
     border-color:                rgba(245, 184, 58, 0.6);
@@ -123,12 +123,14 @@ element {
     enabled:                     true;
     spacing:                     14px;
     margin:                      0px;
-    padding:                     14px 8px;
+    padding:                     20px 10px;
+    dynamic:                     false;
     border:                      0px solid;
-    border-radius:               10px;
+    border-radius:               12px;
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
+    orientation:                 vertical;
     cursor:                      pointer;
 }
 element normal.normal {
@@ -141,12 +143,12 @@ element.alternate.normal {
 }
 element selected {
     background-image:            @active;
-    text-color:                  @background;
+    text-color:                  @foreground;
 }
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        0px;
+    size:                        56px;
     cursor:                      inherit;
 }
 element-text {
@@ -155,7 +157,7 @@ element-text {
     highlight:                   inherit;
     cursor:                      inherit;
     vertical-align:              0.5;
-    horizontal-align:            0.0;
+    horizontal-align:            0.5;
 }
 
 /*****----- Message -----*****/
