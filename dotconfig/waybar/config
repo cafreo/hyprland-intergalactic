@@ -177,7 +177,8 @@
         "tooltip-format": "  {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "  down",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        //"format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "/home/cafreo/Scripts/rofi/rofi-networkmanager.sh"
     },
     "jack": {
     	"format": "DSP {}%",

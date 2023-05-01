@@ -17,7 +17,6 @@ configuration {
 
 /*****----- Global Properties -----*****/
 @import                          "~/.config/rofi/colors/intergalactic.rasi"
-@import                          "~/.config/rofi/fonts/ubuntu.rasi"
 
 /*****----- Main Window -----*****/
 window {
@@ -48,6 +47,7 @@ mainbox {
     border:                      0px solid;
     border-radius:               0px 0px 12px 12px;
     border-color:                transparent;
+    background-color:            @background;
     background-image:            @selected;
     children:                    [ "inputbar", "listview" ];
 }
@@ -141,7 +141,7 @@ element.alternate.normal {
 }
 element selected {
     background-image:            @active;
-    text-color:                  @background;
+    text-color:                  @foreground;
 }
 element-icon {
     background-color:            transparent;
