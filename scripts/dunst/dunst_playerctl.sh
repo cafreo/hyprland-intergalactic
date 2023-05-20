@@ -4,7 +4,7 @@ msgTag="playerctl"
 csTitle=$(playerctl metadata title)
 csArtist=$(playerctl metadata artist)
 csCoverUrl=$(playerctl metadata mpris:artUrl)
-csCover=/home/cafreo/.cache/u-playerctl/csCover
+csCover=/home/$(whoami)/.cache/u-playerctl/csCover
 csCoverImg=$(convert "$csCoverUrl" -flatten -thumbnail 80x80 $csCover)
 
 convert "$csCoverUrl" -flatten -thumbnail 80x80 $csCover

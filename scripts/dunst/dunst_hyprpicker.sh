@@ -5,7 +5,7 @@ hyprpicker -f hex -a
 wait
 
 value=$(wl-paste)
-img=/home/cafreo/.cache/u-hyprpicker/img.png
+img=/home/$(whoami)/.cache/u-hyprpicker/img.png
 
 convert -size 64x64 xc:"$value" $img
 
