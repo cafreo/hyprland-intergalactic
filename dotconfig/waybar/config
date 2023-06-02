@@ -239,13 +239,13 @@
 	"on-click": "playerctl play-pause",
 	"on-click-right": "playerctl next",
         "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/pipewire": {
 	"tooltip": true,
 	"max-length": 6,
-	"exec": "$HOME/.config/waybar/pipewire.sh",
+	"exec": "$HOME/.config/waybar/scripts/pipewire.sh",
 	"on-click": "pavucontrol",
 	"on-click-right": "qpwgraph"
 },

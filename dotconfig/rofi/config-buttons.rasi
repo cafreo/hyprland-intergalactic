@@ -64,7 +64,7 @@ inputbar {
     background-color:            @background;
     background-image:            @selected;
     text-color:                  @foreground;
-    children:                    [ "entry" ];
+    children:                    [ "prompt" ];
 }
 
 prompt {
