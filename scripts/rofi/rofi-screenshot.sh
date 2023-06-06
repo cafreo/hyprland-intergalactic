@@ -14,9 +14,9 @@ case "$chosen" in
     "areaSave")
         grimblast --notify copysave area /home/cafreo/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png ;;
     "screenSave")
-        grimblast --notify copysave output /home/cafreo/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png ;;
+        sleep 0.5 && grimblast --notify copysave output /home/cafreo/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png ;;
     "windowSave")
-        sleep 3 && grimblast --notify copysave active /home/cafreo/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png;;
+        sleep 2.5 && grimblast --notify copysave active /home/cafreo/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png;;
         
         *) exit 1 ;;
 esac
