@@ -14,7 +14,7 @@
  
  ### menus
  
-  <p><img width=75% src="/.screenshots/screenshot5.png"/></p>
+  <p><img width=77% src="/.screenshots/screenshot5.png"/></p>
  
  ### logout
  
