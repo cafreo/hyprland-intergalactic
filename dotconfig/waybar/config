@@ -223,7 +223,7 @@
 	"tooltip": true,
 	"tooltip-format": "{format_source} {volume}%",
 	"scroll-step": 5,
-    "on-click": "pactl set-source-mute 0 toggle",
+    "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
 	"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
 	"on-click-middle": "pavucontrol",
     },

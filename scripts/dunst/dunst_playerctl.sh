@@ -7,9 +7,9 @@ csTitle=$(playerctl metadata title)
 csArtist=$(playerctl metadata artist)
 csCoverUrl=$(playerctl metadata mpris:artUrl)
 csCover=/home/$(whoami)/.cache/dunst/csCover
-csCoverImg=$(convert "$csCoverUrl" -flatten -thumbnail 80x80 $csCover)
+csCoverImg=$(convert "$csCoverUrl" -flatten -thumbnail 160x160 $csCover)
 
-convert "$csCoverUrl" -flatten -thumbnail 80x80 $csCover
+convert "$csCoverUrl" -flatten -thumbnail 160x160 $csCover
 
 wait
 
