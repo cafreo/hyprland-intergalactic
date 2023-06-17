@@ -50,7 +50,7 @@ declare -n options="o_$res"
       "$SCRIPTPATH/fd_cache.sh" "${FD_OPTIONS[@]}" "${options[@]}" '.' "${dirs[@]}" 
    fi
 }\
-   | { "$_ROFI" -theme /home/cafreo/.config/rofi/config-list-find.rasi  \
+   | { "$_ROFI" -theme ~/.config/rofi/config-list-find.rasi  \
     -dmenu -sort -sorting-method fzf -i -p "Choose to open" \
     -mesg "<i>use Ctrl˖d to open parent directory, Ctrl+c to copy filename</i>" \
     -kb-remove-char-forward "Delete" \

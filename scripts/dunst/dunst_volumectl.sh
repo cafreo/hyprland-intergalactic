@@ -16,23 +16,23 @@ volume="$(pactl list sinks | grep -A 7 "$(pactl info | grep 'Default Sink' | cut
 mute="$(pactl list sinks | grep -A 7 "$(pactl info | grep 'Default Sink' | cut -d' ' -f 3)" | grep Mute | awk '{print $2}')"
 if [[ $volume == 0 || "$mute" == "yes" ]]; then
     # Show the sound muted notification
-    dunstify -t 1000 -a "volumectl" "Volume muted" -u low -i /home/cafreo/Scripts/img/mute.svg -h string:x-dunst-stack-tag:$msgTag "0" 
+    dunstify -t 1000 -a "volumectl" "Volume muted" -u low -i ~/Scripts/img/mute.svg -h string:x-dunst-stack-tag:$msgTag "0" 
 
 elif [[ $volume < 75 && $volume > 25 ]]; then
  Show the volume notification
-    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
+    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i ~/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
 
 elif [[ $volume < 25 && $volume > 0 ]]; then
  Show the volume notification
-    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
+    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i ~/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
 
 elif [[ $volume > 75 ]]; then
     # Show the volume notification
-    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
+    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i ~/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
 
 else
     # Show the volume notification
-    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i /home/cafreo/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
+    dunstify -t 1000 -a "volumectl" "Volume: $volume" -u low -i ~/Scripts/img/volume_high.svg -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume"
 fi
  
  

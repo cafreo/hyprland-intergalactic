@@ -1,12 +1,12 @@
 #!/bin/bash
 
-mkdir -p /home/$(whoami)/.cache/dunst
+mkdir -p ~/.cache/dunst
 
 msgTag="playerctl"
 csTitle=$(playerctl metadata title)
 csArtist=$(playerctl metadata artist)
 csCoverUrl=$(playerctl metadata mpris:artUrl)
-csCover=/home/$(whoami)/.cache/dunst/csCover
+csCover=~/.cache/dunst/csCover
 csCoverImg=$(convert "$csCoverUrl" -flatten -thumbnail 160x160 $csCover)
 
 convert "$csCoverUrl" -flatten -thumbnail 160x160 $csCover

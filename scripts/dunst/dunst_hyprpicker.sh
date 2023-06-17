@@ -1,13 +1,13 @@
 #!/bin/bash
 
-mkdir -p /home/$(whoami)/.cache/dunst
+mkdir -p ~/.cache/dunst
 
 hyprpicker -f hex -a
 
 wait
 
 value=$(wl-paste)
-img=/home/$(whoami)/.cache/dunst/hyprpicker.png
+img=~/.cache/dunst/hyprpicker.png
 
 convert -size 64x64 xc:"$value" $img
 
