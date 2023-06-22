@@ -178,7 +178,8 @@
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "  down",
         //"format-alt": "{ifname}: {ipaddr}/{cidr}",
-        "on-click": "~/Scripts/rofi/rofi-networkmanager.sh"
+        "on-click": "~/Scripts/rofi/rofi-networkmanager.sh",
+        "on-click-right": "kitty -e 'nethogs'"
     },
     "jack": {
     	"format": "DSP {}%",
@@ -224,7 +225,7 @@
 	"tooltip-format": "{format_source} {volume}%",
 	"scroll-step": 5,
     "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-	"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
+	//"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
 	"on-click-middle": "pavucontrol",
     },
 
