@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 chosen=$(nmcli -g NAME c show | rofi -dmenu -theme ~/.config/rofi/config-list.rasi)
 
