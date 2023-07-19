@@ -41,6 +41,7 @@
  
  # to do
  - [ ] eww bar
+ - [ ] dolphin rice
  - [x] screenshot menu
 
  # credits
