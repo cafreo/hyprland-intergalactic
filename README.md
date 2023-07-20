@@ -39,6 +39,10 @@
  # scripts
  - rofi: [file-selector](https://gitlab.com/matclab/rofi-file-selector/-/tree/master/), [screenshot](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-screenshot.sh), [networkmanager](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-networkmanager.sh)
  - dunst: [hyprpicker](https://github.com/hyprwm/hyprpicker), [playerctl](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/dunst/dunst_playerctl.sh), [volumectl](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/dunst/dunst_volumectl.sh)
+
+ # misc
+
+ - startpage: [my own](https://github.com/cafreo/startpage)
  
  # to do
  - [ ] eww bar
