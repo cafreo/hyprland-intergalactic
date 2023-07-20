@@ -1,6 +1,7 @@
 <div align="center">
  <h1>intergalactic</h1>
  <p>config and style files for my hyprland intergalactic theme</p>
+ <a href="https://github.com/zemmsoares/awesome-rices"> <img src="https://raw.githubusercontent.com/zemmsoares/awesome-rices/main/assets/awesome-rice-badge.svg"></a>
 </div>
  
  # screenshots
