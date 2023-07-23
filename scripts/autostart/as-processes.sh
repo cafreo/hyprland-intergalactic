@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# wait for the script to start
+sleep 6
+
 # mute microphone
 pactl set-source-mute @DEFAULT_SOURCE@ 1
 
