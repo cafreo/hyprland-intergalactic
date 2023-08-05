@@ -7,11 +7,11 @@
     // Choose the order of the modules
     "modules-left": ["image#caf", "hyprland/window"],
     "modules-center": ["wlr/workspaces"],
-    "modules-right": ["cpu", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
+    "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
     // Modules configuration
     "wlr/workspaces": {
          "all-outputs": true,
-         "format": "{name}  {icon}",
+         "format": "{icon}",
 	 "on-click": "activate",
 	 "on-click-right": "close",
 	 "sort-by-number": true,
@@ -29,7 +29,7 @@
          }
      },
     "hyprland/window": {
-	"format": "> {}",
+	"format": " {}",
 	"separate-outputs": true
 	},
     "keyboard-state": {
@@ -111,7 +111,7 @@
 	"on-click": "wlogout"
     },
     "tray": {
-        // "icon-size": 21,
+        "icon-size": 18,
         "spacing": 10
     },
     "clock": {
@@ -210,7 +210,8 @@
 	"scroll-step": 5,
     "on-click": "pactl set-sink-port 0 analog-output-lineout",
 	"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
-	"on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-middle": "pavucontrol",
+	//"on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
     },
 
     "pulseaudio#microphone": {
@@ -223,10 +224,9 @@
         "format-source-muted": "",
 	"tooltip": true,
 	"tooltip-format": "{format_source} {volume}%",
-	"scroll-step": 5,
+	//"scroll-step": 5,
     "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
 	//"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
-	"on-click-middle": "pavucontrol",
     },
 
     "custom/media": {
@@ -258,6 +258,20 @@
     "exec": "wttrbar",
     "return-type": "json"
 },
+
+"custom/gammastep": {
+    "format": "{}",
+    "interval": 10,
+    "on-update": "",
+    "exec": "$HOME/.config/waybar/scripts/gammastep.sh",
+    "on-click": "$HOME/.config/waybar/scripts/gammastep.sh toggle"
+},
+
+"hyprland/submap": {
+    "format": "  {}",
+    "max-length": 8,
+    "tooltip": false
+}
 
 }
 
