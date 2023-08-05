@@ -33,7 +33,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 12x12
+    offset = 24x24
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -61,10 +61,10 @@
     progress_bar_max_width = 380
 
     # Corner radius for the progress bar. 0 disables rounded corners.
-    progress_bar_corner_radius = 2
+    progress_bar_corner_radius = 8
 
     # Corner radius for the icon image.
-    icon_corner_radius = 3
+    icon_corner_radius = 6
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
@@ -92,7 +92,7 @@
 
     # Defines width in pixels of frame around the notification window.
     # Set to 0 to disable.
-    frame_width = 3
+    frame_width = 4
 
     # Defines color of the frame around the notification window.
     frame_color = "#C8CACCf2"
@@ -123,7 +123,7 @@
 
     ### Text ###
 
-    font = Ubuntu 13
+    font = Ubuntu 12
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -250,7 +250,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 4
+    corner_radius = 8
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
@@ -317,7 +317,7 @@
     background = "#201c28f2"
     foreground = "#C8CACCf2"
     highlight = "#C8CACCf2"
-    #frame_color = "FFFFFF"
+    frame_color = "#EC9B3199"
     timeout = 4
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
@@ -325,6 +325,7 @@
 [urgency_normal]
     background = "#201c28f2"
     foreground = "#C8CACCf2"
+    frame_color = "#DE5F21b3"
     timeout = 8
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
@@ -439,7 +440,7 @@
 
 [history-ignore]
     # This notification will not be saved in history
-    appname = "raven-reader"
+    appname = "Raven Reader"
    # summary = "Raven Reader"
     history_ignore = yes
 
