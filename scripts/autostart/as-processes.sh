@@ -1,10 +1,13 @@
 #!/bin/bash
 
 # wait for the script to start
-sleep 6
+sleep 12
 
 # mute microphone
 pactl set-source-mute @DEFAULT_SOURCE@ 1
+
+# set default output to speakers
+pactl set-sink-port 0 analog-output-lineout
 
 # start mullvad
 mullvad disconnect
