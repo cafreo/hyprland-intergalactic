@@ -47,6 +47,7 @@
  # to do
  - [ ] eww bar
  - [ ] dolphin rice
+ - [ ] combine rofi themes into one file
  - [x] screenshot menu
 
  # credits
