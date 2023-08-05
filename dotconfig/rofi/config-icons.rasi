@@ -9,10 +9,14 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun";
+	modi:                       "drun,filebrowser,window,run,";
     show-icons:                 true;
-    display-drun:               "";
+    display-drun:               "";
+    display-filebrowser:        "";
+	display-window:             "";
+    display-run:                "";
 	drun-display-format:        "{name}";
+    window-format:              "{c}";
 }
 
 /*****----- Global Properties -----*****/
@@ -43,14 +47,37 @@ mainbox {
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     4px;
+    padding:                     6px;
     border:                      0px solid;
     border-radius:               0px 0px 12px 12px;
     border-color:                transparent;
     background-color:            @background;
     background-image:            @selected;
-    children:                    [ "inputbar", "listview" ];
+    children:                    [ "inputbar", "listview", "mode-switcher" ];
 }
+
+mode-switcher {
+    orientation:                 horizontal;
+    enabled:                     false;
+    spacing:                     0px;
+    padding:                     8px 180px;
+    spacing:                     24px;
+    background-color:            transparent;
+}
+
+button {
+    cursor:                      pointer;
+    border-radius:               8px;
+    padding:                     10px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+}
+
+button selected {
+    background-color:            @background;
+    text-color:                  @foreground;
+}
+
 
 /*****----- Inputbar -----*****/
 inputbar {
@@ -61,8 +88,7 @@ inputbar {
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;
-    background-color:            @background;
-    background-image:            @selected;
+    background-color:            transparent;
     text-color:                  @foreground;
     children:                    [ "entry" ];
 }

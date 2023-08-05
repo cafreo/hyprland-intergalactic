@@ -43,7 +43,7 @@ mainbox {
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     4px;
+    padding:                     6px;
     border:                      0px solid;
     border-radius:               0px 0px 12px 12px;
     border-color:                transparent;
@@ -61,15 +61,14 @@ inputbar {
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;
-    background-color:            @background;
-    background-image:            @selected;
+    background-color:            transparent;
     text-color:                  @foreground;
     children:                    [ "entry" ];
 }
 
-#message {
+message {
     enabled:                     true;
-    border:                      4px 0px 12px 4px solid;
+    border:                      6px 0px 12px 6px solid;
     border-color:                transparent;
     border-radius:               12px 12px;
     padding:                     16px;
@@ -150,7 +149,7 @@ element.alternate.normal {
    text-color:                   @foreground;
 }
 element selected {
-    background-image:            @active;
+    background-image:            @active-alt;
     text-color:                  @foreground;
 }
 element-icon {
