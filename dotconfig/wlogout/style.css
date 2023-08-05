@@ -10,9 +10,9 @@ button {
         font-weight: bold;
 	background-color: rgba(32,28,40,0.8);
 	border-style: solid;
-	border-width: 4px;
+	border-width: 6px;
 	border-color: rgba(32,28,40,0.8);
-	border-radius: 8px;
+	border-radius: 12px;
 	margin: 10px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -20,10 +20,10 @@ button {
 }
 
 button:focus, button:active, button:hover {
-	color: rgba(245, 184, 58, 0.8);
-	border-color: rgba(245, 184, 58, 0.6);
-	background-color: rgba(208, 35, 17, 0.6);
-	background-image: linear-gradient(rgba(208, 35, 17, 0.6), rgba(245, 184, 58, 0.6));
+	color: #bcbcbc;
+	border-color: rgba(238, 176, 56, 0.6);
+	background-color: rgba(203, 34, 17, 0.6);
+	background-image: linear-gradient(rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
 	outline-style: none;
 }
 

@@ -2,7 +2,7 @@ daemonize
 font=Ubuntu Bold
 font-size=180px
 
-show-failed-attempts
+#show-failed-attempts
 image=~/Pictures/Wallpaper/Selfmade/intergalactic.png
 scaling=fill
 indicator-caps-lock
@@ -38,10 +38,10 @@ inside-ver-color=201c28a6
 inside-wrong-color=201c28a6
 
 ring-color=C8CACCbf
-ring-clear-color=84BF40bf
+ring-clear-color=10CC64bf
 ring-caps-lock-color=231f20D9
-ring-ver-color=F5B83Abf
-ring-wrong-color=D02311bf
+ring-ver-color=EAAF37bf
+ring-wrong-color=CB2211bf
 
 line-color=ffffff00
 line-clear-color=ffffff00
@@ -50,9 +50,9 @@ line-ver-color=ffffff00
 line-wrong-color=ffffff00
 
 text-color=C8CACCbf
-text-clear-color=84BF40bf
-text-ver-color=F5B83Abf
-text-wrong-color=D02311bf
+text-clear-color=10CC64bf
+text-ver-color=EAAF37bf
+text-wrong-color=CB2211bf
 
 bs-hl-color=ee2e24FF
 caps-lock-key-hl-color=ffd204FF
