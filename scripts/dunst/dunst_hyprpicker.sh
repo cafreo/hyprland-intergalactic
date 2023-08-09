@@ -2,13 +2,15 @@
 
 mkdir -p ~/.cache/dunst
 
-hyprpicker -f hex -a
-
-wait
+hyprpicker -f hex -a &&
 
 value=$(wl-paste)
 img=~/.cache/dunst/hyprpicker.png
 
-convert -size 64x64 xc:"$value" $img
+if [[ $value =~ ^#.* ]]; then
+    convert -size 64x64 xc:"$value" $img
+    dunstify -t 3000 -a "hyprpicker" -b "HEX color copied" "<b>$value</b>" -u low -i "$img"
 
-dunstify -t 6000 -a "hyprpicker" -b "HEX color copied" "<b>$value</b>" -u low -i "$img"
+    else
+    exit
+fi
