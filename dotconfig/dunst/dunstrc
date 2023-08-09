@@ -432,16 +432,17 @@
 #    summary = "*script*"
 #    script = dunst_test.sh
 
-[ignore]
+[Raven Reader]
    # This notification will not be displayed
     appname = "Raven Reader"
-  # summary = "Raven Reader"
     skip_display = true
+    history_ignore = yes
 
-[history-ignore]
+[Simple Tab Groups]
     # This notification will not be saved in history
-    appname = "Raven Reader"
-   # summary = "Raven Reader"
+    appname = "LibreWolf"
+    summary = "Simple Tab Groups"
+    skip_display = true
     history_ignore = yes
 
 #[skip-display]
