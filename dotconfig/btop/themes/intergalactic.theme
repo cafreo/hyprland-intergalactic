@@ -1,0 +1,89 @@
+#Bashtop Adapta theme
+#by olokelo
+
+# Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
+# example for white: "#ffffff", "#ff" or "255 255 255".
+
+# All graphs and meters can be gradients
+# For single color graphs leave "mid" and "end" variable empty.
+# Use "start" and "end" variables for two color gradient
+# Use "start", "mid" and "end" for three color gradient
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]=""
+
+# Main text color
+theme[main_fg]="#C8CACC"
+
+# Title color for boxes
+theme[title]="#ff"
+
+# Higlight color for keyboard shortcuts
+theme[hi_fg]="#90"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#DE5F21"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#ff"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#40"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#DE5F21"
+
+# Cpu box outline color
+theme[cpu_box]="#DE5F21"
+
+# Memory/disks box outline color
+theme[mem_box]="#DE5F21"
+
+# Net up/down box outline color
+theme[net_box]="#DE5F21"
+
+# Processes box outline color
+theme[proc_box]="#DE5F21"
+
+# Box divider line and small boxes line color
+theme[div_line]="#50"
+
+# Temperature graph colors
+theme[temp_start]="#EFB038"
+theme[temp_mid]="#DE5F21"
+theme[temp_end]="#CB2211"
+
+# CPU graph colors
+theme[cpu_start]="#EFB038"
+theme[cpu_mid]="#DE5F21"
+theme[cpu_end]="#CB2211"
+
+# Mem/Disk free meter
+theme[free_start]="#e3b86a"
+theme[free_mid]="#e3b86a"
+theme[free_end]="#e3b86a"
+
+# Mem/Disk cached meter
+theme[cached_start]="#D16548"
+theme[cached_mid]="#D16548"
+theme[cached_end]="#D16548"
+
+# Mem/Disk available meter
+theme[available_start]="#EFB038"
+theme[available_mid]="#EFB038"
+theme[available_end]="#EFB038"
+
+# Mem/Disk used meter
+theme[used_start]="#CB2211"
+theme[used_mid]="#CB2211"
+theme[used_end]="#CB2211"
+
+# Download graph colors
+theme[download_start]="#EFB038"
+theme[download_mid]="#DE5F21"
+theme[download_end]="#CB2211"
+
+# Upload graph colors
+theme[upload_start]="#EFB038"
+theme[upload_mid]="#DE5F21"
+theme[upload_end]="#CB2211"
