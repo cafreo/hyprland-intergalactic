@@ -10,25 +10,25 @@
 # Use "start", "mid" and "end" for three color gradient
 
 # Main background, empty for terminal default, need to be empty if you want transparent background
-theme[main_bg]=""
+theme[main_bg]="#201c28"
 
 # Main text color
 theme[main_fg]="#C8CACC"
 
 # Title color for boxes
-theme[title]="#ff"
+theme[title]="#C8CACC"
 
 # Higlight color for keyboard shortcuts
-theme[hi_fg]="#90"
+theme[hi_fg]="#61646b"
 
 # Background color of selected item in processes box
 theme[selected_bg]="#DE5F21"
 
 # Foreground color of selected item in processes box
-theme[selected_fg]="#ff"
+theme[selected_fg]="#C8CACC"
 
 # Color of inactive/disabled text
-theme[inactive_fg]="#40"
+theme[inactive_fg]="#61646b"
 
 # Misc colors for processes box including mini cpu graphs, details memory graph and details status text
 theme[proc_misc]="#DE5F21"
@@ -46,7 +46,7 @@ theme[net_box]="#DE5F21"
 theme[proc_box]="#DE5F21"
 
 # Box divider line and small boxes line color
-theme[div_line]="#50"
+theme[div_line]="#61646b"
 
 # Temperature graph colors
 theme[temp_start]="#EFB038"
