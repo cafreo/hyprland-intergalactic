@@ -134,7 +134,7 @@
     "cpu": {
         "format": "  {usage}%",
         "tooltip": true,
-	"on-click": "kitty -e 'bashtop'"
+	"on-click": "kitty -e 'btop'"
     },
     "memory": {
         "format": "{}% "
