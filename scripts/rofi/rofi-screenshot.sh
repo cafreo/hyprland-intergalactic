@@ -16,7 +16,7 @@ case "$chosen" in
     "screenSave")
         sleep 0.5 && grimblast --notify copysave output ~/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png ;;
     "windowSave")
-        sleep 2.5 && grimblast --notify copysave active ~/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png;;
+        sleep 2.5 && grimblast --notify copysave active ~/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png ;;
         
         *) exit 1 ;;
 esac
