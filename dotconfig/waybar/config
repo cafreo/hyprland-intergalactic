@@ -6,14 +6,16 @@
     "spacing": 4, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": ["image#caf", "hyprland/window"],
-    "modules-center": ["wlr/workspaces"],
+    "modules-center": ["hyprland/workspaces"],
     "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
     // Modules configuration
-    "wlr/workspaces": {
+    "hyprland/workspaces": {
          "all-outputs": true,
          "format": "{icon}",
 	 "on-click": "activate",
 	 "on-click-right": "close",
+     "on-scroll-up": "hyprctl dispatch workspace e+1",
+     "on-scroll-down": "hyprctl dispatch workspace e-1",
 	 "sort-by-number": true,
          "format-icons": {
              "1": "",
@@ -21,8 +23,7 @@
              "3": "",
              "4": "",
              "5": "",
-	         "6": "",
-	         "7": "",		
+	         "6": "",		
              "urgent": "",
              "focused": "",
              "default": ""
