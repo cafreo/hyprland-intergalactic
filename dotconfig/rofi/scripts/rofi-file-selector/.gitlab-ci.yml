@@ -1,0 +1,13 @@
+variables:
+   GIT_SUBMODULE_STRATEGY: recursive
+
+image:
+   name: registry.gitlab.com/matclab/rofi-file-selector/rfs-test:0.3
+
+test:
+   script:
+      - set -euo pipefail
+      - "bats --formatter junit tests | tee  TestReport.xml"
+   artifacts:
+      reports:
+         junit: TestReport*.xml

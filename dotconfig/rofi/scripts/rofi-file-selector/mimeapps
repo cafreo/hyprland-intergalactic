@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+    ** Short description
+
+"""
+
+# TODO does not work the same for vcalendar in zsh and in bash called from
+# astroid.
+
+__version__ = 0.1
+from gi.repository import Gio
+import sys
+import os
+import subprocess
+from pathlib import Path
+import platform
+import logging
+from argparse import ArgumentParser, Namespace
+
+options = Namespace()
+logging.basicConfig(format="%(levelname)-8s %(message)s")
+logger = logging.getLogger()
+
+def process_main_options():
+    global options
+    options.verbose = logging.WARNING
+    parser = ArgumentParser(description=__doc__)
+    # first retrieve config file if any :
+    _version= "mimeapps {0} -- {1} {2}".format(__version__,
+            platform.python_implementation(), platform.python_version())
+    parser.add_argument('file', type=str, nargs=1,
+                    help='file to be process')
+    parser.add_argument('appname', nargs='?',
+                    help='choosen application name')
+    parser.add_argument('-m', '--mime-type',  type=str,
+                        help="Mime type use to find concerned applications")
+    parser.add_argument('--version', action='version', version=_version)
+    parser.add_argument("-q", "--quiet",
+            action="store_const", const=logging.CRITICAL, dest="verbose",
+            help="don't print status messages to stderr")
+    parser.add_argument("-w", "--warning",
+            action="store_const", const=logging.WARNING, dest="verbose",
+            help="output warning information to stderr (default)")
+    parser.add_argument("-v", "--verbose",
+            action="store_const", const=logging.INFO, dest="verbose",
+            help="output verbose status (info) to stderr")
+    parser.add_argument("--debug",
+            action="store_const", const=logging.DEBUG, dest="verbose",
+            help="output debug information to stderr")
+    parser.parse_args(namespace=options)
+    if os.getenv('TRACE', 0) == "1":
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(options.verbose)
+    #logger.setLevel(options.verbose)
+    return(options)
+
+def main(argv=None):
+    opt = process_main_options()
+    logger.debug(opt)
+    filename = opt.file[0]
+    rofi_retv = int(os.getenv("ROFI_RETV", 0))
+
+
+    if rofi_retv == 2: # Custom entry argv[2] 
+        # If user provide a custom entry, we launch the program in a terminal
+        subprocess.Popen(["kitty", sys.argv[2], filename])
+        sys.exit(0)
+
+    apps = dict()
+    if opt.mime_type:
+        content_type = opt.mime_type
+    else:
+        if Path(filename).is_dir():
+            content_type = "inode/directory"
+        else:
+            content_type, _ = Gio.content_type_guess(f'filename={filename}', data=None)
+            if content_type == "application/octet-stream":
+                with open(filename,'rb') as f:
+                    content_type, _ = Gio.content_type_guess(f'filename={filename}',
+                            data=f.read())
+    logger.debug(f"content mimetype: {content_type}")
+    for app in Gio.app_info_get_all_for_type(content_type):
+        apps[app.get_name()] = app
+
+    default_name = Gio.app_info_get_default_for_type(content_type, False).get_name()
+    logger.debug(f"apps : {apps.keys()}")
+
+    sorted_apps = [default_name]
+    sorted_apps.extend(set(apps.keys()) - set([default_name]))
+
+    logger.debug(opt)
+    if not opt.appname: 
+        #print(f"\0message\x1fType to filer of input program name ({filename} {content_type})\n")
+        print("\0markup-rows\x1ftrue\n")
+        print("\0message\x1f<i>use Ctrl˖+ to select and mark as default</i>\n")
+        print(f"\0prompt\x1fOpen {content_type} with\n")
+        for name in sorted_apps:
+            app = apps[name]
+            icon = app.get_icon()
+            iconstr = f"icon\x1f{icon.to_string()}" if icon else ""
+            meta = f"meta\x1f{app.get_executable()}"
+            info = f"info\x1f{app.get_description()}"
+            print(f"{name}\0{iconstr}\x1f{meta}\x1f{info}\n")
+    else:
+        choosen_name = opt.appname
+
+        if rofi_retv == 10: # Custom kb 1 pressed → set as default
+            apps[choosen_name].set_as_default_for_type(content_type)
+        print(f"launch {filename} of type {content_type}  with {choosen_name}")
+        apps[choosen_name].launch([Gio.File.parse_name(filename)], None)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+
+# vim: sw=4 sts=4 ts=4 et ai
+
