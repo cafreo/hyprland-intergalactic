@@ -79,13 +79,13 @@
 			"serverSide": false
 		}
 	},
-	"volume": 0.19,
+	"volume": 0.16,
 	"audioDeviceId": "default",
 	"seekForwardInterval": 5,
 	"seekBackwardInterval": 5,
 	"volumeFade": false,
-	"repeat": "one",
-	"shuffle": false,
+	"repeat": "all",
+	"shuffle": true,
 	"scrollWithCurrentSong": true,
 	"cacheImages": true,
 	"cacheSongs": true,
