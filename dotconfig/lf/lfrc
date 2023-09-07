@@ -1,0 +1,88 @@
+
+#set previewer ~/.config/lf/lf_kitty_preview
+#set cleaner ~/.config/lf/lf_kitty_clean
+
+set previewer ctpv
+set cleaner ctpvclear
+&ctpv -s $id
+&ctpvquit $id
+
+cmd paste $cp-p --lf-paste $id
+
+#cmd trash %trash-put $fx
+
+cmd trash %{{
+    printf "move '%s' to trash bin? [y/n] " "$fx"
+    read -r ans
+    if [ "$ans" = "y" ]; then
+        trash-put "$fx"
+        echo "moved to trash bin successfully"
+    else
+        echo "aborted"
+    fi
+}}
+
+
+cmd mkdir %{{
+    printf "create new directory: "
+    read ans
+    mkdir $ans
+}}
+
+cmd mkfile %{{
+    printf "create new file: "
+    read ans
+    touch $ans
+}}
+
+# Basic Settings
+set hidden false
+set ignorecase true
+set icons true
+set number
+#set relativenumber
+set hiddenfiles '*.log:'
+set dirfirst true
+set hidden false
+set history true
+set ignorecase true
+set mouse false
+set preview true
+set sortby 'name'
+set relativenumber false
+set number true
+set info 'size'
+set incsearch true
+set incfilter true
+set icons true
+set drawbox true
+set ratios '1:2:2'
+set period 3
+
+# Keybinds
+map u unselect
+map c copy
+map x cut
+map v paste
+map c-r reload
+map delete delete
+map d trash
+map r rename
+map ':' read
+map f find
+map / search
+map "#" mark-load
+map "'" mark-remove
+map "+" mark-save
+map h set hidden!
+map u unselect
+map g toggle
+map m mkfile
+map M mkdir
+
+map sn :set sortby 'name'; set info
+map ss :set sortby 'size'; set info size
+map st :set sortby 'time'; set info time;
+map sc :set sortby 'ctime'; set info ctime
+map sa :set sortby 'atime'; set info atime
+map sr :set reverse!
