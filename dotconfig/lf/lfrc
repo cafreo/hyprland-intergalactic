@@ -1,46 +1,170 @@
-
 #set previewer ~/.config/lf/lf_kitty_preview
 #set cleaner ~/.config/lf/lf_kitty_clean
 
+# PREVIEW
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
 
-cmd paste $cp-p --lf-paste $id
+# SET SORT MODE FOR SPECIFIC DIRECTORIES
+cmd on-cd &{{
+	# set title of window
+	printf "\033]0; lf - $PWD\007" > /dev/tty
+
+	# load git infos 
+	source /usr/share/git/completion/git-prompt.sh
+    GIT_PS1_SHOWDIRTYSTATE=auto
+    GIT_PS1_SHOWSTASHSTATE=auto
+    GIT_PS1_SHOWUNTRACKEDFILES=auto
+    GIT_PS1_SHOWUPSTREAM=auto
+    GIT_PS1_COMPRESSSPARSESTATE=auto
+    git=$(__git_ps1 "  %s") || true
+    fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m$git\033[0m"
+    lf -remote "send $id set promptfmt \"$fmt\""
+
+	# sorting
+    case "$PWD" in
+        ~/Pictures/Screenshots* | ~/Downloads | ~/Flow)
+            lf -remote "send $id set user_prev_sortby $lf_sortby"
+            lf -remote "send $id set info time"
+            lf -remote "send $id set sortby time"
+            lf -remote "send $id set reverse"
+
+            lf -remote "send $id echomsg 󱕇   changed sort to time"
+            ;;
+        *)
+            # restore sorting on directory exit
+            if [[ "$lf_user_prev_sortby" != "" ]]; then
+                lf -remote "send $id set sortby $lf_user_prev_sortby"
+                lf -remote "send $id set noreverse"
+
+                lf -remote "send $id echomsg 󰦛   restored sort to $lf_user_prev_sortby"
+                lf -remote "send $id set user_prev_sortby ''"
+            fi
+            ;;
+    esac
+}}
+
+# run on startup too
+on-cd
+
+#cmd paste $cp-p --lf-paste $id
+
+# ECHO PROGRESS ON FILE TRANSFER
+cmd paste &{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    case "$mode" in
+        copy)
+            rsync -av --ignore-existing --progress -- "$@" . |
+            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+            ;;
+        move) mv -n -- "$@" .;;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+
+# BULK RENAME FILES IN EDITOR
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    if [ -n "$fs" ]; then
+        fs="$(basename -a $fs)"
+    else
+        fs="$(ls)"
+    fi
+    printf '%s\n' "$fs" >"$old"
+    printf '%s\n' "$fs" >"$new"
+    $EDITOR "$new"
+    [ "$(wc -l < "$new")" -ne "$(wc -l < "$old")" ] && exit
+    paste "$old" "$new" | while IFS= read -r names; do
+        src="$(printf '%s' "$names" | cut -f1)"
+        dst="$(printf '%s' "$names" | cut -f2)"
+        if [ "$src" = "$dst" ] || [ -e "$dst" ]; then
+            continue
+        fi
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+
+# FUZZY FIND
+cmd fzf_jump ${{
+  #lf -remote "send cd ~/"
+  res="$(fd --hidden --ignore-case . '/' | fzf --border --header='  jump to location')"
+  if [ -f "$res" ]; then
+    cmd="select"
+  elif [ -d "$res" ]; then
+    cmd="cd"
+  fi
+  lf -remote "send $id $cmd \"$res\""
+}}
 
 #cmd trash %trash-put $fx
 
+# TRASH SELECTED ITEMS
 cmd trash %{{
-    printf "move '%s' to trash bin? [y/n] " "$fx"
+    printf "   move '%s' to trash bin? [y/n] " $fx
     read -r ans
     if [ "$ans" = "y" ]; then
-        trash-put "$fx"
-        echo "moved to trash bin successfully"
+        trash-put $fx
+        echo "  moved to trash bin successfully"
     else
-        echo "aborted"
+        echo "  aborted"
     fi
 }}
 
-
+# CREATE DIRECTORIES & FILES
 cmd mkdir %{{
-    printf "create new directory: "
+    printf " 󰉗  create new directory: "
     read ans
     mkdir $ans
 }}
 
 cmd mkfile %{{
-    printf "create new file: "
+    printf " 󰝒  create new file: "
     read ans
     touch $ans
 }}
 
-# Basic Settings
+# UNZIP ARCHIVES
+cmd unarchive ${{
+  case "$f" in
+      *.zip) unzip "$f" -d "${f%.zip}" ;;
+      *.7z) 7za e "$f" -o"${f%.7z}" ;;
+      *.tar.gz) tar -xzvf "$f" ;;
+      *.tar.bz2) tar -xjvf "$f" ;;
+      *.tar) tar -xvf "$f" ;;
+      *) echo "Unsupported format" ;;
+  esac
+}}
+
+
+#cmd trash-empty ${{
+#	trash-empty
+#}}
+
+#cmd trash-restore ${{
+#	trash-restore
+#}}
+
+# OPEN FILE IN SPECIFIED APP
+cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
+cmd open-with-cli $$@ $fx ## opens with a cli application inside lf client
+
+# BASIC SETTINGS
 set hidden false
 set ignorecase true
 set icons true
-set number
-#set relativenumber
+set number true
+set relativenumber false
 set hiddenfiles '*.log:'
 set dirfirst true
 set hidden false
@@ -49,8 +173,6 @@ set ignorecase true
 set mouse false
 set preview true
 set sortby 'name'
-set relativenumber false
-set number true
 set info 'size'
 set incsearch true
 set incfilter true
@@ -58,31 +180,92 @@ set icons true
 set drawbox true
 set ratios '1:2:2'
 set period 3
+#set cursorpreviewfmt "\033[7;90m"
+set cursorpreviewfmt "\033[7m"
 
-# Keybinds
+# UNBIND KEYS
+map gg
+
+# BASIC KEYBINDS
 map u unselect
 map c copy
 map x cut
 map v paste
 map c-r reload
-map delete delete
+map <delete> delete
 map d trash
-map r rename
-map ':' read
-map f find
+map r :rename; cmd-delete-home
+map R bulk-rename
+map ":" read
+#map ";" find
 map / search
-map "#" mark-load
-map "'" mark-remove
-map "+" mark-save
 map h set hidden!
 map u unselect
-map g toggle
-map m mkfile
-map M mkdir
+map t toggle
 
+#map br trash-restore
+#map be trash-empty
+
+# BOOKMARK KEYBINDS
+map "#" mark-load
+map md mark-remove
+map ms mark-save
+
+# MAKE KEYBINDS
+map mf mkfile
+map md mkdir
+
+# ZIP KEYBINDS
+map zu unarchive
+
+# SORT KEYBINDS
 map sn :set sortby 'name'; set info
 map ss :set sortby 'size'; set info size
-map st :set sortby 'time'; set info time;
+map st :set sortby 'time'; set info time; set reverse!
 map sc :set sortby 'ctime'; set info ctime
 map sa :set sortby 'atime'; set info atime
 map sr :set reverse!
+
+# OPEN IN APP KEYBINDS
+map og push :open-with-gui<space> ## input application
+map oc push :open-with-cli<space> ## input application
+map oe $$EDITOR "$f"
+map or $$READER "$f"
+map ot $$TEXT_EDITOR "$f"
+map oiv $$IMAGE_VIEWER "$f"
+map oie $$IMAGE_EDITOR "$f"
+map ovp $$VIDEO_PLAYER "$f"
+map ove $$VIDEO_EDITOR "$f"
+map oa $$AUDIO_PLAYER "$f"
+
+# GO TO USER FILES DIRECTORIES KEYBINDS
+map gh cd ~/
+map gt cd ~/.local/share/Trash/files
+map gd cd ~/Downloads
+map gdd cd ~/Documents
+map gf cd ~/Flow
+map gg1 cd ~/Git
+map gg2 cd ~/Git/hyprland-intergalactic
+map gm cd ~/Music
+map gms cd ~/MEGAsync
+map gi1 cd ~/Pictures
+map gi2 cd ~/Pictures/Screenshots
+map gp1 cd ~/Projects
+map gp2 cd ~/Projects/Fonts
+map gs cd ~/Scripts
+map gv1 cd ~/Videos
+map gv2 cd "~/Videos/After Effects/cafreo"
+map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
+
+# GO TO USER CONFIG DIRECORIES KEYBINDS
+map gc1 cd ~/.config
+map gc2 cd ~/.config/hypr
+map gc6 cd ~/.config/icons
+map gc5 cd ~/.config/kitty
+map gc4 cd ~/.config/lf
+map gc3 cd ~/.config/rofi
+
+map f fzf_jump
+
+
+
