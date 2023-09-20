@@ -25,7 +25,7 @@ cmd on-cd &{{
 
 	# sorting
     case "$PWD" in
-        ~/Pictures/Screenshots* | ~/Downloads | ~/Flow)
+        ~/Pictures/Screenshots* | ~/Downloads | ~/Flow | /mnt/CA-POTRO-EXT-HDD/Music)
             lf -remote "send $id set user_prev_sortby $lf_sortby"
             lf -remote "send $id set info time"
             lf -remote "send $id set sortby time"
@@ -182,16 +182,19 @@ set ratios '1:2:2'
 set period 3
 #set cursorpreviewfmt "\033[7;90m"
 set cursorpreviewfmt "\033[7m"
+set borderfmt "\033[0m"
 
 # UNBIND KEYS
 map gg
+map m
+map G
 
 # BASIC KEYBINDS
 map u unselect
 map c copy
 map x cut
 map v paste
-map c-r reload
+map <c-r> reload
 map <delete> delete
 map d trash
 map r :rename; cmd-delete-home
@@ -202,6 +205,13 @@ map / search
 map h set hidden!
 map u unselect
 map t toggle
+map <c-q> quit
+map <down> down
+map <c-down> half-down
+map <up> up
+map <c-up> half-up
+map <left> updir
+map <right> open
 
 #map br trash-restore
 #map be trash-empty
@@ -264,6 +274,9 @@ map gc6 cd ~/.config/icons
 map gc5 cd ~/.config/kitty
 map gc4 cd ~/.config/lf
 map gc3 cd ~/.config/rofi
+
+map Gca cd /mnt/CA-POTRO-EXT-HDD/
+map Gcb cd /mnt/CB-POTRO-EXT-HDD/
 
 map f fzf_jump
 
