@@ -25,7 +25,7 @@ cmd on-cd &{{
 
 	# sorting
     case "$PWD" in
-        ~/Pictures/Screenshots* | ~/Downloads | ~/Flow | /mnt/CA-POTRO-EXT-HDD/Music)
+        ~/Pictures/Screenshots | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Projects/Fonts | /mnt/CA-POTRO-EXT-HDD/Music)
             lf -remote "send $id set user_prev_sortby $lf_sortby"
             lf -remote "send $id set info time"
             lf -remote "send $id set sortby time"
@@ -49,26 +49,9 @@ cmd on-cd &{{
 # run on startup too
 on-cd
 
-#cmd paste $cp-p --lf-paste $id
-
 # ECHO PROGRESS ON FILE TRANSFER
-cmd paste &{{
-    set -- $(cat ~/.local/share/lf/files)
-    mode="$1"
-    shift
-    case "$mode" in
-        copy)
-            rsync -av --ignore-existing --progress -- "$@" . |
-            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
-            while IFS= read -r line; do
-                lf -remote "send $id echo $line"
-            done
-            ;;
-        move) mv -n -- "$@" .;;
-    esac
-    rm ~/.local/share/lf/files
-    lf -remote "send clear"
-}}
+
+cmd paste $cp-p --lf-paste $id
 
 # BULK RENAME FILES IN EDITOR
 cmd bulk-rename ${{
@@ -107,11 +90,12 @@ cmd fzf_jump ${{
   lf -remote "send $id $cmd \"$res\""
 }}
 
-#cmd trash %trash-put $fx
+
 
 # TRASH SELECTED ITEMS
+
 cmd trash %{{
-    printf "   move '%s' to trash bin? [y/n] " $fx
+    printf "   move $fx to trash bin? [y/n] " $fx
     read -r ans
     if [ "$ans" = "y" ]; then
         trash-put $fx
@@ -120,6 +104,8 @@ cmd trash %{{
         echo "  aborted"
     fi
 }}
+
+#cmd trash %trash-put $fx
 
 # CREATE DIRECTORIES & FILES
 cmd mkdir %{{
@@ -134,7 +120,15 @@ cmd mkfile %{{
     touch $ans
 }}
 
-# UNZIP ARCHIVES
+# ARCHIVES
+
+cmd zip %zip -r "$f" "$f"
+cmd zipe $zip -re "$f" "$f"
+
+#cmd tar %tar cvf "$f.tar" "$f"
+#cmd targz %tar cvzf "$f.tar.gz" "$f"
+#cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
+
 cmd unarchive ${{
   case "$f" in
       *.zip) unzip "$f" -d "${f%.zip}" ;;
@@ -146,14 +140,27 @@ cmd unarchive ${{
   esac
 }}
 
+# CONVERT FILES
 
-#cmd trash-empty ${{
-#	trash-empty
-#}}
+cmd convertmp4 ${{
+	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"	
+}}
 
-#cmd trash-restore ${{
-#	trash-restore
-#}}
+cmd convertmp3 ${{	
+	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
+}}
+
+# TRASH BIN
+
+cmd trash-empty ${{
+	trash-empty --trash-dir ~/.local/share/Trash
+}}
+
+cmd trash-restore ${{
+	trash-restore
+}}
+
+
 
 # OPEN FILE IN SPECIFIED APP
 cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
@@ -183,11 +190,15 @@ set period 3
 #set cursorpreviewfmt "\033[7;90m"
 set cursorpreviewfmt "\033[7m"
 set borderfmt "\033[0m"
+set ifs "\n"
 
 # UNBIND KEYS
 map gg
 map m
 map G
+map f
+map p
+map k
 
 # BASIC KEYBINDS
 map u unselect
@@ -213,9 +224,6 @@ map <c-up> half-up
 map <left> updir
 map <right> open
 
-#map br trash-restore
-#map be trash-empty
-
 # BOOKMARK KEYBINDS
 map "#" mark-load
 map md mark-remove
@@ -226,7 +234,13 @@ map mf mkfile
 map md mkdir
 
 # ZIP KEYBINDS
-map zu unarchive
+map azu zip
+map aze zipe 
+map au unarchive
+
+# CONVERT KEYBINDS
+map kv1 convertmp4
+map ka1 convertmp3
 
 # SORT KEYBINDS
 map sn :set sortby 'name'; set info
@@ -275,10 +289,13 @@ map gc5 cd ~/.config/kitty
 map gc4 cd ~/.config/lf
 map gc3 cd ~/.config/rofi
 
+# GO TO MOUNTED DIRECTORIES
 map Gca cd /mnt/CA-POTRO-EXT-HDD/
 map Gcb cd /mnt/CB-POTRO-EXT-HDD/
 
-map f fzf_jump
+# MISC
+map ff fzf_jump
+map fr trash-restore
+map b trash-empty
 
-
-
+map ps calcdirsize; set info size; set dircounts false
