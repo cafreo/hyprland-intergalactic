@@ -14,6 +14,8 @@ PS1="\e[1;33m\u@\h \W$ \e[0;0m"
 
 alias ssh="kitty +kitten ssh"
 alias yayf="yay -Suy --devel && flatpak update"
+alias clearpac="sudo pacman -Qdtq | sudo pacman -Rs -"
+alias ncduh="ncdu / --exclude media --exclude mnt"
 
 alias lf=lfcd
 
