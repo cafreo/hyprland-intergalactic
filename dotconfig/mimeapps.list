@@ -23,6 +23,7 @@ image/svg+xml=IMAGE_VIEWER.desktop;org.inkscape.Inkscape.desktop;
 inode/directory=org.kde.dolphin.desktop;
 video/mp4=VIDEO_PLAYER.desktop;mpv.desktop;
 video/x-msvideo=VIDEO_PLAYER.desktop;mpv.desktop;
+video/mkv=VIDEO_PLAYER.desktop;mpv.desktop;
 x-scheme-handler/geo=openstreetmap-geo-handler.desktop;
 x-scheme-handler/http=librewolf.desktop;
 x-scheme-handler/https=librewolf.desktop;
