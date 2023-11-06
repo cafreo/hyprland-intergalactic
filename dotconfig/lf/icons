@@ -21,9 +21,9 @@
 
 # file types (with matching order)
 ln      󰌷       # LINK
-or      󰌷       # ORPHAN
+or      󰌸       # ORPHAN
 tw      t       # STICKY_OTHER_WRITABLE
-ow      󰉋       # OTHER_WRITABLE
+ow             # OTHER_WRITABLE
 st      t       # STICKY
 di      󰉋       # DIR
 pi      p       # FIFO
@@ -32,7 +32,7 @@ bd      b       # BLK
 cd      c       # CHR
 su      u       # SETUID
 sg      g       # SETGID
-ex      󰌧       # EXEC
+ex      󰗼       # EXEC
 fi      󰈔       # FILE
 
 # file extensions (vim-devicons)
@@ -353,5 +353,36 @@ Vagrantfile             
 *.spx   󰎈
 *.xspf  󰎈
 
-# other formats
+# document formats
+*.odt	󰈙
+*.doc 	󰈙
+*.docx	󰈙
+*.ods	󰱾
+*.csv	󰱾
+*.xls 	󰱾
+*.xlsx	󰱾
+*.odp	󰈧
+*.ppt 	󰈧
+*.pptx	󰈧
 *.pdf   
+*.xml	󰈮
+
+# game formats
+*.gba	󱎓
+*.z64	
+*.nds	󱎓
+*.chd	
+*.sfc	
+*.dsv	󰆓
+*.sav	󰆓
+*.srm	󰆓
+*.state.auto 	󰠘
+
+# other formats
+*.iso	
+*.img	
+*.torrent	󰥥
+*.nfo 	󰋼
+*.inf 	󰋼
+*.ttf	
+*.otf	
