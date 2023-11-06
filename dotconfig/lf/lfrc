@@ -25,13 +25,14 @@ cmd on-cd &{{
 
 	# sorting
     case "$PWD" in
-        ~/Pictures/Screenshots | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Projects/Fonts | /mnt/CA-POTRO-EXT-HDD/Music)
+        ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Projects/Fonts | /mnt/CA-POTRO-EXT-HDD/Music)
             lf -remote "send $id set user_prev_sortby $lf_sortby"
             lf -remote "send $id set info time"
             lf -remote "send $id set sortby time"
             lf -remote "send $id set reverse"
 
             lf -remote "send $id echomsg 󱕇   changed sort to time"
+            lf -remote "send top"
             ;;
         *)
             # restore sorting on directory exit
@@ -41,6 +42,7 @@ cmd on-cd &{{
 
                 lf -remote "send $id echomsg 󰦛   restored sort to $lf_user_prev_sortby"
                 lf -remote "send $id set user_prev_sortby ''"
+                #lf -remote "send top"
             fi
             ;;
     esac
@@ -49,9 +51,21 @@ cmd on-cd &{{
 # run on startup too
 on-cd
 
+# OPEN
+
+#cmd open &xdg-open $f
+
 # ECHO PROGRESS ON FILE TRANSFER
 
 cmd paste $cp-p --lf-paste $id
+
+# COPY FILE NAME
+
+cmd cpfilename ${{
+	file=${f##*/}
+	name=${file%.*}
+	printf $name | wl-copy
+}}
 
 # BULK RENAME FILES IN EDITOR
 cmd bulk-rename ${{
@@ -120,6 +134,32 @@ cmd mkfile %{{
     touch $ans
 }}
 
+# CHANGE
+
+cmd chown %{{
+  #printf "   new owner: "
+  #read ans
+
+  for file in "$fx"
+  do
+    chown $USER $file
+  done
+
+  lf -remote 'send :reload;unselect'
+}}
+
+cmd chmod %{{
+  printf " 󰦝  new permissions: "
+  read ans
+
+  for file in "$fx"
+  do
+    chmod $ans $file
+  done
+
+  lf -remote 'send :reload;unselect'
+}}
+
 # ARCHIVES
 
 cmd zip %zip -r "$f" "$f"
@@ -161,10 +201,17 @@ cmd trash-restore ${{
 }}
 
 
-
 # OPEN FILE IN SPECIFIED APP
 cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
 cmd open-with-cli $$@ $fx ## opens with a cli application inside lf client
+
+cmd mimeopen ${{
+	for file in "$fx"
+	  do
+	    mimeopen -d $file
+	  done
+}}
+
 
 # BASIC SETTINGS
 set hidden false
@@ -179,7 +226,7 @@ set history true
 set ignorecase true
 set mouse false
 set preview true
-set sortby 'name'
+set sortby 'natural'
 set info 'size'
 set incsearch true
 set incfilter true
@@ -189,8 +236,16 @@ set ratios '1:2:2'
 set period 3
 #set cursorpreviewfmt "\033[7;90m"
 set cursorpreviewfmt "\033[7m"
-set borderfmt "\033[0m"
+set borderfmt "\033[33m"
 set ifs "\n"
+set timefmt 'Mon 02.01.2006 15:04'
+set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u| %g| %t| %c| -> %l"
+set errorfmt "\033[7;31;47m   "
+set rulerfmt "  %a|  %p|  \033[7;35m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;34m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t"
+set numberfmt "\033[33m"
+set infotimefmtnew "02.01.06|15:04"
+set infotimefmtold "02.01.2006"
+
 
 # UNBIND KEYS
 map gg
@@ -205,6 +260,8 @@ map u unselect
 map c copy
 map x cut
 map v paste
+map y cpfilename 
+map <enter> open
 map <c-r> reload
 map <delete> delete
 map d trash
@@ -214,8 +271,10 @@ map ":" read
 #map ";" find
 map / search
 map h set hidden!
-map u unselect
-map t toggle
+map u :unselect;clear
+map t :toggle;down
+map T :unselect;invert
+map i invert
 map <c-q> quit
 map <down> down
 map <c-down> half-down
@@ -233,6 +292,10 @@ map ms mark-save
 map mf mkfile
 map md mkdir
 
+# CHANGE KEYBINDS
+map po chown
+map pm chmod
+
 # ZIP KEYBINDS
 map azu zip
 map aze zipe 
@@ -243,16 +306,18 @@ map kv1 convertmp4
 map ka1 convertmp3
 
 # SORT KEYBINDS
-map sn :set sortby 'name'; set info
+map sn :set sortby 'natural'; set info size
 map ss :set sortby 'size'; set info size
 map st :set sortby 'time'; set info time; set reverse!
 map sc :set sortby 'ctime'; set info ctime
 map sa :set sortby 'atime'; set info atime
+map sa :set sortby 'ext'; set info size
 map sr :set reverse!
 
 # OPEN IN APP KEYBINDS
 map og push :open-with-gui<space> ## input application
 map oc push :open-with-cli<space> ## input application
+map om mimeopen "$f"
 map oe $$EDITOR "$f"
 map or $$READER "$f"
 map ot $$TEXT_EDITOR "$f"
@@ -266,7 +331,7 @@ map oa $$AUDIO_PLAYER "$f"
 map gh cd ~/
 map gt cd ~/.local/share/Trash/files
 map gd cd ~/Downloads
-map gdd cd ~/Documents
+map gD cd ~/Documents
 map gf cd ~/Flow
 map gg1 cd ~/Git
 map gg2 cd ~/Git/hyprland-intergalactic
@@ -292,10 +357,11 @@ map gc3 cd ~/.config/rofi
 # GO TO MOUNTED DIRECTORIES
 map Gca cd /mnt/CA-POTRO-EXT-HDD/
 map Gcb cd /mnt/CB-POTRO-EXT-HDD/
+map Gx cd /mnt/X-POTRO-SSD/
 
 # MISC
 map ff fzf_jump
 map fr trash-restore
 map b trash-empty
 
-map ps calcdirsize; set info size; set dircounts false
+map ps :calcdirsize; set info size; set dircounts false
