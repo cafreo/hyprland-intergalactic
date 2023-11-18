@@ -59,6 +59,24 @@ on-cd
 
 cmd paste $cp-p --lf-paste $id
 
+cmd paste-alt &{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    case "$mode" in
+        copy)
+            rsync -av --ignore-existing --progress -- "$@" . |
+            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+            ;;
+        move) mv -n -- "$@" .;;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+
 # COPY FILE NAME
 
 cmd cpfilename ${{
@@ -166,6 +184,7 @@ cmd unarchive ${{
       *.zip) unzip "$f" -d "${f%.zip}" ;;
       *.7z) 7za e "$f" -o"${f%.7z}" ;;
       *.tar.gz) tar -xzvf "$f" ;;
+      *.tar.xz) tar -xvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
       *.tar) tar -xvf "$f" ;;
       *) echo "Unsupported format" ;;
@@ -257,7 +276,7 @@ map <enter> open
 map <c-r> reload
 map <delete> delete
 map d trash
-map r :rename; cmd-delete-home
+map r rename
 map R bulk-rename
 map Zr undo-bulk-rename
 map ":" read
@@ -356,6 +375,8 @@ map gc3 cd ~/.config/rofi
 map Gca cd /mnt/CA-POTRO-EXT-HDD/
 map Gcb cd /mnt/CB-POTRO-EXT-HDD/
 map Gx cd /mnt/X-POTRO-SSD/
+map Gm cd /mnt/
+map Gu cd /run/media/cafreo/
 
 # MISC
 map ff fzf_jump

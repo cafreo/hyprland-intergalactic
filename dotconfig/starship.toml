@@ -1,0 +1,334 @@
+format = """
+[](#F5B83A)\
+$username\
+[](bg:#EC9B31 fg:#F5B83A)\
+[](bg:#E57D29 fg:#EC9B31)\
+[](bg:#DE5F21 fg:#E57D29)\
+[](bg:#D74119 fg:#DE5F21)\
+[](bg:#D02311 fg:#D74119)\
+$directory\
+[](fg:#D02311 bg:#DC551F)\
+[ ](fg:#DC551F)\
+$cmd_duration\
+$shlvl\
+$singularity\
+$kubernetes\
+$vcsh\
+$fossil_branch\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$env_var\
+$crystal\
+$sudo\
+$jobs\
+$battery\
+$status\
+$os\
+$container\
+$shell\
+$line_break\
+$line_break\
+[](#E8872D)\
+$time\
+[](fg:#E8872D bg:#E8872D)\
+[](fg:#E8872D bg:#F5B83A)\
+[ ](#F5B83A)\
+"""
+
+right_format = """
+
+"""
+
+# You can also replace your username with a neat symbol like  to save some space
+[username]
+show_always = true
+style_user = "bg:#F5B83A fg:#1e1e20 bold"
+style_root = "bg:#D02311"
+format = '[ $user ]($style)'
+
+[directory]
+style = "bg:#D02311 fg:#1e1e20"
+format = "[ $path$read_only ]($style)"
+truncate_to_repo = false
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+
+[directory.substitutions]
+"Documents" = "   "
+"Downloads" = "   "
+"Music" = " 󰝚  "
+"Pictures" = "   "
+"Videos" = " 󱜅  "
+"Git" = "   "
+"Trash" = "   "
+"MEGAsync" = " 󰘿  "
+"Scripts" = " 󰯂  "
+"Synct" = "   "
+"Vault" = "   "
+
+
+[aws]
+symbol = "  "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[buf]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[c]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[conda]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[dart]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol $context ]($style) $path'
+
+[elixir]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[fossil_branch]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[git_branch]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "#d8b86b"
+format = '[$all_status$ahead_behind ]($style)'
+
+[golang]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[guix_shell]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[haxe]
+symbol = "⌘ "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[hg_branch]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[lua]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[memory_usage]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[meson]
+symbol = "喝 "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[nix_shell]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[os.symbols]
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "﯑ "
+Gentoo = " "
+HardenedBSD = "ﲊ "
+Illumos = " "
+Linux = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = " "
+openSUSE = " "
+OracleLinux = " "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = " "
+Solus = "ﴱ "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = " "
+
+[package]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[pijul_channel]
+symbol = "🪺 "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[rlang]
+symbol = "ﳒ "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[ruby]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = " "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[spack]
+symbol = "🅢 "
+style = "#d8b86b"
+format = '[ $symbol ($version) ]($style)'
+
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#E8872D fg:#1e1e20"
+format = '[ $time ]($style)'
+
+[cmd_duration]
+style= "fg:#1e1e20 bg:#DA6A4C bold"
+format = "[](#DA6A4C)[  $duration]($style)[ ](fg:#DA6A4C)"
