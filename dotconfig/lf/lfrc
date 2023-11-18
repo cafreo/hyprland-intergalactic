@@ -1,11 +1,11 @@
-#set previewer ~/.config/lf/lf_kitty_preview
-#set cleaner ~/.config/lf/lf_kitty_clean
-
 # PREVIEW
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
+
+#set previewer ~/.config/lf/lf_kitty_preview
+#set cleaner ~/.config/lf/lf_kitty_clean
 
 # SET SORT MODE FOR SPECIFIC DIRECTORIES
 cmd on-cd &{{
@@ -153,6 +153,18 @@ cmd chown %{{
   for file in "$fx"
   do
     chown $USER $file
+  done
+
+  lf -remote 'send :reload;unselect'
+}}
+
+cmd chgrp %{{
+  printf " 󰡉  new group: "
+  read ans
+
+  for file in "$fx"
+  do
+    chgrp $ans $file
   done
 
   lf -remote 'send :reload;unselect'
