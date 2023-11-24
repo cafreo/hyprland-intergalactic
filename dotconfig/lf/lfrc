@@ -31,7 +31,7 @@ cmd on-cd &{{
             lf -remote "send $id set sortby time"
             lf -remote "send $id set reverse"
 
-            lf -remote "send $id echomsg 󱕇   changed sort to time"
+            lf -remote "send $id echomsg 󱕇   changed sort mode to time"
             lf -remote "send top"
             ;;
         *)
@@ -40,7 +40,7 @@ cmd on-cd &{{
                 lf -remote "send $id set sortby $lf_user_prev_sortby"
                 lf -remote "send $id set noreverse"
 
-                lf -remote "send $id echomsg 󰦛   restored sort to $lf_user_prev_sortby"
+                lf -remote "send $id echomsg 󰦛   restored sort mode to $lf_user_prev_sortby"
                 lf -remote "send $id set user_prev_sortby ''"
                 #lf -remote "send top"
             fi
@@ -57,24 +57,60 @@ on-cd
 
 # ECHO PROGRESS ON FILE TRANSFER
 
-cmd paste $cp-p --lf-paste $id
+#cmd paste $cp-p --lf-paste $id
 
-cmd paste-alt &{{
+cmd paste &{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
+    case "$mode" in
+        copy)
+
+            rsync -ar --info=progress2 -- "$@" . |
+            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+            lf -remote "send :clear;reload"
+			lf -remote "send echo '  $nof file(s) copied successfully'"
+            ;;
+        move)
+        	
+        	rsync -ar --info=progress2 --remove-source-files -- "$@" . |
+        	stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+                if [ find $@ -type f | read ]; then
+                	lf -remote "send echo '  not all files have been moved'";
+                else rm -rf $@;
+                fi
+            lf -remote "send :clear;reload"
+			lf -remote "send echo '  $nof file(s) moved successfully'"
+    esac
+    rm ~/.local/share/lf/files
+    
+}}
+
+cmd paste-alt1 &{{
     set -- $(cat ~/.local/share/lf/files)
     mode="$1"
     shift
     case "$mode" in
         copy)
-            rsync -av --ignore-existing --progress -- "$@" . |
-            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            advcp -gri "$@" . | grep -Po --line-buffered "(?<=^\033\[K).+%$" | sed -nu 'n;p' |
             while IFS= read -r line; do
-                lf -remote "send $id echo $line"
+                lf -remote "send $id echo '$line'"
             done
             ;;
-        move) mv -n -- "$@" .;;
+        move)
+            mv -n -- "$@" .
+            ;;
     esac
     rm ~/.local/share/lf/files
     lf -remote "send clear"
+    lf -remote "send echo 'done'"
 }}
 
 # COPY FILE NAME
@@ -83,7 +119,18 @@ cmd cpfilename ${{
 	file=${f##*/}
 	name=${file%.*}
 	printf $name | wl-copy
+	lf -remote "send echo '󰢨  copied \"$name\" to clipboard'"
 }}
+
+cmd cpfilenameext ${{
+	file=${f##*/}
+	name=${file%.*}
+	printf $file | wl-copy
+	lf -remote "send echo '󰢨  copied \"$file\" to clipboard'"
+}}
+
+cmd cpfilepath $pwd | wl-copy
+cmd cpfilepathf $printf "$pwd $fx" | wl-copy
 
 # BULK RENAME FILES IN EDITOR
 
@@ -136,12 +183,14 @@ cmd mkdir %{{
     printf " 󰉗  create new directory: "
     read ans
     mkdir $ans
+    lf -remote "send echo '󰉗  created directory \"$ans\"'"
 }}
 
 cmd mkfile %{{
     printf " 󰝒  create new file: "
     read ans
     touch $ans
+    lf -remote "send echo '󰝒  created file \"$ans\"'"
 }}
 
 # CHANGE
@@ -156,6 +205,7 @@ cmd chown %{{
   done
 
   lf -remote 'send :reload;unselect'
+  lf -remote "send echo '  changed owner of \"$file\" to \"$USER\"'"
 }}
 
 cmd chgrp %{{
@@ -168,6 +218,7 @@ cmd chgrp %{{
   done
 
   lf -remote 'send :reload;unselect'
+  lf -remote "send echo '󰡉  changed group of \"$file\" to \"$ans\"'"
 }}
 
 cmd chmod %{{
@@ -177,15 +228,17 @@ cmd chmod %{{
   for file in "$fx"
   do
     chmod $ans $file
+    perms=$(ls -l $file | awk '{print $1}')
   done
 
   lf -remote 'send :reload;unselect'
+  lf -remote "send echo '󰦝  set permissions to $perms '"
 }}
 
 # ARCHIVES
 
 cmd zip %zip -r "$f" "$f"
-cmd zipe $zip -re "$f" "$f"
+cmd zipe %zip -re "$f" "$f"
 
 #cmd tar %tar cvf "$f.tar" "$f"
 #cmd targz %tar cvzf "$f.tar.gz" "$f"
@@ -203,10 +256,13 @@ cmd unarchive ${{
   esac
 }}
 
+# DRAGON
+cmd dragon %dragon-drop -a -x -T -i -s 96 $fx
+
 # CONVERT FILES
 
 cmd convertmp4 ${{
-	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"	
+	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
 }}
 
 cmd convertmp3 ${{	
@@ -242,7 +298,7 @@ set ignorecase true
 set icons true
 set number true
 set relativenumber false
-set hiddenfiles '*.log:'
+set hiddenfiles '.*:lost+found:*.bak:*.log'
 set dirfirst true
 set hidden false
 set history true
@@ -283,7 +339,9 @@ map u unselect
 map c copy
 map x cut
 map v paste
-map y cpfilename 
+map y cpfilename
+map Yx cpfilenameext
+map Yp cpfilepathf
 map <enter> open
 map <c-r> reload
 map <delete> delete
@@ -358,7 +416,7 @@ map oa $$AUDIO_PLAYER "$f"
 
 # GO TO USER FILES DIRECTORIES KEYBINDS
 map gh cd ~/
-map gt cd ~/.local/share/Trash/files
+map gb cd ~/.local/share/Trash/files
 map gd cd ~/Downloads
 map gD cd ~/Documents
 map gf cd ~/Flow
@@ -394,4 +452,7 @@ map Gu cd /run/media/cafreo/
 map ff fzf_jump
 map br trash-restore
 map be trash-empty
+map bg cd ~/.local/share/Trash/files
 map ps :calcdirsize; set info size; set dircounts false
+map pc cpfilepath
+map pd dragon
