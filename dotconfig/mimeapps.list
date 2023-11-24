@@ -2,8 +2,8 @@
 
 [Default Applications]
 x-scheme-handler/geo=openstreetmap-geo-handler.desktop;
-x-scheme-handler/http=librewolf.desktop;
-x-scheme-handler/https=librewolf.desktop;
+x-scheme-handler/http=brave-browser.desktop
+x-scheme-handler/https=brave-browser.desktop
 x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop;
 x-scheme-handler/ravenreader=Raven Reader.desktop;
 image/png=feh.desktop;
@@ -23,3 +23,6 @@ audio/mpeg=mpv.desktop;
 text/plain=micro.desktop;
 application/vnd.oasis.opendocument.text=libreoffice-writer.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
+text/html=brave-browser.desktop
+x-scheme-handler/about=brave-browser.desktop
+x-scheme-handler/unknown=brave-browser.desktop
