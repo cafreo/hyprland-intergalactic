@@ -1,0 +1,52 @@
+preview list7z application/x-7z-compressed ."7z" {{
+	printf "Archive: "$f"\n\n"
+    7z l "$f" | awk 'NR>2{print p2} {p2=p; p=$0}'| awk 'NR > 19 { print }' | awk '{ print $6}'
+}}
+
+preview listzip application/zip ."zip" {{
+	printf "Archive: "$f"\n\n"
+    unzip -Z1 "$f"
+}}
+
+preview listtar application/x-tar ."tar" {{
+	printf "Archive: "$f"\n\n"
+    tar -tvf "$f" | awk '{ print $6}'
+}}
+
+preview listtargz application/x-compressed-tar ."tar.gz" {{
+	printf "Archive: "$f"\n\n"
+    tar -tzvf "$f" | awk '{ print $6}'
+}}
+
+preview listtarxz application/x-xz-compressed-tar ."tar.xz" {{
+	printf "Archive: "$f"\n\n"
+   	tar -tvf "$f" | awk '{ print $6}'
+}}
+
+preview listtarbz2 application/x-bzip2-compressed-tar ."tar.bz2" {{
+	printf "Archive: "$f"\n\n"
+    tar -tjvf "$f" | awk '{ print $6}'
+}}
+
+preview listrar application/vnd.rar ."rar" {{
+	printf "Archive: "$f"\n\n"
+    rar lb "$f"
+}}
+
+preview audio audio/* {{
+img(){
+	ffmpegthumbnailer -i "$f" -s 256 -o "$cache_f" 2>/dev/null
+	#exiftool -b "-Picture" "$f" > "$cache_f"
+}
+	meta="$(exiftool -S -Title -Artist -Album -Band -Track -Duration -FileSize -AudioBitrate -SampleRate -ChannelMode -FileName "$f" 2>&1)"
+	printf '%s\n' "$meta"
+	y=$((y + $(printf '%s\n\n' "$meta" | wc -l)))
+	convert_and_show_image img
+}}
+
+# WIP
+#preview audio audio/* {{
+#	file="~/.cache/ctpv/audiopreviewtxt"
+#	meta="$(ffmpeg -i "$f" -hide_banner -f ffmetadata ~/.cache/ctpv/audiopreviewtxt)"
+#	printf "$file" | awk 'NR > 7 { print }'
+#}}
