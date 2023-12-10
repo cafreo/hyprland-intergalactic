@@ -7,7 +7,7 @@ set cleaner ctpvclear
 #set previewer ~/.config/lf/lf_kitty_preview
 #set cleaner ~/.config/lf/lf_kitty_clean
 
-# SET SORT MODE FOR SPECIFIC DIRECTORIES
+# ON CHANGE DIRECTORY
 cmd on-cd &{{
 	# set title of window
 	printf "\033]0; lf - $PWD\007" > /dev/tty
@@ -57,7 +57,7 @@ on-cd
 
 # ECHO PROGRESS ON FILE TRANSFER
 
-#cmd paste $cp-p --lf-paste $id
+#cmd paste $cp-p --lf-paste $id # requires cp-p. package seems to be not maintained anymore and the progress is not quite right, if you use multiple files
 
 cmd paste &{{
     set -- $(cat ~/.local/share/lf/files)
@@ -66,7 +66,6 @@ cmd paste &{{
     nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
     case "$mode" in
         copy)
-
             rsync -ar --info=progress2 -- "$@" . |
             stdbuf -i0 -o0 -e0 tr '\r' '\n' |
             while IFS= read -r line; do
@@ -74,9 +73,9 @@ cmd paste &{{
             done
             lf -remote "send :clear;reload"
 			lf -remote "send echo '  $nof file(s) copied successfully'"
+			notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
             ;;
         move)
-        	
         	rsync -ar --info=progress2 --remove-source-files -- "$@" . |
         	stdbuf -i0 -o0 -e0 tr '\r' '\n' |
             while IFS= read -r line; do
@@ -88,11 +87,13 @@ cmd paste &{{
                 fi
             lf -remote "send :clear;reload"
 			lf -remote "send echo '  $nof file(s) moved successfully'"
+			notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
     esac
     rm ~/.local/share/lf/files
     
 }}
 
+# deprecated version. requires advcp
 cmd paste-alt1 &{{
     set -- $(cat ~/.local/share/lf/files)
     mode="$1"
@@ -129,8 +130,15 @@ cmd cpfilenameext ${{
 	lf -remote "send echo '󰢨  copied \"$file\" to clipboard'"
 }}
 
-cmd cpfilepath $pwd | wl-copy
-cmd cpfilepathf $printf "$pwd $fx" | wl-copy
+cmd cpfilepath ${{
+	printf $(pwd) | wl-copy
+	lf -remote "send echo '󰢨  copied \"$(pwd)\" to clipboard'"
+}}
+
+cmd cpfilepathf ${{
+	printf "$(pwd) $fx" | wl-copy
+	lf -remote "send echo '󰢨  copied \"$(pwd) $fx\" to clipboard'"
+}}
 
 # BULK RENAME FILES IN EDITOR
 
@@ -153,7 +161,7 @@ cmd undo-bulk-rename ${{
 # FUZZY FIND
 cmd fzf_jump ${{
   #lf -remote "send cd ~/"
-  res="$(fd --hidden --ignore-case . '/' | fzf --border --header='  jump to location')"
+  res="$(fd --hidden --ignore-case . | fzf --border --header='  jump to location')"
   if [ -f "$res" ]; then
     cmd="select"
   elif [ -d "$res" ]; then
@@ -161,22 +169,6 @@ cmd fzf_jump ${{
   fi
   lf -remote "send $id $cmd \"$res\""
 }}
-
-
-# TRASH SELECTED ITEMS
-
-cmd trash %{{
-    printf "   move $fx to trash bin? [y/n] " $fx
-    read -r ans
-    if [ "$ans" = "y" ]; then
-        trash-put $fx
-        echo "  moved to trash bin successfully"
-    else
-        echo "  aborted"
-    fi
-}}
-
-#cmd trash %trash-put $fx
 
 # CREATE DIRECTORIES & FILES
 cmd mkdir %{{
@@ -271,6 +263,19 @@ cmd convertmp3 ${{
 
 # TRASH BIN
 
+cmd trash %{{
+    printf "   move $fx to trash bin? [y/n] " $fx
+    read -r ans
+    if [ "$ans" = "y" ]; then
+        trash-put $fx
+        echo "  moved to trash bin successfully"
+    else
+        echo "  aborted"
+    fi
+}}
+
+#cmd trash %trash-put $fx
+
 cmd trash-empty ${{
 	trash-empty --trash-dir ~/.local/share/Trash
 }}
@@ -279,8 +284,8 @@ cmd trash-restore ${{
 	trash-restore
 }}
 
-
 # OPEN FILE IN SPECIFIED APP
+
 cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
 cmd open-with-cli $$@ $fx ## opens with a cli application inside lf client
 
@@ -291,18 +296,26 @@ cmd mimeopen ${{
 	  done
 }}
 
+# ON QUIT
 
-# BASIC SETTINGS
+cmd on-quit %{{
+	ctpv -e $id
+	rm ~/.cache/ctpv/*
+}}
+
+
+# SETTINGS
 set hidden false
 set ignorecase true
 set icons true
 set number true
 set relativenumber false
 set hiddenfiles '.*:lost+found:*.bak:*.log'
+set globsearch false
 set dirfirst true
 set hidden false
 set history true
-set ignorecase true
+set incsearch true
 set mouse false
 set preview true
 set sortby 'natural'
@@ -324,7 +337,7 @@ set rulerfmt "  %a|  %p|  \033[7;35m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7
 set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
-
+set incfilter true
 
 # UNBIND KEYS
 map gg
@@ -335,12 +348,13 @@ map p
 map k
 
 # BASIC KEYBINDS
-map u unselect
+map <esc> :setfilter ''
 map c copy
 map x cut
 map v paste
 map y cpfilename
 map Yx cpfilenameext
+map Yd cpfilepath
 map Yp cpfilepathf
 map <enter> open
 map <c-r> reload
@@ -352,25 +366,29 @@ map Zr undo-bulk-rename
 map ":" read
 #map ";" find
 map / search
+map f filter
 map h set hidden!
 map u :unselect;clear
 map t :toggle;down
 map T :unselect;invert
 map i invert
 map <c-q> quit
-map <down> down
-map <c-down> half-down
 map <up> up
-map <c-up> half-up
+map <s-up> half-up
+map <s-pgup> top
+map <down> down
+map <s-down> half-down
+map <s-pgdn> bottom
 map <left> updir
 map <right> open
+map e $$EDITOR "$f"
 
 # SET RATIO
 map "!" :set ratios '1:2:2'; set preview true
-map '"' :set ratios '1:4'; set preview true
-map "§" :set ratios '1:3'; set preview false
+map '"' :set ratios '1:3'; set preview false
+map '§' :set ratios '1:4'; set preview true
 
-# BOOKMARK KEYBINDS
+# BOOKMARKS KEYBINDS
 map "#" mark-load
 map md mark-remove
 map ms mark-save
@@ -382,6 +400,7 @@ map md mkdir
 # CHANGE KEYBINDS
 map po chown
 map pm chmod
+map pg chgrp
 
 # ZIP KEYBINDS
 map azu zip
@@ -391,6 +410,11 @@ map au unarchive
 # CONVERT KEYBINDS
 map kv1 convertmp4
 map ka1 convertmp3
+
+# TRASH KEYBINDS
+map br trash-restore
+map be trash-empty
+map bg cd ~/.local/share/Trash/files
 
 # SORT KEYBINDS
 map sn :set sortby 'natural'; set info size; set noreverse
@@ -449,10 +473,9 @@ map Gm cd /mnt/
 map Gu cd /run/media/cafreo/
 
 # MISC
-map ff fzf_jump
-map br trash-restore
-map be trash-empty
-map bg cd ~/.local/share/Trash/files
+map F fzf_jump
 map ps :calcdirsize; set info size; set dircounts false
-map pc cpfilepath
 map pd dragon
+
+# COMMAND MODE
+cmap <tab> cmd-menu-complete
