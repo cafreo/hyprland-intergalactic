@@ -9,7 +9,7 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun";
+	modi:                       "run,drun,window,ssh";
     show-icons:                 true;
     display-drun:               "";
 	drun-display-format:        "{name}";

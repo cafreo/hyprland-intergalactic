@@ -9,7 +9,7 @@
 
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun";
+	modi:                       "run,drun,window,filebrowser";
     show-icons:                 true;
     display-drun:               "";
 	drun-display-format:        "{name}";
@@ -21,12 +21,12 @@ configuration {
 /*****----- Main Window -----*****/
 window {
     transparency:                "real";
-    location:                    center;
+    location:                    north;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       960px;
+    width:                       640px;
     x-offset:                    0px;
-    y-offset:                    0px;
+    y-offset:                    12px;
 
     enabled:                     true;
     margin:                      0px;
@@ -91,7 +91,7 @@ entry {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       12;
+    lines:                       3;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
