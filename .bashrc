@@ -13,8 +13,8 @@ eval "$(starship init bash)"
 PS1="\e[1;33m\u@\h \W$ \e[0;0m"
 
 alias ssh="kitty +kitten ssh"
-alias yayf="yay -Suy --devel && paccache -rvk2 && paccache -ruvk1 && sudo pacman -Qdtq | sudo pacman -Rs - && flatpak update "
-alias pacclean="paccache -rvk2 && paccache -ruvk1 && sudo pacman -Qdtq | sudo pacman -Rs -"
+alias yayf="yay -Suy --devel; flatpak update; paccache -rvk3; paccache -ruvk1; sudo pacman -Qdtq | sudo pacman -Rs -"
+alias pacclean="paccache -rvk2; paccache -ruvk1; sudo pacman -Qdtq | sudo pacman -Rs -"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
 alias gduh="gdu / --ignore-dirs /media,/mnt"
@@ -33,7 +33,7 @@ alias winvm='bash ~/Scripts/VM/winvm.sh'
 # default apps
 export OPENER=/usr/bin/xdg-open
 export TERMINAL=/usr/bin/kitty
-export EDITOR=/usr/bin/micro
+export EDITOR=/usr/bin/nvim
 export READER=/usr/bin/zathura
 export TEXT_EDITOR=/usr/bin/lowriter
 export IMAGE_VIEWER=/usr/bin/feh
@@ -42,7 +42,7 @@ export VIDEO_PLAYER=/usr/bin/mpv
 export VIDEO_EDITOR=/usr/bin/kdenlive
 export AUDIO_PLAYER=/usr/bin/mpv
 
-# lf
+# lf wrapper
 LFCD="/home/cafreo/.config/lf/lfcd.sh"
      if [ -f "$LFCD" ]; then
          source "$LFCD"
