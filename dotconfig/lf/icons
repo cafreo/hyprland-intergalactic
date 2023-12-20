@@ -386,3 +386,11 @@ Vagrantfile             
 *.inf 	󰋼
 *.ttf	
 *.otf	
+*.exe   󰖳
+
+# custom folders
+home/   󱂵
+Downloads/   󰉍
+Music/   󱍙 
+Pictures/   󰉏
+Vault/   󰢬
