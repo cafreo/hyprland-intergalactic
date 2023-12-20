@@ -9,28 +9,35 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
+# STARSHIP PROMPT
 eval "$(starship init bash)"
 PS1="\e[1;33m\u@\h \W$ \e[0;0m"
 
+# ALIASES SYSTEM
 alias ssh="kitty +kitten ssh"
-alias yayf="yay -Suy --devel; flatpak update; paccache -rvk3; paccache -ruvk1; sudo pacman -Qdtq | sudo pacman -Rs -"
-alias pacclean="paccache -rvk2; paccache -ruvk1; sudo pacman -Qdtq | sudo pacman -Rs -"
+alias pacclean="paccache -rvk3; paccache -ruvk1; sudo pacman -Qdtq | sudo pacman -Rs -"
+alias yayf="yay -Suy --devel; flatpak update; pacclean"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
 alias gduh="gdu / --ignore-dirs /media,/mnt"
 alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, type'"
-#alias dv="mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'"
-alias spotdl="/home/cafreo/.local/bin/spotdl"
+alias fstype="findmnt -n -o FSTYPE -T ."
+alias swaylock="swaylock -C ~/.config/swaylock/config"
+alias gitsync="bash ~/Scripts/git-syncs.sh"
 
+# ALIASES APPS
+#alias dv="mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'"
+alias ticker="ticker --config $HOME/.config/ticker/config.yaml"
+alias stonks="kitty -e tickrs & ticker"
 alias lf=lfcd
 
-# scripts
+# ALIASES SCRIPTS
 alias gayming='bash ~/Scripts/deprecated/gayming.sh'
 alias wurking='bash ~/Scripts/deprecated/wurking.sh'
-#alias minexmr='sudo xmrig | sleep 12 && qutebrowser www.redditp.com/r/monerochan'
+alias minexmr='qutebrowser www.redditp.com/r/monerochan &>/dev/null & sudo xmrig'
 alias winvm='bash ~/Scripts/VM/winvm.sh'
 
-# default apps
+# DEFAULT APPS
 export OPENER=/usr/bin/xdg-open
 export TERMINAL=/usr/bin/kitty
 export EDITOR=/usr/bin/nvim
@@ -67,4 +74,21 @@ eval "$(dircolors ~/.dircolors)";
 export FZF_DEFAULT_OPTS='--color=fg:#c8cacc,bg:#201c28,hl:#de5f21 --color=fg+:#c8cacc,bg+:#2e2a36,hl+:#f5b83a --color=info:#da6a4c,prompt:#c8cacc,pointer:#f5b83a --color=marker:#f5b83a,spinner:#da6a4c,header:#74747a'
 
 # Created by `pipx` on 2023-11-02 10:55:03
-export PATH="$PATH:/home/cafreo/.local/bin"
+#export PATH="$PATH:/home/cafreo/.local/bin"
+
+source /usr/share/doc/pkgfile/command-not-found.bash
+
+# SCRIPTS
+function cv() {
+	if [ $# == 2 ];
+	then
+		mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'
+	
+	elif [ $# == 4 ];
+	then
+		mpv $1 --external-file=$2 --external-file=$3 --external-file=$4 --lavfi-complex='[vid1] [vid2] hstack [t1] ; [vid3] [vid4] hstack [t2] ; [t1] [t2] vstack [vo]'
+	
+	else
+		printf "   invalid number of files (2 or 4 allowed)"
+	fi
+}
