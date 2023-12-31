@@ -42,7 +42,7 @@ return{
                 desc = "open",
                 key = "o",
                 key_format = " | %s",
-                action = "Telescope file_browser",
+                action = "Telescope file_browser toggle_hidden=true",
             },
 
             
