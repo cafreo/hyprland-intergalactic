@@ -24,6 +24,9 @@ alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, typ
 alias fstype="findmnt -n -o FSTYPE -T ."
 alias swaylock="swaylock -C ~/.config/swaylock/config"
 alias gitsync="bash ~/Scripts/git-syncs.sh"
+alias ytdl="yt-dlp"
+alias ytdla="yt-dlp -x"
+alias computer="ollama run mistral"
 
 # ALIASES APPS
 #alias dv="mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'"
