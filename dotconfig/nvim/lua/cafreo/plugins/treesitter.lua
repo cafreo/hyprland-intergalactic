@@ -23,7 +23,7 @@ return {
 			"sql",
 			"toml",
 			"vim",
-			"yaml",			
+			"yaml",
 		},
 		auto_install = true,
 
