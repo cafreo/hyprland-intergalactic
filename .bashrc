@@ -26,19 +26,23 @@ alias swaylock="swaylock -C ~/.config/swaylock/config"
 alias gitsync="bash ~/Scripts/git-syncs.sh"
 alias ytdl="yt-dlp"
 alias ytdla="yt-dlp -x"
-alias computer="ollama run mistral"
-
+alias computer="ollama run dolphin-mistral"
+alias mount!="sudo mount -av"
 # ALIASES APPS
 #alias dv="mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'"
 alias ticker="ticker --config $HOME/.config/ticker/config.yaml"
 alias stonks="kitty -e tickrs & ticker"
 alias lf=lfcd
+alias nv="nvim"
+alias ip="curl ifconfig.me"
+#alias eww ="~/git-clone/eww/target/release/eww"
 
 # ALIASES SCRIPTS
 alias gayming='bash ~/Scripts/deprecated/gayming.sh'
 alias wurking='bash ~/Scripts/deprecated/wurking.sh'
 alias minexmr='qutebrowser www.redditp.com/r/monerochan &>/dev/null & sudo xmrig'
 alias winvm='bash ~/Scripts/VM/winvm.sh'
+alias backup="sudo bash ~/Scripts/restic/restic-monthly-schedule.sh"
 
 # DEFAULT APPS
 export OPENER=/usr/bin/xdg-open
