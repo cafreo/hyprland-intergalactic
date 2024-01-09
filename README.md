@@ -45,8 +45,9 @@
  - startpage: [my own](https://github.com/cafreo/startpage)
  
  # to do
- - [ ] eww bar
- - [ ] dolphin rice
+ - [ ] eww/ags bar
+ - [ ] switch from micro to neovim
+ - [x] dolphin rice
  - [ ] combine rofi themes into one file
  - [x] screenshot menu
 
