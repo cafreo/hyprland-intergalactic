@@ -22,8 +22,8 @@ keymap({"n", "v", "i"}, "<C-c>", '"+y')
 --keymap({"n", "v", "i"}, "<C-c>", '"+Y')
 
 -- Paste from system keyboard
-keymap({"n", "v"}, "<C-v>", '"*P')
-keymap("i", "<C-v>", '<C-r>+')
+keymap({"n", "v", "c"}, "<C-v>", ':set paste<CR>"+p<CR>:set nopaste<CR>')
+keymap("i", "<C-v>", '<C-r><C-o>+')
 
 -- Cut to system keyboard
 keymap({"v", "i"}, "<C-x>", '"+x')
@@ -39,9 +39,23 @@ keymap({"n"}, "<C-S-z>", "<C-r>")
 keymap({"i"}, "<C-S-z>", "<C-o><C-r>")
 
 -- Navigate buffers
-keymap("n", "<S-PgUp>", ":bnext<CR>")
-keymap("n", "<S-PgDown>", ":bprevious<CR>")
+keymap({"n"}, "<S-PageUp>", ":bnext<CR>")
+keymap({"n"}, "<S-PageDown>", ":bprevious<CR>")
+keymap({"n"}, "q", ":bw<CR>")
+keymap({"n"}, "!", ":buffer 1<CR>")
+keymap({"n"}, '"', ":buffer 2<CR>")
+keymap({"n"}, "§", ":buffer 3<CR>")
+keymap({"n"}, "$", ":buffer 4<CR>")
+keymap({"n"}, "%", ":buffer 5<CR>")
+keymap({"n"}, "&", ":buffer 6<CR>")
+keymap({"n"}, "/", ":buffer 7<CR>")
+keymap({"n"}, "(", ":buffer 8<CR>")
+keymap({"n"}, ")", ":buffer 9<CR>")
 
 -- Move text up and down
 keymap("v", "<S-Up>", ":m .+1<CR>==")
 keymap("v", "<S-Down>", ":m .-2<CR>==")
+
+-- Plugin Keymaps
+-- auto-save
+keymap({"n"}, "<f5>", ":ASToggle<CR>")

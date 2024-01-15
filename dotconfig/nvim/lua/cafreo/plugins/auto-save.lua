@@ -7,7 +7,7 @@ return {
 			message = function()
 				return ("󰠘 autosave completed")
 			end,
-			cleaning_inverval = 3000,
+			cleaning_inverval = 500,
 		},
 	trigger_events = {"InsertLeave", "TextChanged"},
 	condition = function(buf)
