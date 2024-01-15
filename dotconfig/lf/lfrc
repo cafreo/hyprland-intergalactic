@@ -323,6 +323,17 @@ cmd trash-restore ${{
 	trash-restore
 }}
 
+cmd delete %{{
+	printf "   delete $fx permanently? [y/n] " $fx
+	read -r ans
+	if [ "$ans" = "y" ]; then
+		rm -rv $fx | pv -l -s $(find $fx | wc -l) > /dev/null
+		echo "  deleted successfully"
+	else
+		echo "  aborted"
+	fi
+}}
+
 # OPEN FILE IN SPECIFIED APP
 
 cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
