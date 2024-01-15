@@ -135,6 +135,7 @@
     "cpu": {
         "format": "  {usage}%",
         "tooltip": true,
+	"interval": 4,
 	"on-click": "kitty -e 'btop'"
     },
     "memory": {
@@ -173,7 +174,7 @@
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         //"format-wifi": "{essid} ({signalStrength}%) ",
-	"interval": 20,
+	"interval": 4,
         "format-ethernet": "  {bandwidthUpBits} | {bandwidthDownBits}",
         "tooltip-format": "  {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
@@ -262,7 +263,7 @@
 
 "custom/gammastep": {
     "format": "{}",
-    "interval": 10,
+    "interval": 4,
     "on-update": "",
     "exec": "$HOME/.config/waybar/scripts/gammastep.sh",
     "on-click": "$HOME/.config/waybar/scripts/gammastep.sh toggle"
