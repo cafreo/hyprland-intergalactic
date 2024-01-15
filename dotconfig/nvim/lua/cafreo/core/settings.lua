@@ -31,3 +31,7 @@ vim.opt.numberwidth = 2
 vim.opt.wrap = false
 vim.opt.linebreak = true
 vim.opt.list = false
+
+vim.opt.hidden = false
+vim.opt.splitbelow = false
+vim.opt.splitright = false
