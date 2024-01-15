@@ -9,32 +9,39 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
+HISTSIZE=2000
+HISTFILESIZE=2000
+
 # STARSHIP PROMPT
 eval "$(starship init bash)"
 PS1="\e[1;33m\u@\h \W$ \e[0;0m"
 
 # ALIASES SYSTEM
-alias ssh="kitty +kitten ssh"
-alias pacclean="paccache -rvk3; paccache -ruvk1; sudo pacman -Qdtq | sudo pacman -Rs -"
+# pacman/yay
+alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rs -"
 alias yayf="yay -Suy --devel; flatpak update; pacclean"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
+
+alias ssh="kitty +kitten ssh"
 alias gduh="gdu / --ignore-dirs /media,/mnt"
 alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, type'"
 alias fstype="findmnt -n -o FSTYPE -T ."
 alias swaylock="swaylock -C ~/.config/swaylock/config"
 alias gitsync="bash ~/Scripts/git-syncs.sh"
-alias ytdl="yt-dlp"
-alias ytdla="yt-dlp -x"
 alias computer="ollama run dolphin-mistral"
 alias mount!="sudo mount -av"
+alias ip="curl ifconfig.me"
+
 # ALIASES APPS
 #alias dv="mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'"
 alias ticker="ticker --config $HOME/.config/ticker/config.yaml"
 alias stonks="kitty -e tickrs & ticker"
 alias lf=lfcd
 alias nv="nvim"
-alias ip="curl ifconfig.me"
+alias vim="nvim"
+alias ytdl="yt-dlp"
+alias ytdla="yt-dlp -x"
 #alias eww ="~/git-clone/eww/target/release/eww"
 
 # ALIASES SCRIPTS
@@ -43,6 +50,8 @@ alias wurking='bash ~/Scripts/deprecated/wurking.sh'
 alias minexmr='qutebrowser www.redditp.com/r/monerochan &>/dev/null & sudo xmrig'
 alias winvm='bash ~/Scripts/VM/winvm.sh'
 alias backup="sudo bash ~/Scripts/restic/restic-monthly-schedule.sh"
+
+#alias setappvolume="set-app-volume"
 
 # DEFAULT APPS
 export OPENER=/usr/bin/xdg-open
@@ -63,10 +72,10 @@ LFCD="/home/cafreo/.config/lf/lfcd.sh"
      fi 
 
 # qt5
-export QT_STYLE_OVERRIDE=qt5ct-style
-export QT_QPA_PLATFORM=wayland
-export QT_QPA_PLATFORMTHEME=qt5ct
-export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+#export QT_STYLE_OVERRIDE=qt5ct-style
+#export QT_QPA_PLATFORM=wayland
+#export QT_QPA_PLATFORMTHEME=qt5ct
+#export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
 export XCURSOR_THEME=pixelfun3
 export XCURSOR_SIZE=36
@@ -79,9 +88,6 @@ eval "$(dircolors ~/.dircolors)";
 
 # fzf colors
 export FZF_DEFAULT_OPTS='--color=fg:#c8cacc,bg:#201c28,hl:#de5f21 --color=fg+:#c8cacc,bg+:#2e2a36,hl+:#f5b83a --color=info:#da6a4c,prompt:#c8cacc,pointer:#f5b83a --color=marker:#f5b83a,spinner:#da6a4c,header:#74747a'
-
-# Created by `pipx` on 2023-11-02 10:55:03
-#export PATH="$PATH:/home/cafreo/.local/bin"
 
 source /usr/share/doc/pkgfile/command-not-found.bash
 
@@ -98,4 +104,16 @@ function cv() {
 	else
 		printf "   invalid number of files (2 or 4 allowed)"
 	fi
+}
+
+#function set-app-volume() {
+#  local player="$1"
+#  local volume="$2"
+#  firstPlayerSinkIndex="$(pacmd list-sink-inputs | awk '/index:|application.name |application.process.binary / {print $0};' | grep -iB 1 "$player" | awk '/index:/ {print $2; exit}')"  # get specific app sink
+#  [[ $firstPlayerSinkIndex ]] && pacmd set-sink-input-volume "$firstPlayerSinkIndex" "$((volume*65536/100))" # 100% → 65536
+#}
+
+function computer-tts() {
+	computer $@ | piper-tts -q --model ~/git-clone/piper-voices/en/en_US/lessac/medium/en_US-lessac-medium.onnx --output-raw | ffplay -v -10 -volume 5 -f s16le -ar 22050 -ac 1 -nodisp -autoexit -
+	#piper-tts -q --model ~/git-clone/piper-voices/en/en_US/lessac/medium/en_US-lessac-medium.onnx --output-raw | aplay -q -r 22050 -f S16_LE -t raw -
 }
