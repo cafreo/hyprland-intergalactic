@@ -12,6 +12,8 @@ PS1='[\u@\h \W]\$ '
 HISTSIZE=2000
 HISTFILESIZE=2000
 
+export PATH=$PATH:/usr/local/bin:/usr/bin:/usr/bin/vendor_perl
+
 # STARSHIP PROMPT
 eval "$(starship init bash)"
 PS1="\e[1;33m\u@\h \W$ \e[0;0m"
@@ -32,6 +34,9 @@ alias gitsync="bash ~/Scripts/git-syncs.sh"
 alias computer="ollama run dolphin-mistral"
 alias mount!="sudo mount -av"
 alias ip="curl ifconfig.me"
+
+alias conv2mp4="ffmpeg -i $1 -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac ${s%.*}.mp4"
+alias searchssh="sudo nmap -p 22 192.168.178.0/24"
 
 # ALIASES APPS
 #alias dv="mpv $1 --external-file=$2 --lavfi-complex='[vid1] [vid2] hstack [vo]'"
@@ -64,9 +69,10 @@ export IMAGE_EDITOR=/usr/bin/gimp
 export VIDEO_PLAYER=/usr/bin/mpv
 export VIDEO_EDITOR=/usr/bin/kdenlive
 export AUDIO_PLAYER=/usr/bin/mpv
+export AUDIO_EDITOR=/usr/bin/tenacity
 
 # lf wrapper
-LFCD="/home/cafreo/.config/lf/lfcd.sh"
+LFCD="~/.config/lf/lfcd.sh"
      if [ -f "$LFCD" ]; then
          source "$LFCD"
      fi 
