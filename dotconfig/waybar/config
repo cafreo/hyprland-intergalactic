@@ -42,23 +42,19 @@
             "unlocked": ""
         }
     },
-    "hyprland/submap": {
-        "format": "<span style=\"italic\">{}</span>"
+
+   "hyprland/submap": {
+	"format": "  {}",
+	"max-length": 8,
+	"tooltip": false
     },
-    "user": {
+   "user": {
         "format": "{avatar}{icon}",
         "interval": 600,
         "height": 32,
         "width": 32,
         "icon": true
     },
-    //"sway/scratchpad": {
-    //    "format": "{icon} {count}",
-    //    "show-empty": false,
-    //    "format-icons": ["", ""],
-    //    "tooltip": true,
-    //    "tooltip-format": "{app}: {title}"
-    //},
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
         "format-disconnected": "Disconnected ",
@@ -175,7 +171,7 @@
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         //"format-wifi": "{essid} ({signalStrength}%) ",
 	"interval": 4,
-        "format-ethernet": "  {bandwidthUpBits} | {bandwidthDownBits}",
+        "format-ethernet": "  {bandwidthUpBits}    {bandwidthDownBits}",
         "tooltip-format": "  {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "  down",
@@ -231,6 +227,8 @@
 	//"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
     },
 
+
+
     "custom/media": {
         "format": "{icon}",
         "return-type": "json",
@@ -269,10 +267,34 @@
     "on-click": "$HOME/.config/waybar/scripts/gammastep.sh toggle"
 },
 
-"hyprland/submap": {
-    "format": "  {}",
-    "max-length": 8,
-    "tooltip": false
+"custom/playerctl": {
+      "format": "{icon}",
+      "return-type": "json",
+      "max-length": 64,
+      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+      "on-click-middle": "playerctl play-pause",
+      "on-click": "playerctl previous",
+      "on-click-right": "playerctl next",
+      "format-icons": {
+        "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
+        "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
+	},
+},
+
+"custom/playerlabel": {
+      "format": "<span>{}</span>",
+      "return-type": "json",
+      "max-length": 48,
+      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+      "on-click-middle": "playerctl play-pause",
+      "on-click": "playerctl previous",
+      "on-click-right": "playerctl next",
+      "format-icons": {
+        "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
+        "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
+      },
+},
 }
-}
+
+
 
