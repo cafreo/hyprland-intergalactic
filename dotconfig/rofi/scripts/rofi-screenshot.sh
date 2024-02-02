@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export GRIMBLAST_EDITOR="/usr/bin/swappy -f"
+export GRIMBLAST_EDITOR="/usr/bin/satty --early-exit --output-filename /home/$USER/Pictures/Screenshots/Screenshot_$(date '+%d-%m-%Y_%H-%M-%S').png -f"
 
 areaCopy='areaCopy\0icon\x1f~/Scripts/img/ssAreaCopy.svg'
 areaSave='areaSave\0icon\x1f~/Scripts/img/ssAreaSave.svg'
