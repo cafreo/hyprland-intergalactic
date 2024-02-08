@@ -72,7 +72,7 @@ export AUDIO_PLAYER=/usr/bin/mpv
 export AUDIO_EDITOR=/usr/bin/tenacity
 
 # lf wrapper
-LFCD="~/.config/lf/lfcd.sh"
+LFCD="$HOME/.config/lf/lfcd.sh"
      if [ -f "$LFCD" ]; then
          source "$LFCD"
      fi 
@@ -122,4 +122,13 @@ function cv() {
 function computer-tts() {
 	computer $@ | piper-tts -q --model ~/git-clone/piper-voices/en/en_US/lessac/medium/en_US-lessac-medium.onnx --output-raw | ffplay -v -10 -volume 5 -f s16le -ar 22050 -ac 1 -nodisp -autoexit -
 	#piper-tts -q --model ~/git-clone/piper-voices/en/en_US/lessac/medium/en_US-lessac-medium.onnx --output-raw | aplay -q -r 22050 -f S16_LE -t raw -
+}
+
+function ya() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
