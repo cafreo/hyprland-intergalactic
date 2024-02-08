@@ -46,7 +46,7 @@
  
  # to do
  - [ ] eww/ags bar
- - [ ] switch from micro to neovim
+ - [x] switch from micro to neovim
  - [x] dolphin rice
  - [ ] combine rofi themes into one file
  - [x] screenshot menu
