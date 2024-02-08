@@ -7,6 +7,43 @@ set cleaner ctpvclear
 #set previewer ~/.config/lf/lf_kitty_preview
 #set cleaner ~/.config/lf/lf_kitty_clean
 
+# SETTINGS
+set hidden false
+set ignorecase true
+set icons true
+set number true
+set relativenumber false
+set hiddenfiles '.*:lost+found:*.bak:*.log'
+set globsearch true
+set dirfirst true
+set hidden false
+set history true
+set incsearch true
+set mouse false
+set preview true
+set sortby 'natural'
+set info 'size'
+set incsearch true
+set incfilter true
+set icons true
+set drawbox true
+set ratios '1:2:2'
+set period 3
+set cursorpreviewfmt "\033[7m"
+set borderfmt "\033[33m"
+set ifs "\n"
+set timefmt 'Mon 02.01.2006 15:04'
+set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u:%g| %t| -> %l"
+set errorfmt "\033[7;31;47m   "
+set rulerfmt "  %a|  %p|  \033[7;35m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;34m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t"
+set numberfmt "\033[33m"
+set infotimefmtnew "15:04|02.01.06"
+set infotimefmtold "02.01.06"
+set incfilter true
+set scrolloff 8
+
+# CUSTOM COMMANDS
+
 # ON CHANGE DIRECTORY
 cmd on-cd &{{
 	# set title of window
@@ -48,8 +85,10 @@ cmd on-cd &{{
     esac
 }}
 
-# run on startup too
+# run on startup
 on-cd
+
+# ON REDRAWING THE WINDOW
 
 cmd on-redraw %{{
     if (( $lf_width <= 60 )); then
@@ -66,11 +105,52 @@ cmd on-redraw %{{
     fi 
 }}
 
-# OPEN
+# ON QUIT
 
-#cmd open &xdg-open $f
+cmd on-quit %{{
+	ctpv -e $id
+	rm ~/.cache/ctpv/*
+}}
 
-# ECHO PROGRESS ON FILE TRANSFER
+# SORTING
+
+cmd "sort by natural" ${{
+	lf -remote "send $id set sortby natural"
+	lf -remote "send $id set info size"
+	lf -remote "send $id set noreverse"
+}}
+
+cmd "sort by size" ${{
+	lf -remote "send $id set sortby size"
+	lf -remote "send $id set info size"
+	lf -remote "send $id set dircounts false"
+}}
+
+cmd "sort by time" ${{
+	lf -remote "send $id set sortby time"
+	lf -remote "send $id set reverse!"
+}}
+
+cmd "sort by ctime" ${{
+	lf -remote "send $id set sortby ctime"
+	lf -remote "send $id set info ctime"
+}}
+
+cmd "sort by atime" ${{
+	lf -remote "send $id set sortby atime"
+	lf -remote "send $id set info atime"
+}}
+
+cmd "sort by extension" ${{
+	lf -remote "send $id set sortby ext"
+	lf -remote "send $id set info size"
+}}
+
+cmd "reverse sorting order" ${{
+	lf -remote "send $id set reverse!"
+}}
+
+# COPY FILES AND SHOW PROGRESS
 
 #cmd paste $cp-p --lf-paste $id # requires cp-p. package seems to be not maintained anymore and the progress is not quite right, if you use multiple files
 
@@ -107,6 +187,477 @@ cmd paste &{{
     rm ~/.local/share/lf/files
     
 }}
+
+# COPY FILE NAME
+
+cmd "copy filename" ${{
+	file=${f##*/}
+	name=${file%.*}
+	printf $name | wl-copy
+	lf -remote "send echo '󰢨  copied \"$name\" to clipboard'"
+}}
+
+cmd "copy filename with extension" ${{
+	file=${f##*/}
+	name=${file%.*}
+	printf $file | wl-copy
+	lf -remote "send echo '󰢨  copied \"$file\" to clipboard'"
+}}
+
+cmd "copy filepath" ${{
+	printf "$fx" | wl-copy
+	lf -remote "send echo '󰢨  copied \"$fx\" to clipboard'"
+}}
+
+cmd "copy path of current directory" ${{
+	printf $(pwd) | wl-copy
+	lf -remote "send echo '󰢨  copied \"$(pwd)\" to clipboard'"
+}}
+
+# BULK RENAME FILES IN EDITOR
+
+cmd bulk-rename ${{
+
+    renamer -p $(basename -a -- $fx)
+
+    lf -remote "send $id load"
+    lf -remote "send $id unselect"
+
+}}
+
+cmd undo-bulk-rename ${{
+	renamer -u
+
+	lf -remote "send $id load"
+	lf -remote "send $id unselect"
+}}
+
+# FUZZY FIND
+cmd fzf_jump ${{
+  #lf -remote "send cd ~/"
+  res="$(fd --hidden --ignore-case . | fzf --border --header='  jump to location')"
+  if [ -f "$res" ]; then
+    cmd="select"
+  elif [ -d "$res" ]; then
+    cmd="cd"
+  fi
+  lf -remote "send $id $cmd \"$res\""
+}}
+
+# CREATE DIRECTORIES & FILES
+cmd "make directory" %{{
+    printf " 󰉗  create new directory: "
+    read ans
+    mkdir $ans
+    lf -remote "send echo '󰉗  created directory \"$ans\"'"
+}}
+
+cmd "make file" %{{
+    printf " 󰝒  create new file: "
+    read ans
+    touch $ans
+    lf -remote "send echo '󰝒  created file \"$ans\"'"
+}}
+
+# CHANGE
+
+cmd "change owner" %{{
+  #printf "   new owner: "
+  #read ans
+
+  for file in "$fx"
+  do
+    chown $USER $file
+  done
+
+  lf -remote 'send :reload;unselect'
+  lf -remote "send echo '  changed owner of \"$file\" to \"$USER\"'"
+}}
+
+cmd "change group" %{{
+  printf " 󰡉  new group: "
+  read ans
+
+  for file in "$fx"
+  do
+    chgrp $ans $file
+  done
+
+  lf -remote 'send :reload;unselect'
+  lf -remote "send echo '󰡉  changed group of \"$file\" to \"$ans\"'"
+}}
+
+cmd "change permissions" %{{
+  printf " 󰦝  new permissions: "
+  read ans
+
+  for file in "$fx"
+  do
+    chmod $ans $file
+    perms=$(ls -l $file | awk '{print $1}')
+  done
+
+  lf -remote 'send :reload;unselect'
+  lf -remote "send echo '󰦝  set permissions to $perms '"
+}}
+
+# CALCULATE DIRECTORY SIZE
+
+cmd "calculate size of directory" &{{
+	lf -remote "send $id set info size"
+	lf -remote "send $id set dircounts false"
+	lf -remote "send calcdirsize"
+}}
+
+# ARCHIVES
+
+cmd zip %{{
+    printf " 󱝣  create new zipfile: "
+    read ans
+    origd="$(pwd)"
+    tempd="$(mktemp -d)"
+    pushd "$tempd"
+    rsync -arh --info=progress2 -- $fx . 
+    zip -r "$ans" *
+    rsync -arh --info=progress2 -- "$ans".zip "$origd/"
+    popd
+    lf -remote 'send :reload;unselect'
+    lf -remote "send echo '󱝣  created zipfile \"$ans.zip\"'"
+    rm -rf "$tempd" 
+}}
+
+cmd zipe ${{
+    printf " 󱝣  create new encrypted zipfile: "
+    read ans
+    origd="$(pwd)"
+    tempd="$(mktemp -d)"
+    pushd "$tempd"
+    rsync -arh --info=progress2 -- $fx . 
+    zip -re "$ans" * &&
+    rsync -arh --info=progress2 -- "$ans".zip "$origd/"
+    popd
+    lf -remote 'send :reload;unselect'
+    lf -remote "send echo ' 󱝣 created encrypted zipfile \"$ans.zip\"'"
+    rm -rf "$tempd" 
+}}
+
+
+#cmd zip %zip -r "$fx" "$fx"
+#cmd zipe %zip -re "$fx.zip" "$fx"
+
+cmd unarchive ${{
+  case "$f" in
+      *.zip) unzip "$f" -d "${f%.zip}" ;;
+      *.7z) 7za e "$f" -o"${f%.7z}" ;;
+      *.tar.gz) tar -xzvf "$f" ;;
+      *.tar.xz) tar -xvf "$f" ;;
+      *.tar.bz2) tar -xjvf "$f" ;;
+      *.tar) tar -xvf "$f" ;;
+      *) echo "Unsupported format" ;;
+  esac
+}}
+
+# DRAG AND DROP FILES
+
+cmd "drag and drop" %{{
+	dragon-drop -a -x -T -i -s 96 $fx
+}}
+
+# CONVERT FILES
+
+cmd "convert to mp4" ${{
+	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
+}}
+
+cmd "convert to gif" ${{
+	ffmpeg -i $fx -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${f%.*}.gif"
+}}
+
+
+cmd "convert to mp3" ${{	
+	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
+}}
+
+cmd "convert to png" ${{
+	ffmpeg -i $fx "${f%.*}.png"
+}}
+
+cmd "convert to jpg" ${{
+	ffmpeg -i $fx "${f%.*}.jpg"
+}}
+
+# OPEN FILE IN SPECIFIED APP
+
+cmd "open in gui app" %{{
+	printf "   open file(s) in gui app: " $fx
+	read -r ans
+	$ans $fx
+}}
+
+cmd "open in terminal" %{{
+	printf "   open file(s) in current terminal: " $fx
+	read -r ans
+	$ans $fx
+}}
+
+cmd "set default app to open filetype" ${{
+	for file in "$fx"
+	  do
+	    mimeopen -d $file
+	  done
+}}
+
+cmd "open in default editor" ${{
+	$EDITOR "$f"
+}}
+
+cmd "open in default pdf reader" ${{
+	$READER "$f"
+}}
+
+cmd "open in default text editor" ${{
+	$TEXT_EDITOR "$f"
+}}
+
+cmd "open in default image viewer" ${{
+	$IMAGE_VIEWER "$f"
+}}
+
+cmd "open in default image editor" ${{
+	$IMAGE_EDITOR "$f"
+}}
+
+cmd "open in default video player" ${{
+	$VIDEO_PLAYER "$f"
+}}
+
+cmd "open in default video editor" ${{
+	$VIDEO_EDITOR "$f"
+}}
+
+cmd "open in default audio player" ${{
+	$AUDIO_PLAYER "$f"
+}}
+
+cmd "open in default audio editor" ${{
+	$AUDIO_EDITOR "$f"
+}}
+
+# MOUNT
+
+cmd "mount all available devices" %{{
+	udiskie-mount -ar 
+}}
+
+cmd "eject current media" %{{
+	udiskie-umount -f "$f"
+}}
+
+# TRASH BIN
+
+cmd trash %{{
+    printf "   move $fx to trash bin? [y/n] " $fx
+    read -r ans
+    if [ "$ans" = "y" ]; then
+        trash-put $fx
+        echo "  moved to trash bin successfully"
+    else
+        echo "  aborted"
+    fi
+}}
+
+cmd "empty trash bin" ${{
+	trash-empty --trash-dir ~/.local/share/Trash
+}}
+
+cmd "restore trashed file" ${{
+	trash-restore
+}}
+
+# DELETE PERMANENTLY
+
+cmd delete %{{
+	printf "   delete $fx permanently? [y/n] " $fx
+	read -r ans
+	if [ "$ans" = "y" ]; then
+		rm -rv $fx | pv -l -s $(find $fx | wc -l) > /dev/null
+		echo "  deleted successfully"
+	else
+		echo "  aborted"
+	fi
+}}
+
+# MISC
+
+cmd "git pull" %{{
+	git pull 
+}}
+
+# KEYBINDS
+
+# UNBIND KEYS
+map gg
+map m
+map G
+map p
+map k
+
+# BASIC KEYBINDS
+map <esc> :setfilter '';unselect;clear
+map c copy
+map x cut
+map v paste
+map y "copy filename"
+map Yx "copy filename with extension"
+map Yd "copy path of current directory"
+map Yp "copy filepath"
+map <enter> open
+map <c-r> reload
+map <delete> delete
+map d trash
+map r rename
+map R bulk-rename
+map Zr undo-bulk-rename
+map ":" read
+map f search
+map / search
+map <space> search
+map F filter
+map h set hidden!
+map u :unselect;clear
+map t :toggle;down
+map T :unselect;invert
+map i invert
+map <c-q> quit
+map <up> up
+map <s-up> half-up
+map <s-pgup> top
+map <down> down
+map <s-down> half-down
+map <s-pgdn> bottom
+map <left> updir
+map <right> open
+
+# SET RATIO
+map "!" :set ratios '1:2:2'; set preview true
+map '"' :set ratios '1:3'; set preview false
+map '§' :set ratios '1:4'; set preview true
+
+# MAKE KEYBINDS
+map md "make directory"
+map mf "make file"
+
+# CHANGE KEYBINDS
+map po "change owner"
+map pm "change permissions"
+map pg "change group"
+
+# ZIP KEYBINDS
+map azu zip
+map aze zipe 
+map au unarchive
+
+# CONVERT KEYBINDS
+map kv1 "convert to mp4"
+map ka1 "convert to mp3"
+map ki1 "convert to png"
+map ki2 "convert to jpg"
+map ki3 "convert to gif"
+
+# TRASH KEYBINDS
+map br "restore trashed file"
+map be "empty trash bin"
+map bg cd ~/.local/share/Trash/files
+
+# SORT KEYBINDS
+map sn "sort by natural"
+map ss "sort by size"
+map st "sort by time"
+map sc "sort by ctime"
+map sa "sort by atime"
+map se "sort by extension"
+map sr "reverse sorting order"
+
+# OPEN IN APP KEYBINDS
+map og "open in gui app"
+map oc "open in terminal"
+map om "set default app to open filetype"
+map oe "open in default editor"
+map e "open in default editor"
+map or "open in default pdf reader"
+map ot "open in default text editor"
+map oiv "open in default image viewer"
+map oie "open in default image editor"
+map ovp "open in default video player"
+map ove "open in default video editor"
+map oap "open in default audio player"
+map oae "open in default audio editor"
+
+# GO TO USER FILES DIRECTORIES KEYBINDS
+map gh cd ~/
+map gb cd ~/.local/share/Trash/files
+map gt cd ~/.local/share/Trash/files
+map gd cd ~/Downloads
+map gD cd ~/Documents
+map gf cd ~/Flow
+map gg1 cd ~/Git
+map gg2 cd ~/Git/hyprland-intergalactic
+map ggc cd ~/git-clone
+map gm cd ~/Music
+map gM cd ~/MEGAsync
+map gi1 cd ~/Pictures
+map gi2 cd ~/Pictures/Screenshots
+map gp1 cd ~/Projects
+map gp2 cd ~/Projects/Fonts
+map gs cd ~/Scripts
+map gv1 cd ~/Videos
+map gv2 cd "~/Videos/After Effects/cafreo"
+map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
+
+# GO TO USER CONFIG DIRECORIES KEYBINDS
+map gc1 cd ~/.config
+map gc2 cd ~/.config/hypr
+map gc3 cd ~/.config/rofi
+map gc4 cd ~/.config/lf
+map gc5 cd ~/.config/nvim
+map gc6 cd ~/.config/kitty
+map gc7 cd ~/.config/icons
+
+# GO TO MOUNTED DIRECTORIES
+map Gca cd /mnt/CA-POTRO-EXT-HDD/
+map Gcb cd /mnt/CB-POTRO-EXT-HDD/
+map Gx cd /mnt/X-POTRO-SSD/
+map Gm cd /mnt/
+map Gu cd /run/media/cafreo/
+
+# MISC
+map pf fzf_jump
+map pS "calculate size of all directories (could take a while)"
+map ps "calculate size of directory"
+map pd "drag and drop"
+map pp "git pull"
+map pc comparevids
+map pt test
+
+map ma "mount all available devices"
+map mu "eject current media"
+
+# BOOKMARKS KEYBINDS
+#map "#" mark-load
+#map md mark-remove
+#map ms mark-save
+
+# COMMAND MODE
+cmap <tab> cmd-menu-complete
+
+# WIP
+cmd "calculate size of all directories (could take a while)" &{{
+	lf -remote "send $id set info size"
+	lf -remote "send $id set dircounts false"
+	lf -remote "send :unselect;invert;calcdirsize"
+	#lf -remote "send :reload;unselect"
+}}
+
 
 cmd test &{{
     set -- $(cat ~/.local/share/lf/files)
@@ -153,206 +704,6 @@ cmd paste-alt1 &{{
     lf -remote "send echo 'done'"
 }}
 
-# COPY FILE NAME
-
-cmd cpfilename ${{
-	file=${f##*/}
-	name=${file%.*}
-	printf $name | wl-copy
-	lf -remote "send echo '󰢨  copied \"$name\" to clipboard'"
-}}
-
-cmd cpfilenameext ${{
-	file=${f##*/}
-	name=${file%.*}
-	printf $file | wl-copy
-	lf -remote "send echo '󰢨  copied \"$file\" to clipboard'"
-}}
-
-cmd cpfilepath ${{
-	printf $(pwd) | wl-copy
-	lf -remote "send echo '󰢨  copied \"$(pwd)\" to clipboard'"
-}}
-
-cmd cpfilepathf ${{
-	printf "$(pwd) $fx" | wl-copy
-	lf -remote "send echo '󰢨  copied \"$(pwd) $fx\" to clipboard'"
-}}
-
-# BULK RENAME FILES IN EDITOR
-
-cmd bulk-rename ${{
-
-    renamer -p $(basename -a -- $fx)
-
-    lf -remote "send $id load"
-    lf -remote "send $id unselect"
-
-}}
-
-cmd undo-bulk-rename ${{
-	renamer -u
-
-	lf -remote "send $id load"
-    lf -remote "send $id unselect"
-}}
-
-# FUZZY FIND
-cmd fzf_jump ${{
-  #lf -remote "send cd ~/"
-  res="$(fd --hidden --ignore-case . | fzf --border --header='  jump to location')"
-  if [ -f "$res" ]; then
-    cmd="select"
-  elif [ -d "$res" ]; then
-    cmd="cd"
-  fi
-  lf -remote "send $id $cmd \"$res\""
-}}
-
-# CREATE DIRECTORIES & FILES
-cmd mkdir %{{
-    printf " 󰉗  create new directory: "
-    read ans
-    mkdir $ans
-    lf -remote "send echo '󰉗  created directory \"$ans\"'"
-}}
-
-cmd mkfile %{{
-    printf " 󰝒  create new file: "
-    read ans
-    touch $ans
-    lf -remote "send echo '󰝒  created file \"$ans\"'"
-}}
-
-# CHANGE
-
-cmd chown %{{
-  #printf "   new owner: "
-  #read ans
-
-  for file in "$fx"
-  do
-    chown $USER $file
-  done
-
-  lf -remote 'send :reload;unselect'
-  lf -remote "send echo '  changed owner of \"$file\" to \"$USER\"'"
-}}
-
-cmd chgrp %{{
-  printf " 󰡉  new group: "
-  read ans
-
-  for file in "$fx"
-  do
-    chgrp $ans $file
-  done
-
-  lf -remote 'send :reload;unselect'
-  lf -remote "send echo '󰡉  changed group of \"$file\" to \"$ans\"'"
-}}
-
-cmd chmod %{{
-  printf " 󰦝  new permissions: "
-  read ans
-
-  for file in "$fx"
-  do
-    chmod $ans $file
-    perms=$(ls -l $file | awk '{print $1}')
-  done
-
-  lf -remote 'send :reload;unselect'
-  lf -remote "send echo '󰦝  set permissions to $perms '"
-}}
-
-# ARCHIVES
-
-cmd zip %zip -r "$f" "$f"
-cmd zipe %zip -re "$f" "$f"
-
-#cmd tar %tar cvf "$f.tar" "$f"
-#cmd targz %tar cvzf "$f.tar.gz" "$f"
-#cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
-
-cmd unarchive ${{
-  case "$f" in
-      *.zip) unzip "$f" -d "${f%.zip}" ;;
-      *.7z) 7za e "$f" -o"${f%.7z}" ;;
-      *.tar.gz) tar -xzvf "$f" ;;
-      *.tar.xz) tar -xvf "$f" ;;
-      *.tar.bz2) tar -xjvf "$f" ;;
-      *.tar) tar -xvf "$f" ;;
-      *) echo "Unsupported format" ;;
-  esac
-}}
-
-# DRAGON
-cmd dragon %dragon-drop -a -x -T -i -s 96 $fx
-
-# CONVERT FILES
-
-cmd convertmp4 ${{
-	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
-}}
-
-cmd convertmp3 ${{	
-	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
-}}
-
-# TRASH BIN
-
-cmd trash %{{
-    printf "   move $fx to trash bin? [y/n] " $fx
-    read -r ans
-    if [ "$ans" = "y" ]; then
-        trash-put $fx
-        echo "  moved to trash bin successfully"
-    else
-        echo "  aborted"
-    fi
-}}
-
-#cmd trash %trash-put $fx
-
-cmd trash-empty ${{
-	trash-empty --trash-dir ~/.local/share/Trash
-}}
-
-cmd trash-restore ${{
-	trash-restore
-}}
-
-cmd delete %{{
-	printf "   delete $fx permanently? [y/n] " $fx
-	read -r ans
-	if [ "$ans" = "y" ]; then
-		rm -rv $fx | pv -l -s $(find $fx | wc -l) > /dev/null
-		echo "  deleted successfully"
-	else
-		echo "  aborted"
-	fi
-}}
-
-# OPEN FILE IN SPECIFIED APP
-
-cmd open-with-gui &$@ $fx ## opens with a gui application outside lf client
-cmd open-with-cli $$@ $fx ## opens with a cli application inside lf client
-
-cmd mimeopen ${{
-	for file in "$fx"
-	  do
-	    mimeopen -d $file
-	  done
-}}
-
-# ON QUIT
-
-cmd on-quit %{{
-	ctpv -e $id
-	rm ~/.cache/ctpv/*
-}}
-
 cmd comparevids %{{
 	if [ $fs# == 2 ];
 		then
@@ -366,190 +717,4 @@ cmd comparevids %{{
 			printf "   invalid number of files (2 or 4 allowed)"
 		fi
 }}
-
-cmd git-pull %{{
-	git pull 
-}}
-
-# SETTINGS
-set hidden false
-set ignorecase true
-set icons true
-set number true
-set relativenumber false
-set hiddenfiles '.*:lost+found:*.bak:*.log'
-set globsearch false
-set dirfirst true
-set hidden false
-set history true
-set incsearch true
-set mouse false
-set preview true
-set sortby 'natural'
-set info 'size'
-set incsearch true
-set incfilter true
-set icons true
-set drawbox true
-set ratios '1:2:2'
-set period 3
-#set cursorpreviewfmt "\033[7;90m"
-set cursorpreviewfmt "\033[7m"
-set borderfmt "\033[33m"
-set ifs "\n"
-set timefmt 'Mon 02.01.2006 15:04'
-set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u| %g| %t| %c| -> %l"
-set errorfmt "\033[7;31;47m   "
-set rulerfmt "  %a|  %p|  \033[7;35m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;34m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t"
-set numberfmt "\033[33m"
-set infotimefmtnew "15:04|02.01.06"
-set infotimefmtold "02.01.06"
-set incfilter true
-set scrolloff 8
-
-# UNBIND KEYS
-map gg
-map m
-map G
-map p
-map k
-
-# BASIC KEYBINDS
-map <esc> :setfilter ''
-map c copy
-map x cut
-map v paste
-map y cpfilename
-map Yx cpfilenameext
-map Yd cpfilepath
-map Yp cpfilepathf
-map <enter> open
-map <c-r> reload
-map <delete> delete
-map d trash
-map r rename
-map R bulk-rename
-map Zr undo-bulk-rename
-map ":" read
-map f search
-map / search
-map F filter
-map h set hidden!
-map u :unselect;clear
-map t :toggle;down
-map T :unselect;invert
-map i invert
-map <c-q> quit
-map <up> up
-map <s-up> half-up
-map <s-pgup> top
-map <down> down
-map <s-down> half-down
-map <s-pgdn> bottom
-map <left> updir
-map <right> open
-map e $$EDITOR "$f"
-
-# SET RATIO
-map "!" :set ratios '1:2:2'; set preview true
-map '"' :set ratios '1:3'; set preview false
-map '§' :set ratios '1:4'; set preview true
-
-# MAKE KEYBINDS
-map mf mkfile
-map md mkdir
-
-# CHANGE KEYBINDS
-map po chown
-map pm chmod
-map pg chgrp
-
-# ZIP KEYBINDS
-map azu zip
-map aze zipe 
-map au unarchive
-
-# CONVERT KEYBINDS
-map kv1 convertmp4
-map ka1 convertmp3
-
-# TRASH KEYBINDS
-map br trash-restore
-map be trash-empty
-map bg cd ~/.local/share/Trash/files
-
-# SORT KEYBINDS
-map sn :set sortby 'natural'; set info size; set noreverse
-map ss :set sortby 'size'; set info size; set dircounts false
-map st :set sortby 'time'; set info time; set reverse!
-map sc :set sortby 'ctime'; set info ctime
-map sa :set sortby 'atime'; set info atime
-map sa :set sortby 'ext'; set info size
-map sr :set reverse!
-
-# OPEN IN APP KEYBINDS
-map og push :open-with-gui<space> ## input application
-map oc push :open-with-cli<space> ## input application
-map om mimeopen "$f"
-map oe $$EDITOR "$f"
-map or $$READER "$f"
-map ot $$TEXT_EDITOR "$f"
-map oiv $$IMAGE_VIEWER "$f"
-map oie $$IMAGE_EDITOR "$f"
-map ovp $$VIDEO_PLAYER "$f"
-map ove $$VIDEO_EDITOR "$f"
-map oa $$AUDIO_PLAYER "$f"
-
-# GO TO USER FILES DIRECTORIES KEYBINDS
-map gh cd ~/
-map gb cd ~/.local/share/Trash/files
-map gt cd ~/.local/share/Trash/files
-map gd cd ~/Downloads
-map gD cd ~/Documents
-map gf cd ~/Flow
-map gg1 cd ~/Git
-map gg2 cd ~/Git/hyprland-intergalactic
-map ggc cd ~/git-clone
-map gm cd ~/Music
-map gM cd ~/MEGAsync
-map gi1 cd ~/Pictures
-map gi2 cd ~/Pictures/Screenshots
-map gp1 cd ~/Projects
-map gp2 cd ~/Projects/Fonts
-map gs cd ~/Scripts
-map gv1 cd ~/Videos
-map gv2 cd "~/Videos/After Effects/cafreo"
-map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
-
-# GO TO USER CONFIG DIRECORIES KEYBINDS
-map gc1 cd ~/.config
-map gc2 cd ~/.config/hypr
-map gc3 cd ~/.config/rofi
-map gc4 cd ~/.config/lf
-map gc5 cd ~/.config/nvim
-map gc6 cd ~/.config/kitty
-map gc7 cd ~/.config/icons
-
-# GO TO MOUNTED DIRECTORIES
-map Gca cd /mnt/CA-POTRO-EXT-HDD/
-map Gcb cd /mnt/CB-POTRO-EXT-HDD/
-map Gx cd /mnt/X-POTRO-SSD/
-map Gm cd /mnt/
-map Gu cd /run/media/cafreo/
-
-# MISC
-map pf fzf_jump
-map ps :calcdirsize; set info size; set dircounts false
-map pd dragon
-map pp git-pull
-map pc comparevids
-map pt test
-
-# BOOKMARKS KEYBINDS
-#map "#" mark-load
-#map md mark-remove
-#map ms mark-save
-
-# COMMAND MODE
-cmap <tab> cmd-menu-complete
 
