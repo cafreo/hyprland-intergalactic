@@ -34,6 +34,7 @@ alias gitsync="bash ~/Scripts/git-syncs.sh"
 alias computer="ollama run dolphin-mistral"
 alias mount!="sudo mount -av"
 alias ip="curl ifconfig.me"
+alias backup="bash ~/Scripts/restic/restic-monthly-schedule.sh"
 
 alias conv2mp4="ffmpeg -i $1 -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac ${s%.*}.mp4"
 alias searchssh="sudo nmap -p 22 192.168.178.0/24"
