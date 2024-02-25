@@ -1,0 +1,157 @@
+# KEYBINDS
+
+# UNBIND KEYS
+map gg
+map m
+map G
+map p
+map k
+
+# BASIC KEYBINDS
+map <esc> :setfilter '';unselect;clear
+map c copy
+map x cut
+map v paste
+map y "copy filename"
+map Yx "copy filename with extension"
+map Yd "copy path of current directory"
+map Yp "copy filepath"
+map <enter> open
+map <c-r> reload
+map <delete> delete
+map d trash
+map r rename
+map R bulk-rename
+map Zr undo-bulk-rename
+map ":" read
+map f search
+map / search
+map <space> search
+map F filter
+map h set hidden!
+map u :unselect;clear
+map t :toggle;down
+map T :unselect;invert
+map i invert
+map <c-q> quit
+map <up> up
+map <s-up> half-up
+map <s-pgup> top
+map <down> down
+map <s-down> half-down
+map <s-pgdn> bottom
+map <left> updir
+map <right> open
+
+# SET RATIO
+map "!" :set ratios '1:2:2'; set preview true
+map '"' :set ratios '1:3'; set preview false
+map '§' :set ratios '1:4'; set preview true
+
+# MAKE KEYBINDS
+map md "make directory"
+map mf "make file"
+
+# CHANGE KEYBINDS
+map po "change owner"
+map pm "change permissions"
+map pg "change group"
+
+# ZIP KEYBINDS
+map azu zip
+map aze zipe 
+map au unarchive
+
+# CONVERT KEYBINDS
+map kv1 "convert to mp4"
+map ka1 "convert to mp3"
+map ki1 "convert to png"
+map ki2 "convert to jpg"
+map ki3 "convert to gif"
+
+# TRASH KEYBINDS
+map br "restore trashed file"
+map be "empty trash bin"
+map bg cd ~/.local/share/Trash/files
+
+# SORT KEYBINDS
+map sn "sort by natural"
+map ss "sort by size"
+map st "sort by time"
+map sc "sort by ctime"
+map sa "sort by atime"
+map se "sort by extension"
+map sr "reverse sorting order"
+
+# OPEN IN APP KEYBINDS
+map og "open in gui app"
+map oc "open in terminal"
+map om "set default app to open filetype"
+map oe "open in default editor"
+map e "open in default editor"
+map or "open in default pdf reader"
+map ot "open in default text editor"
+map oiv "open in default image viewer"
+map oie "open in default image editor"
+map ovp "open in default video player"
+map ove "open in default video editor"
+map oap "open in default audio player"
+map oae "open in default audio editor"
+
+# GO TO USER FILES DIRECTORIES KEYBINDS
+map gh cd ~/
+map gb cd ~/.local/share/Trash/files
+map gt cd ~/.local/share/Trash/files
+map gd cd ~/Downloads
+map gD cd ~/Documents
+map gf cd ~/Flow
+map gg1 cd ~/Git
+map gg2 cd ~/Git/hyprland-intergalactic
+map ggc cd ~/git-clone
+map gm cd ~/Music
+map gM cd ~/MEGAsync
+map gi1 cd ~/Pictures
+map gi2 cd ~/Pictures/Screenshots
+map gp1 cd ~/Projects
+map gp2 cd ~/Projects/Fonts
+map gs cd ~/Scripts
+map gv1 cd ~/Videos
+map gv2 cd "~/Videos/After Effects/cafreo"
+map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
+
+# GO TO USER CONFIG DIRECORIES KEYBINDS
+map gc1 cd ~/.config
+map gc2 cd ~/.config/hypr
+map gc3 cd ~/.config/rofi
+map gc4 cd ~/.config/lf
+map gc5 cd ~/.config/nvim
+map gc6 cd ~/.config/kitty
+map gc7 cd ~/.config/icons
+
+# GO TO MOUNTED DIRECTORIES
+map Gca cd /mnt/CA-POTRO-EXT-HDD/
+map Gcb cd /mnt/CB-POTRO-EXT-HDD/
+map Gx cd /mnt/X-POTRO-SSD/
+map Gm cd /mnt/
+map Gu cd /run/media/cafreo/
+
+# MISC
+map pf fzf_jump
+map pS "calculate size of all directories (could take a while)"
+map ps "calculate size of directory"
+map pd "drag and drop"
+map pp "git pull"
+map pc comparevids
+map pt test
+
+map ma "mount all available devices"
+map mu "eject current media"
+
+# BOOKMARKS KEYBINDS
+#map "#" mark-load
+#map md mark-remove
+#map ms mark-save
+
+# COMMAND MODE
+cmap <tab> cmd-menu-complete
+
