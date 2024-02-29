@@ -1,0 +1,84 @@
+/**
+ *
+ * Author : cafreo
+ * Github : @cafreo
+ * 
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/** MENU SPECIFIC CONFIGURATIONS **/
+
+configuration {
+	modi:			"run,drun,window,filebrowser";
+	show-icons:             true;
+	display-drun:           "apps";
+	display-filebrowser:    "";
+	display-window:         "";
+	display-run:            "";
+	drun-display-format:    "{name}";
+	window-format:          "{c}";
+}
+
+/** IMPORT GLOBAL SETTINGS **/
+
+@import				"~/.config/rofi/themes/intergalactic.rasi"
+@import                          "~/.config/rofi/colors/intergalactic.rasi"
+
+/** WINDOW **/
+
+window {
+	fullscreen:             false;
+	width:                  640px;
+	border-color:           @selected;
+}
+
+/** MAINBOX **/
+
+mainbox {
+	children:               [ "horibox", "inputbar", "listview", "mode-switcher" ];
+}
+
+/** TITLE **/
+
+horibox {
+	children:		["dummy", "prompt", "dummy"];
+}
+
+/** LISTVIEW **/
+
+listview {
+	columns:                 4;
+	lines:                   3;
+	padding:                 16px;
+}
+
+/** ELEMENTS **/
+
+element {
+	margin:                 8px;
+	padding:                14px 12px;
+	orientation:		vertical;
+}
+
+element normal.normal {
+	background-color:	@background2;
+}
+
+element.alternate.normal {
+	background-color:	@background2;
+}
+
+element selected {
+	background-image:	@active-alt;
+}
+
+element-icon {
+	padding:		10px;
+	size:                   56px;
+}
+
+element-text {
+	vertical-align:         0.5;
+	horizontal-align:       0.5;
+}

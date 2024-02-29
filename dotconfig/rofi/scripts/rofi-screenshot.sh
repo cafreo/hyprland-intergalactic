@@ -8,7 +8,7 @@ screenSave='screenSave\0icon\x1f~/Scripts/img/ssScreen.svg'
 windowSave='windowSave\0icon\x1f~/Scripts/img/ssWindow.svg'
 
 
-chosen=$(printf "$areaCopy;$areaSave;$screenSave;$windowSave" | rofi -dmenu -p 'screenshot' -sep ';' -show-icons -theme ~/.config/rofi/config-buttons.rasi )
+chosen=$(printf "$areaCopy;$areaSave;$screenSave;$windowSave" | rofi -dmenu -p 'screenshot' -sep ';' -show-icons -theme ~/.config/rofi/modes/buttons.rasi )
 
 case "$chosen" in
     "areaCopy")

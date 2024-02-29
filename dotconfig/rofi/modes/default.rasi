@@ -1,0 +1,21 @@
+/**
+ *
+ * Author : cafreo
+ * Github : @cafreo
+ * 
+ * Rofi Theme File
+ * Rofi Version: 1.7.3
+ **/
+
+/** MENU SPECIFIC CONFIGURATIONS **/
+
+configuration {
+	modi:                       "run,drun,window,emoji";
+	show-icons:                 true;
+	display-drun:               "";
+	drun-display-format:        "{name}";
+}
+
+/** IMPORT GLOBAL SETTINGS **/
+@import				"~/.config/rofi/themes/intergalactic.rasi"
+@import                         "~/.config/rofi/colors/intergalactic.rasi"

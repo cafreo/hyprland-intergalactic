@@ -1,6 +1,8 @@
 #! /bin/bash
 
-chosen=$(nmcli -g NAME c show | rofi -dmenu -theme ~/.config/rofi/config-list.rasi)
+sleep 0.1
+
+chosen=$(nmcli -g NAME c show | rofi -dmenu -p "network" -theme ~/.config/rofi/modes/list.rasi)
 
 if [ -z "$chosen" ]; then
 

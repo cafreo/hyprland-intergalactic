@@ -1,0 +1,162 @@
+/** @import		"~/.config/rofi/colors/intergalactic.rasi" **/
+
+/** GLOBAL SETTINGS **/
+
+* {
+	enabled:		true;
+	dynamic:		false;
+	border:			0px solid;
+	border-radius:		14px;
+	border-color:		transparent;
+	margin:			0;
+	padding: 		0;
+	spacing: 		0;
+	text-color:		@foreground;
+	background-color: 	@background;
+	cursor: 		"default";
+}
+
+/** WINDOW **/
+
+window {
+	width:			400px;
+	transparency:		"real";
+	location:		center;
+	anchor:			center;
+	x-offset:		0;
+	y-offset:		0;
+	border-color:		@selected;
+}
+
+/** MAINBOX **/
+
+mainbox {
+	padding:		6px;
+	border-radius:          0px 0px 14px 14px;
+	background-image:	@selected;
+	children:		[ "horibox", "inputbar", "listview" ];
+}
+
+/** TITLE **/
+
+horibox {
+	orientation: 		horizontal;
+	expand: 		false;
+	background-color:	transparent;
+	children: ["dummy", "prompt", "dummy"];
+}
+
+dummy {
+	expand:			true;
+	background-color:	transparent;
+}
+
+prompt {
+	padding:		0px 0px 6px 0px;
+	background-color:	transparent;
+}
+
+/** INPUTBAR **/
+
+inputbar {
+	border-radius:		14px 14px 0px 0px;
+	spacing:		10px;
+	children:		[ "entry" ];
+}
+
+entry {
+	border-radius:          14px 14px 0px 0px;
+	padding:		16px;
+	background-color:	@background2;
+	cursor:			text;
+	placeholder:		"search...";
+	placeholder-color:	@foreground;
+}
+
+/** MESSAGE **/
+
+message {
+	enabled:		true;
+	border-radius:		0px 0px 14px 14px;
+	padding:		16px;
+	margin:			0px 0px 6px 0px;
+}
+
+/** LISTVIEW **/
+
+listview {
+	border-radius:		0px 0px 14px 14px;
+	spacing:		6px;
+	cycle:			false;
+	scrollbar:		false;
+	layout: 		vertical;
+	fixed-height: 		true;
+	fixed-columns:		true;
+}
+
+scrollbar {
+	handle-width:		6px;
+}
+
+/** ELEMENTS **/
+
+element {
+	spacing:		0px;
+	padding:		14px;
+	orientation:		vertical;
+	background-color:       transparent;
+	cursor: 		pointer;
+}
+
+element normal.normal {
+	background-color:	@background;
+}
+
+element.alternate.normal {
+	background-color:	@background;
+}
+
+element selected {
+	background-image:	@active;
+}
+
+element-icon {
+	background-color:	transparent;
+	cursor:			inherit;
+	size:			0px;
+}
+
+element-text {
+	background-color:	transparent;
+	cursor:			inherit;
+}
+
+/** MODE SWITCHER **/
+
+mode-switcher {
+	orientation:		horizontal;
+	enabled:		false;
+	spacing:		24px;
+	background-color:	transparent;
+}
+
+button {
+	background-color:	transparent;
+	cursor:			pointer;
+}
+
+button selected {
+	
+}
+
+/** ERROR MESSAGE **/
+
+error-message {
+	padding:		16px;
+	border:			2px solid;
+	border-color:		@selected;
+}
+
+textbox {
+	vertical-align:		0.5;
+}
