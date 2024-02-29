@@ -1,0 +1,115 @@
+/** WORKSPACE BUTTON **/ 
+
+@keyframes buttoncycle {
+    0% {
+        background-image: linear-gradient(-30deg, rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
+	}
+    20% {
+        background-image: linear-gradient(10deg, rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
+	}
+    40% {
+        background-image: linear-gradient(230deg, rgba(203, 34, 17, 0.8), rgba(238, 176, 56, 0.8)); 
+	}
+    60% {
+        background-image: linear-gradient(290deg, rgba(203, 34, 17, 0.7), rgba(238, 176, 56, 0.7));
+	}
+    80% {
+        background-image: linear-gradient(330deg, rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
+	}
+    100% {
+        background-image: linear-gradient(330deg, rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
+	}
+}
+
+@keyframes breathehover {
+    0% {
+      background-color: rgba(245, 184, 58, 0.2);
+    }
+    50% {
+        background-color: rgba(245, 184, 58, 0.4);
+    }
+    100% {
+        background-color: rgba(245, 184, 58, 0.2);
+    }
+}
+
+@keyframes urgentblink {
+    0% {
+      background-color: rgba(245, 184, 58, 0.2);
+    }
+    20% {
+        background-color: rgba(245, 184, 58, 0.2);
+    }
+    26% {
+        background-color: rgba(245, 184, 58, 0.4);
+    }
+    32% {
+        background-color: rgba(245, 184, 58, 0.2);
+    }
+    38% {
+        background-color: rgba(245, 184, 58, 0.4);
+    }
+    42% {
+        background-color: rgba(245, 184, 58, 0.2);
+    }
+    100% {
+        background-color: rgba(245, 184, 58, 0.2);
+    }
+}
+
+/** HIGH CPU USAGE **/
+
+@keyframes breathehigh {
+    0% {
+	background-color: rgba(203, 34, 17, 0.3);
+    	}
+    50% {
+	background-color: rgba(203, 34, 17, 0.15);
+	}
+    100% {
+        background-color: rgba(203, 34, 17, 0.3);
+	}
+}
+
+/** CLOCK **/
+
+@keyframes daycycle {
+    0% {
+      background-image: linear-gradient(-180deg, rgba(203, 34, 17, 0.3), rgba(238, 176, 56, 0.2));
+    }
+    30% {
+        background-image: linear-gradient(-45deg, rgba(203, 34, 17, 0.3), rgba(238, 176, 56, 0.5));
+    }
+    70% {
+        background-image: linear-gradient(45deg, rgba(203, 34, 17, 0.3), rgba(238, 176, 56, 0.5));
+    }
+    100% {
+        background-image: linear-gradient(180deg, rgba(203, 34, 17, 0.3), rgba(238, 176, 56, 0.2));
+    }
+}
+
+/** USER IMAGE **/
+
+@keyframes breatheimg {
+    0% {
+      background-image: linear-gradient(-30deg, rgba(203, 34, 17, 0.5), rgba(238, 176, 56, 0.5));
+      box-shadow: 0px 0px 0px #CB2211;
+    }
+    50% {
+        background-image: linear-gradient(-30deg, rgba(203, 34, 17, 0.8), rgba(238, 176, 56, 0.8));
+        box-shadow: 0px 0px 4px #CB2211;
+    }
+    100% {
+        background-image: linear-gradient(-30deg, rgba(203, 34, 17, 0.5), rgba(238, 176, 56, 0.5));
+        box-shadow: 0px 0px 0px #CB2211;
+    }
+}
+
+/** BATTERY **/
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
