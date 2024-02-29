@@ -4,6 +4,7 @@
 # ▄██ █▄▄  █   █  █ █ ▀█ ▀▄█ ▄██
 #
 #
+
 # PREVIEW
 set previewer ctpv
 set cleaner ctpvclear
@@ -48,10 +49,12 @@ set infotimefmtold "02.01.06"
 set incfilter true
 set scrolloff 8
 
-
- ▄▀▀ ▄▀▄ █▄ ▄█ █▄ ▄█ ▄▀▄ █▄ █ █▀▄ ▄▀▀
- ▀▄▄ ▀▄▀ █ ▀ █ █ ▀ █ █▀█ █ ▀█ █▄▀ ▄██
-
+#
+#
+# ▄▀▀ ▄▀▄ █▄ ▄█ █▄ ▄█ ▄▀▄ █▄ █ █▀▄ ▄▀▀
+# ▀▄▄ ▀▄▀ █ ▀ █ █ ▀ █ █▀█ █ ▀█ █▄▀ ▄██
+#
+#
 
 # ON CHANGE DIRECTORY
 cmd on-cd &{{
@@ -368,7 +371,7 @@ cmd unarchive ${{
 
 # DRAG AND DROP FILES
 
-cmd "drag and drop" %{{
+cmd "drag and drop" &{{
 	dragon-drop -a -x -T -i -s 96 $fx
 }}
 
@@ -571,10 +574,12 @@ cmd comparevids %{{
 		fi
 }}
 
-
- █▄▀ ██▀ ▀▄▀ █▄ ▄█ ▄▀▄ █▀▄ ▄▀▀
- █ █ █▄▄  █  █ ▀ █ █▀█ █▀  ▄██
-
+#
+#
+# █▄▀ ██▀ ▀▄▀ █▄ ▄█ ▄▀▄ █▀▄ ▄▀▀
+# █ █ █▄▄  █  █ ▀ █ █▀█ █▀  ▄██
+#
+#
 
 source ~/.config/lf/keymaps
 

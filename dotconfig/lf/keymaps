@@ -4,6 +4,7 @@
 # █ █ █▄▄  █  █ ▀ █ █▀█ █▀  ▄██
 #
 #
+
 # UNBIND KEYS
 map gg
 map m
@@ -16,10 +17,10 @@ map <esc> :setfilter '';unselect;clear
 map c copy
 map x cut
 map v paste
-map y "copy filename"
-map Yx "copy filename with extension"
-map Yd "copy path of current directory"
-map Yp "copy filepath"
+map yy "copy filename"
+map yx "copy filename with extension"
+map yd "copy path of current directory"
+map yp "copy filepath"
 map <enter> open
 map <c-r> reload
 map <delete> delete
