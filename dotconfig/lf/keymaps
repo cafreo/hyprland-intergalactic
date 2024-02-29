@@ -122,6 +122,7 @@ map gs cd ~/Scripts
 map gv1 cd ~/Videos
 map gv2 cd "~/Videos/After Effects/cafreo"
 map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
+map gV cd ~/Vault
 
 # GO TO USER CONFIG DIRECORIES KEYBINDS
 map gc1 cd ~/.config
