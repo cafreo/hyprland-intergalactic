@@ -32,9 +32,10 @@
  - menu: [rofi](https://github.com/davatorium/rofi) ([themes](https://github.com/adi1090x/rofi))
  - not: [dunst](https://github.com/dunst-project/dunst)
  - font: [ubuntu nerd](https://www.nerdfonts.com/font-downloads) / [ubuntu mono nerd](https://www.nerdfonts.com/font-downloads)
- - lock: [swaylock-effects](https://github.com/mortie/swaylock-effects)
+ - lock: [hyprlock](https://github.com/hyprwm/hyprlock)
  - power: [wlogout](https://github.com/ArtsyMacaw/wlogout)
  - night: [gammastep](https://gitlab.com/chinstrap/gammastep)
+ - file manager: [lf](https://github.com/gokcehan/lf)
 
  # scripts
  - rofi: [file-selector](https://gitlab.com/matclab/rofi-file-selector/-/tree/master/), [screenshot](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-screenshot.sh), [networkmanager](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-networkmanager.sh)
@@ -48,7 +49,7 @@
  - [ ] eww/ags bar
  - [x] switch from micro to neovim
  - [x] dolphin rice
- - [ ] combine rofi themes into one file
+ - [ ] combine rofi themes into one file (sorta kinda done)
  - [x] screenshot menu
 
  # credits
