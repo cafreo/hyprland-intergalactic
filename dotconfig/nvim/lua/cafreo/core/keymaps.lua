@@ -17,20 +17,23 @@ local keymap = vim.keymap.set
 keymap("n", "<C-q>", vim.cmd.quit)
 keymap("i", "<C-q>", "<Esc>")
 
--- Copy to system keyboard
+-- Copy to system clipboard
 keymap({"n", "v", "i"}, "<C-c>", '"+y')
 --keymap({"n", "v", "i"}, "<C-c>", '"+Y')
 
--- Paste from system keyboard
-keymap({"n", "v", "c"}, "<C-v>", ':set paste<CR>"+p<CR>:set nopaste<CR>')
+-- Paste from system clipboard
+keymap({"n", "c"}, "<C-v>", ':set paste<CR>"+p<CR>:set nopaste<CR>')
 keymap("i", "<C-v>", '<C-r><C-o>+')
+keymap({"v"}, "<C-v>", '"_dP')
 
--- Cut to system keyboard
+
+-- Cut to system clipboard
 keymap({"v", "i"}, "<C-x>", '"+x')
 
 -- Delete selected Text
-keymap({"v"}, "<Bs>", "d")
-keymap({"n", "v", "i"}, "<S-Del>", "DELETE")
+keymap({"v"}, "<Bs>", '"_d')
+keymap({"v"}, "<Del>", '"_d')
+keymap({"n", "v", "i"}, "<S-Del>", '"_DELETE')
 
 -- Undo and Redo
 keymap({"n"}, "<C-z>", "u")
