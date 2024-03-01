@@ -11,6 +11,7 @@ map m
 map G
 map p
 map k
+map y
 
 # BASIC KEYBINDS
 map <esc> :setfilter '';unselect;clear

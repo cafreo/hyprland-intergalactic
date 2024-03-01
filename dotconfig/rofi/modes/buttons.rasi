@@ -36,6 +36,7 @@ mainbox {
 /** LISTVIEW **/
 
 listview {
+	border-radius:		14px;
 	columns:                4;
 	lines:                  1;
 	padding:                16px;

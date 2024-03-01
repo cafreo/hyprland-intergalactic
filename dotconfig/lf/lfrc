@@ -21,11 +21,10 @@ set icons true
 set number true
 set relativenumber false
 set hiddenfiles '.*:lost+found:*.bak:*.log'
-set globsearch true
+set globsearch false
 set dirfirst true
 set hidden false
 set history true
-set incsearch true
 set mouse false
 set preview true
 set sortby 'natural'
@@ -46,7 +45,6 @@ set rulerfmt "  %a|  %p|  \033[7;35m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7
 set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
-set incfilter true
 set scrolloff 8
 
 #
