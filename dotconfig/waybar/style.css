@@ -106,7 +106,7 @@ window#waybar {
 }
 
 #clock {
-    background-image: linear-gradient(-180deg, rgba(203, 34, 17, 0.3), rgba(238, 176, 56, 0.2));
+    background-color: rgba(203, 34, 17, 0.3);
     animation: daycycle 60s ease infinite;
 }
 
