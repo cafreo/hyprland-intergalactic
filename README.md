@@ -35,7 +35,7 @@
  - lock: [hyprlock](https://github.com/hyprwm/hyprlock)
  - power: [wlogout](https://github.com/ArtsyMacaw/wlogout)
  - night: [gammastep](https://gitlab.com/chinstrap/gammastep)
- - file manager: [lf](https://github.com/gokcehan/lf)
+ - files: [lf](https://github.com/gokcehan/lf)
 
  # scripts
  - rofi: [file-selector](https://gitlab.com/matclab/rofi-file-selector/-/tree/master/), [screenshot](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-screenshot.sh), [networkmanager](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-networkmanager.sh)
