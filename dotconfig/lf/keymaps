@@ -18,10 +18,6 @@ map <esc> :setfilter '';unselect;clear
 map c copy
 map x cut
 map v paste
-map yy "copy filename"
-map yx "copy filename with extension"
-map yd "copy path of current directory"
-map yp "copy filepath"
 map <enter> open
 map <c-r> reload
 map <delete> delete
@@ -48,6 +44,13 @@ map <s-down> half-down
 map <s-pgdn> bottom
 map <left> updir
 map <right> open
+
+# COPY FILE NAME
+map yy "copy filename"
+map yx "copy filename with extension"
+map ys "show filename with extension"
+map yd "copy path of current directory"
+map yp "copy filepath"
 
 # SET RATIO
 map "!" :set ratios '1:2:2'; set preview true
@@ -95,6 +98,7 @@ map oc "open in terminal"
 map om "set default app to open filetype"
 map oe "open in default editor"
 map e "open in default editor"
+map ob "open in default browser"
 map or "open in default pdf reader"
 map ot "open in default text editor"
 map oiv "open in default image viewer"
@@ -112,15 +116,14 @@ map gd cd ~/Downloads
 map gD cd ~/Documents
 map gf cd ~/Flow
 map gg1 cd ~/Git
-map gg2 cd ~/Git/hyprland-intergalactic
-map ggc cd ~/git-clone
+map gg2 cd ~/Git/Repos/hyprland-intergalactic
+map ggc cd ~/Git/Clones
 map gm cd ~/Music
 map gM cd ~/MEGAsync
 map gi1 cd ~/Pictures
 map gi2 cd ~/Pictures/Screenshots
-map gp1 cd ~/Projects
-map gp2 cd ~/Projects/Fonts
-map gs cd ~/Scripts
+map gp1 cd ~/Projects/Designing/
+map gp2 cd ~/Projects/Scripting/
 map gv1 cd ~/Videos
 map gv2 cd "~/Videos/After Effects/cafreo"
 map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"

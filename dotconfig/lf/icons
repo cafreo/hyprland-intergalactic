@@ -388,17 +388,25 @@ Vagrantfile             
 # other formats
 *.iso	
 *.img	
+*.qcow2 
 *.torrent	󰥥
 *.nfo 	󰋼
 *.inf 	󰋼
 *.ttf	
 *.otf	
 *.exe   󰖳
+*.pdn 󰃣
+*.clip 󰃣 
+*.opml 
+*.m3u 󰲸
+*.kdbx 󰈡
+*.key 󱆄
 
 # custom folders
 home/   󱂵
 Documents/	󰲂
 Downloads/   󰉍
+Flow/	󰾶
 Music/   󱍙 
 Projects/	󱥾
 Pictures/   󰉏
