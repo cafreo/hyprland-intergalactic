@@ -16,4 +16,4 @@ mullvad relay set hostname ch-zrh-wg-00$(echo $(( $RANDOM % 4 + 1 )))
 #mullvad relay set hostname no-osl-wg-00$(echo $(( $RANDOM % 6 + 1 )))
 mullvad connect
 sleep 2
-dunstify -t 3000 -a "mlvd" -b "Mullvad" "<b>$(mullvad status)</b>" -u low -i ~/Scripts/img/wifi.svg
+dunstify -t 3000 -a "mlvd" -b "Mullvad" "<b>$(mullvad status)</b>" -u low -i ~/.config/icons/wifi.svg
