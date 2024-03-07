@@ -110,7 +110,7 @@
 		"tooltip-format": "  {ifname}: {ipaddr} via {gwaddr}/{cidr}",
 		"format-linked": "{ifname} (No IP) ",
 		"format-disconnected": "  down",
-		"on-click": "~/Scripts/rofi/rofi-networkmanager.sh",
+		"on-click": "~/.config/rofi/scripts/rofi-networkmanager.sh",
 		"on-click-right": "kitty -e 'nethogs'"
 	},
 
