@@ -20,7 +20,7 @@ set ignorecase true
 set icons true
 set number true
 set relativenumber false
-set hiddenfiles '.*:lost+found:*.bak:*.log'
+set hiddenfiles '.*:lost+found:*.log'
 set globsearch false
 set dirfirst true
 set hidden false
@@ -46,6 +46,7 @@ set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
 set scrolloff 8
+set dircounts false
 
 #
 #
@@ -78,13 +79,14 @@ cmd on-cd &{{
             lf -remote "send $id set sortby time"
             lf -remote "send $id set reverse"
 
+  	    lf -remote "send top"
             lf -remote "send $id echomsg 󱕇   changed sort mode to time"
-            lf -remote "send top"
             ;;
         *)
             # restore sorting on directory exit
             if [[ "$lf_user_prev_sortby" != "" ]]; then
                 lf -remote "send $id set sortby $lf_user_prev_sortby"
+		lf -remote "send $id set info size"
                 lf -remote "send $id set noreverse"
 
                 lf -remote "send $id echomsg 󰦛   restored sort mode to $lf_user_prev_sortby"
@@ -100,7 +102,7 @@ on-cd
 
 # ON REDRAWING THE WINDOW
 
-cmd on-redraw %{{
+cmd on-redraw &{{
     if (( $lf_width <= 60 )); then
     	lf -remote "send $id set preview false"
         lf -remote "send $id set ratios 1"
@@ -124,40 +126,48 @@ cmd on-quit %{{
 
 # SORTING
 
-cmd "sort by natural" ${{
+cmd "sort by natural" &{{
 	lf -remote "send $id set sortby natural"
 	lf -remote "send $id set info size"
 	lf -remote "send $id set noreverse"
+	lf -remote "send top"
 }}
 
-cmd "sort by size" ${{
+cmd "sort by size" &{{
 	lf -remote "send $id set sortby size"
 	lf -remote "send $id set info size"
 	lf -remote "send $id set dircounts false"
+	lf -remote "send top"
 }}
 
-cmd "sort by time" ${{
+cmd "sort by time" &{{
 	lf -remote "send $id set sortby time"
+	lf -remote "send $id set info time"
 	lf -remote "send $id set reverse!"
+	lf -remote "send top"
 }}
 
-cmd "sort by ctime" ${{
+cmd "sort by ctime" &{{
 	lf -remote "send $id set sortby ctime"
 	lf -remote "send $id set info ctime"
+	lf -remote "send top"
 }}
 
-cmd "sort by atime" ${{
+cmd "sort by atime" &{{
 	lf -remote "send $id set sortby atime"
 	lf -remote "send $id set info atime"
+	lf -remote "send top"
 }}
 
-cmd "sort by extension" ${{
+cmd "sort by extension" &{{
 	lf -remote "send $id set sortby ext"
 	lf -remote "send $id set info size"
+	lf -remote "send top"
 }}
 
-cmd "reverse sorting order" ${{
+cmd "reverse sorting order" &{{
 	lf -remote "send $id set reverse!"
+	lf -remote "send top"
 }}
 
 # COPY FILES AND SHOW PROGRESS
@@ -165,61 +175,139 @@ cmd "reverse sorting order" ${{
 #cmd paste $cp-p --lf-paste $id # requires cp-p. package seems to be not maintained anymore and the progress is not quite right, if you use multiple files
 
 cmd paste &{{
+	set -- $(cat ~/.local/share/lf/files)
+	mode="$1"
+	shift
+
+	if [[ $@ != "" ]]; then
+	nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
+	
+	case "$mode" in
+        copy)
+		for file in "$@"; do
+			if ! [[ -O "$file" ]]; then
+				printf "   by moving these files the owner and group will be changed to the current user and group. continue? (y/n) "
+				read -r ans
+				if [ "$ans" = "y" ]; then
+					rsync -arh --info=progress2 -- "$@" . |
+
+					stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+					while IFS= read -r line; do
+					lf -remote "send $id echo $line"
+       					done
+
+					lf -remote "send :clear;reload"
+					lf -remote "send $id echo '  $nof file(s) copied successfully'"
+					notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
+					exit 0
+				else
+					#lf -remote "send $id echo '  aborted'"
+					lf -remote "send $id echo '  permission denied! one or more of the selected files are not owned by you and so can not be copied'"  
+					exit 1
+			
+				fi
+			fi
+		done
+			
+			rsync -arh --info=progress2 -- "$@" . |
+
+			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+			while IFS= read -r line; do
+        		lf -remote "send $id echo $line"
+			done
+
+			lf -remote "send :clear;reload"	
+			lf -remote "send $id echo '  $nof file(s) copied successfully'"
+			notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
+			exit 0	
+	;;
+	move)
+		for file in "$@"; do
+			if ! [[ -O "$file" ]]; then	
+				lf -remote "send $id echo '  permission denied! one or more of the selected files are not owned by you and so can not be moved'"  
+				exit 1
+			fi
+		done
+
+			rsync -arh --info=progress2 --remove-source-files -- "$@" . |
+
+			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+			while IFS= read -r line; do
+	        	lf -remote "send $id echo $line"
+		        done
+        
+			if [ find $@ -type f | read ]; then
+	        	lf -remote "send $id echo '  not all files have been moved'";
+		        else find $@ -type d -empty -delete
+			fi
+        
+			lf -remote "send :clear;reload"
+			lf -remote "send $id echo '  $nof file(s) moved successfully'"
+			notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
+  			exit 0
+	;;
+	esac
+	else
+		exit 1
+fi
+
+	rm ~/.local/share/lf/files
+ 
+}}
+
+# CREATE (SOFT/HARD) LINK
+
+cmd "create (soft/hard) link" %{{
     set -- $(cat ~/.local/share/lf/files)
     mode="$1"
     shift
-    nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echo '  no files selected to create (soft/hard) link'"
+        exit 0
+    fi
     case "$mode" in
+        # symbolically copy mode is indicating a soft link
         copy)
-            rsync -arh --info=progress2 -- "$@" . |
-            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
-            while IFS= read -r line; do
-                lf -remote "send $id echo $line"
-            done
-            lf -remote "send :clear;reload"
-			lf -remote "send $id echo '  $nof file(s) copied successfully'"
-			notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
-            ;;
-        move)
-        	rsync -arh --info=progress2 --remove-source-files -- "$@" . |
-        	stdbuf -i0 -o0 -e0 tr '\r' '\n' |
-            while IFS= read -r line; do
-                lf -remote "send $id echo $line"
-            done
-                if [ find $@ -type f | read ]; then
-                	lf -remote "send $id echo '  not all files have been moved'";
-                else rm -rf $@;
-                fi
-            lf -remote "send :clear;reload"
-			lf -remote "send $id echo '  $nof file(s) moved successfully'"
-			notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
+	ln -sr -t . -- "$@"
+	lf -remote "send $id echo '󰴛  soft link created'"
+	;;
+        # while a move mode is indicating a hard link
+        move) ln -t . -- "$@"
+	lf -remote "send $id echo '󰴚  hard link created'"
+	;;
     esac
     rm ~/.local/share/lf/files
-    
+    lf -remote "send $id unselect"
 }}
 
 # COPY FILE NAME
 
-cmd "copy filename" ${{
+cmd "copy filename" &{{
 	file=${f##*/}
 	name=${file%.*}
 	printf $name | wl-copy
 	lf -remote "send $id echo '󰢨  copied \"$name\" to clipboard'"
 }}
 
-cmd "copy filename with extension" ${{
+cmd "copy filename with extension" &{{
 	file=${f##*/}
 	name=${file%.*}
 	printf $file | wl-copy
 	lf -remote "send $id echo '󰢨  copied \"$file\" to clipboard'"
 }}
 
-cmd "copy filepath" ${{
+cmd "show filename with extension" &{{
+	file=${f##*/}
+	name=${file%.*}
+	lf -remote "send $id echo '  full file name: \"$file\"'"
+}}
+
+cmd "copy filepath" &{{
 	printf "$fx" | wl-copy
 	lf -remote "send $id echo '󰢨  copied \"$fx\" to clipboard'"
 }}
 
-cmd "copy path of current directory" ${{
+cmd "copy path of current directory" &{{
 	printf $(pwd) | wl-copy
 	lf -remote "send $id echo '󰢨  copied \"$(pwd)\" to clipboard'"
 }}
@@ -355,7 +443,7 @@ cmd zipe ${{
 #cmd zip %zip -r "$fx" "$fx"
 #cmd zipe %zip -re "$fx.zip" "$fx"
 
-cmd unarchive ${{
+cmd unarchive &{{
   case "$f" in
       *.zip) unzip "$f" -d "${f%.zip}" ;;
       *.7z) 7za e "$f" -o"${f%.7z}" ;;
@@ -363,7 +451,7 @@ cmd unarchive ${{
       *.tar.xz) tar -xvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
       *.tar) tar -xvf "$f" ;;
-      *) echo "Unsupported format" ;;
+      *) lf -remote "send $id echo '  unsupported format'" ;;
   esac
 }}
 
@@ -375,25 +463,30 @@ cmd "drag and drop" &{{
 
 # CONVERT FILES
 
-cmd "convert to mp4" ${{
+cmd "convert to mp4" &{{
 	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
+	lf -remote "send $id echo '󰗠  successfully converted to mp4'" 
 }}
 
-cmd "convert to gif" ${{
+cmd "convert to gif" &{{
 	ffmpeg -i $fx -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${f%.*}.gif"
+	lf -remote "send $id echo '󰗠  successfully converted to gif'" 
 }}
 
 
-cmd "convert to mp3" ${{	
+cmd "convert to mp3" &{{	
 	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
+	lf -remote "send $id echo '󰗠  successfully converted to mp3'" 
 }}
 
-cmd "convert to png" ${{
+cmd "convert to png" &{{
 	ffmpeg -i $fx "${f%.*}.png"
+	lf -remote "send $id echo '󰗠  successfully converted to png'" 
 }}
 
-cmd "convert to jpg" ${{
+cmd "convert to jpg" &{{
 	ffmpeg -i $fx "${f%.*}.jpg"
+	lf -remote "send $id echo '󰗠  successfully converted to jpg'" 
 }}
 
 # OPEN FILE IN SPECIFIED APP
@@ -405,7 +498,7 @@ cmd "open in gui app" %{{
 }}
 
 cmd "open in terminal" %{{
-	printf "   open file(s) in current terminal: " $fx
+	printf "   open file(s) in terminal app: " $fx
 	read -r ans
 	$ans $fx
 }}
@@ -419,6 +512,10 @@ cmd "set default app to open filetype" ${{
 
 cmd "open in default editor" ${{
 	$EDITOR "$f"
+}}
+
+cmd "open in default browser" ${{
+	$BROWSER "$f"
 }}
 
 cmd "open in default pdf reader" ${{
@@ -503,17 +600,114 @@ cmd "git pull" %{{
 	git pull 
 }}
 
+cmd "compare 2 or 4 videos simultaneously" &{{
+tcount() {
+	echo "$#"
+}
+nof=$(tcount $fx)
 
-# WIP
-cmd "calculate size of all directories (could take a while)" &{{
-	lf -remote "send $id set info size"
-	lf -remote "send $id set dircounts false"
-	lf -remote "send :unselect;invert;calcdirsize"
-	#lf -remote "send :reload;unselect"
+	if [ $nof == 2 ]; then
+		mapfile -t -n 2 array < <(printf '%s\n' "$fx")
+		fname1=${array[0]##*/}
+		fname2=${array[1]##*/}
+
+		lf -remote "send $id echo '  playing now: $fname1 & $fname2'"
+		mpv "${array[0]}" --external-file="${array[1]}" --lavfi-complex='[vid1] [vid2] hstack [vo]'
+		
+	
+	elif [ $nof == 4 ]; then
+		mapfile -t -n 4 array < <(printf '%s\n' "$fx")
+		fname1=${array[0]##*/}
+		fname2=${array[1]##*/}
+		fname3=${array[2]##*/}
+		fname4=${array[3]##*/}
+
+		lf -remote "send $id echo '  playing now: $fname1, $fname2, $fname3 & $fname4'"
+		mpv "${array[0]}" --external-file="${array[1]}" --external-file="${array[2]}" --external-file="${array[3]}" --lavfi-complex='[vid1] [vid2] hstack [t1] ; [vid3] [vid4] hstack [t2] ; [t1] [t2] vstack [vo]'
+
+	else
+		lf -remote "send $id echo '  invalid number of videos selected (2 or 4 allowed)'"
+	fi
+
+	lf -remote "send $id :clear;unselect"
 }}
 
 
+# WIP
+cmd "calculate size of all directories (could take a while)" ${{
+	lf -remote $id "send $id set info size"
+	lf -remote $id "send $id set dircounts false"
+	lf -remote $id "send :unselect;invert;calcdirsize"
+	#lf -remote $id "send :reload;unselect"
+}}
+
 cmd test &{{
+	set -- $(cat ~/.local/share/lf/files)
+	mode="$1"
+	shift
+	nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
+
+	copyfunc() {
+		rsync -arh --info=progress2 -- "$@" . |
+
+		stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+		while IFS= read -r line; do
+        	lf -remote "send $id echo $line"
+        	done
+        
+		lf -remote "send :clear;reload"
+		lf -remote "send $id echo '  $nof file(s) copied successfully'"
+		notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
+        }
+
+	movefunc() {
+        	rsync -arh --info=progress2 --remove-source-files -- "$@" . |
+
+		stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+		while IFS= read -r line; do
+	        lf -remote "send $id echo $line"
+	        done
+        
+		if [ find $@ -type f | read ]; then
+	        lf -remote "send $id echo '  not all files have been moved'";
+	        else rm -rf $@;
+	        fi
+        
+		lf -remote "send :clear;reload"
+		lf -remote "send $id echo '  $nof file(s) moved successfully'"
+		notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
+	}
+
+	case "$mode" in
+        copy)
+
+		if [[ -O "$@" ]]; then  
+			$(copyfunc)  
+		else  
+			printf "  by moving these files the owner and group will be changed to the current user and group. continue? "  
+			read ans  
+			if [ "$ans" = "y" ]; then  
+				$(copyfunc)  
+			else  
+				lf -remote "send $id echo '  aborted'"  
+			fi
+
+        move)
+	
+		if [[ -O "$@" ]]; then  
+			$(movefunc)  
+		else  
+			lf -remote "send $id echo '  permission denied! one or more of the selected files are not owned by you and so can not be moved'"  
+		fi
+
+	esac
+	    
+	rm ~/.local/share/lf/files
+
+	}}
+
+
+cmd test1 &{{
     set -- $(cat ~/.local/share/lf/files)
     mode="$1"
     shift
@@ -558,19 +752,36 @@ cmd paste-alt1 &{{
     lf -remote "send $id echo 'done'"
 }}
 
-cmd comparevids %{{
-	if [ $fs# == 2 ];
-		then
-			mpv $fs1 --external-file=$fs2 --lavfi-complex='[vid1] [vid2] hstack [vo]'
-		
-		elif [ $fs# == 4 ];
-		then
-			mpv $fs1 --external-file=$fs2 --external-file=$fs3 --external-file=$fs4 --lavfi-complex='[vid1] [vid2] hstack [t1] ; [vid3] [vid4] hstack [t2] ; [t1] [t2] vstack [vo]'
-		
-		else
-			printf "   invalid number of files (2 or 4 allowed)"
-		fi
+cmd debug %{{
+	
+	echo $fx
+
 }}
+
+
+
+
+cmd selectregex %{{
+		printf " File exists. Override? [y/n] "
+	    	read -r ans
+    		if [ "$ans" != "" ]; then
+
+			get_files() {
+        			if [ "$lf_hidden" = 'false' ]; then
+			        	find . -mindepth 1 -maxdepth 1 -name "$ans" -exec basename \{} ./ \;
+			        else
+		        		find . -mindepth 1 -maxdepth 1 -name "$ans"
+        			fi
+    }
+
+        		#select=$(find . -name "$ans" -exec basename \{} ./ \;)
+       			lf -remote "send $id :unselect; toggle $(get_files)"
+    		else
+       			echo "  aborted"
+    		fi
+
+}}
+
 
 #
 #

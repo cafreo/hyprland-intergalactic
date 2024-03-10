@@ -18,6 +18,7 @@ map <esc> :setfilter '';unselect;clear
 map c copy
 map x cut
 map v paste
+map l "create (soft/hard) link"
 map <enter> open
 map <c-r> reload
 map <delete> delete
@@ -151,8 +152,11 @@ map pS "calculate size of all directories (could take a while)"
 map ps "calculate size of directory"
 map pd "drag and drop"
 map pp "git pull"
-map pc comparevids
-map pt test
+map pc "compare 2 or 4 videos simultaneously"
+
+# TEST
+map Pt selectregex
+map Pd debug
 
 map ma "mount all available devices"
 map mu "eject current media"
