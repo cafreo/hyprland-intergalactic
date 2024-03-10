@@ -4,6 +4,7 @@ cache=$(echo ~/.cache/notify-send)
 
 mkdir -p $cache
 
+sleep 0.2
 msgTag="playerctl"
 csTitle=$(playerctl metadata title)
 csArtist=$(playerctl metadata artist)
@@ -20,8 +21,9 @@ notify-send -C 4533
 if [ $(playerctl status) == "Playing" ]
 then
     notify-send -t 3000 -a "playerctl" "  Now Playing" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
-else
+elif [ $(playerctl status) == "Paused" ]
+then
     notify-send -t 3000 -a "playerctl" "  Paused" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
+else
+    notify-send -t 3000 -a "playerctl" "  Nothing Playing" "<b>No player has been found</b>\n$csArtist" -u low -i "" -r 4533
 fi
-
-#-h string:x-dunst-stack-tag:$msgTag
