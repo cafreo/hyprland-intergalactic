@@ -79,7 +79,7 @@ cmd on-cd &{{
             lf -remote "send $id set sortby time"
             lf -remote "send $id set reverse"
 
-  	    lf -remote "send top"
+  	    lf -remote "send $id top"
             lf -remote "send $id echomsg 󱕇   changed sort mode to time"
             ;;
         *)
@@ -91,7 +91,7 @@ cmd on-cd &{{
 
                 lf -remote "send $id echomsg 󰦛   restored sort mode to $lf_user_prev_sortby"
                 lf -remote "send $id set user_prev_sortby ''"
-                #lf -remote "send top"
+                #lf -remote "send $id top"
             fi
             ;;
     esac
@@ -130,44 +130,44 @@ cmd "sort by natural" &{{
 	lf -remote "send $id set sortby natural"
 	lf -remote "send $id set info size"
 	lf -remote "send $id set noreverse"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 cmd "sort by size" &{{
 	lf -remote "send $id set sortby size"
 	lf -remote "send $id set info size"
 	lf -remote "send $id set dircounts false"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 cmd "sort by time" &{{
 	lf -remote "send $id set sortby time"
 	lf -remote "send $id set info time"
 	lf -remote "send $id set reverse!"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 cmd "sort by ctime" &{{
 	lf -remote "send $id set sortby ctime"
 	lf -remote "send $id set info ctime"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 cmd "sort by atime" &{{
 	lf -remote "send $id set sortby atime"
 	lf -remote "send $id set info atime"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 cmd "sort by extension" &{{
 	lf -remote "send $id set sortby ext"
 	lf -remote "send $id set info size"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 cmd "reverse sorting order" &{{
 	lf -remote "send $id set reverse!"
-	lf -remote "send top"
+	lf -remote "send $id top"
 }}
 
 # COPY FILES AND SHOW PROGRESS
@@ -178,25 +178,26 @@ cmd paste &{{
 	set -- $(cat ~/.local/share/lf/files)
 	mode="$1"
 	shift
-
-	if [[ $@ != "" ]]; then
-	nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
 	
+	if [[ $@ != "" ]]; then
+	lf -remote "send $id echo '󱥸  calculating files...'"
+	nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
+
 	case "$mode" in
         copy)
 		for file in "$@"; do
 			if ! [[ -O "$file" ]]; then
-				printf "   by moving these files the owner and group will be changed to the current user and group. continue? (y/n) "
+				printf "   by copying these files the owner and group will be changed to the current user and group. continue? (y/n) "
 				read -r ans
 				if [ "$ans" = "y" ]; then
 					rsync -arh --info=progress2 -- "$@" . |
 
 					stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 					while IFS= read -r line; do
-					lf -remote "send $id echo $line"
+					lf -remote "send $id echo 󰆏  $line"
        					done
 
-					lf -remote "send :clear;reload"
+					lf -remote "send $id :clear;reload"
 					lf -remote "send $id echo '  $nof file(s) copied successfully'"
 					notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
 					exit 0
@@ -213,10 +214,10 @@ cmd paste &{{
 
 			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 			while IFS= read -r line; do
-        		lf -remote "send $id echo $line"
+        		lf -remote "send $id echo 󰆏  $line"
 			done
 
-			lf -remote "send :clear;reload"	
+			lf -remote "send $id :clear;reload"	
 			lf -remote "send $id echo '  $nof file(s) copied successfully'"
 			notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
 			exit 0	
@@ -233,7 +234,7 @@ cmd paste &{{
 
 			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 			while IFS= read -r line; do
-	        	lf -remote "send $id echo $line"
+	        	lf -remote "send $id echo 󱀱  $line"
 		        done
         
 			if [ find $@ -type f | read ]; then
@@ -241,7 +242,7 @@ cmd paste &{{
 		        else find $@ -type d -empty -delete
 			fi
         
-			lf -remote "send :clear;reload"
+			lf -remote "send $id :clear;reload"
 			lf -remote "send $id echo '  $nof file(s) moved successfully'"
 			notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
   			exit 0
@@ -641,7 +642,27 @@ cmd "calculate size of all directories (could take a while)" ${{
 	#lf -remote $id "send :reload;unselect"
 }}
 
-cmd test &{{
+cmd test ${{
+
+	nof=$(rsync -ar --dry-run --stats "/home/cafreo/temp/" "/home/cafreo/Downloads/" | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
+
+	while [ -z "$nof" ]; do
+		echo '󰪟  calculating files...'
+	        sleep 1
+  		echo '󰪡  calculating files...'
+		sleep 1
+		echo '󰪣  calculating files...'
+		sleep 1
+		echo '󰪥  calculating files...'
+		sleep 1
+	done
+	
+	echo "$nof"
+
+	nof=""
+}}
+
+cmd test2 &{{
 	set -- $(cat ~/.local/share/lf/files)
 	mode="$1"
 	shift
