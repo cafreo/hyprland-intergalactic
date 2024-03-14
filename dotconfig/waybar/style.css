@@ -76,6 +76,8 @@ window#waybar {
 #network,
 #pulseaudio,
 #pulseaudio.microphone,
+#pulseaudio.muted.microphone,
+#pulseaudio-slider,
 #wireplumber,
 #custom-media,
 #tray,
@@ -87,6 +89,7 @@ window#waybar {
 {
     padding: 0 8px;
     margin: 6px 0px;
+    background-color: transparent;
 }
 
 #submap {
@@ -100,6 +103,7 @@ window#waybar {
 
 #pulseaudio.muted,
 #pulseaudio.microphone.source-muted,
+#pulseaudio.muted.source-muted,
 #network.disconnected
 {
     background-color: rgba(203, 34, 17, 0.3);
@@ -160,4 +164,24 @@ tooltip label {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+}
+
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 32px;
+    border-radius: 10px;
+    background-color: transparent;
+}
+#pulseaudio-slider highlight {
+    min-width: 32px;
+    border-radius: 10px;
+    background-image: linear-gradient(0deg, rgba(238, 176, 56, 0.4), rgba(238, 176, 56, 0.4));
 }
