@@ -5,11 +5,11 @@
 		"serverImage": false
 	},
 	"obs": {
-		"enabled": false,
+		"enabled": true,
 		"url": "",
-		"type": "local",
+		"type": "web",
 		"path": "",
-		"pollingInterval": 2000
+		"pollingInterval": "1000"
 	},
 	"transcode": false,
 	"resume": true,
@@ -42,7 +42,7 @@
 	},
 	"sidebar": {
 		"expand": true,
-		"width": "232px",
+		"width": "214px",
 		"coverArt": true,
 		"selected": [
 			"dashboard",
@@ -79,7 +79,7 @@
 			"serverSide": false
 		}
 	},
-	"volume": 0.16,
+	"volume": 0.13,
 	"audioDeviceId": "default",
 	"seekForwardInterval": 5,
 	"seekBackwardInterval": 5,
@@ -99,7 +99,7 @@
 	"albumViewType": "grid",
 	"albumSortDefault": "random",
 	"musicSortDefault": "random",
-	"artistViewType": "list",
+	"artistViewType": "grid",
 	"musicListFontSize": "14",
 	"musicListRowHeight": "60.0",
 	"randomPlaylistTrackCount": 50,
@@ -123,11 +123,11 @@
 	"miniListRowHeight": "40",
 	"genreListFontSize": "14",
 	"genreListRowHeight": "50",
-	"retainWindowSize": true,
+	"retainWindowSize": false,
 	"defaultWindowWidth": 1280,
 	"defaultWindowHeight": 720,
 	"savedWindowSize": [
-		1888,
+		782,
 		1004
 	],
 	"savedWindowPos": [
@@ -1774,44 +1774,47 @@
 			"resizable": true,
 			"width": 50,
 			"label": "# (Drag/Drop)",
-			"uniqueId": "m5yfkW2ywGV_9PE9DU8DD"
+			"uniqueId": "A_p9MFR7c5VU0AZLOXYSN"
 		},
 		{
 			"id": "Title",
 			"dataKey": "combinedtitle",
 			"alignment": "left",
+			"flexGrow": 5,
 			"label": "Title (Combined)",
-			"uniqueId": "EoDe_K0n7QdsFmoUP0eWn",
-			"resizable": false,
-			"flexGrow": 5
+			"uniqueId": "4yj_KdxwqhWxy41bREB82"
 		},
 		{
 			"id": "Album",
 			"dataKey": "album",
 			"alignment": "left",
+			"flexGrow": 3,
 			"label": "Album",
-			"uniqueId": "5FalDDBWEm54_f7vapv11",
-			"resizable": false,
-			"flexGrow": 3
+			"uniqueId": "IBRQMyRLRYJJKxagzNLur"
 		},
 		{
 			"id": "Duration",
 			"dataKey": "duration",
 			"alignment": "center",
+			"flexGrow": 2,
 			"label": "Duration",
-			"uniqueId": "Zhym8a0oCHlGIln34f02Z",
-			"rowIndex": 5,
-			"resizable": true
+			"uniqueId": "giqRyrSp202iTGLtT29F0"
 		},
 		{
-			"width": 50,
-			"id": "Fav",
-			"dataKey": "starred",
+			"id": "Created",
+			"dataKey": "created",
+			"alignment": "left",
+			"flexGrow": 2,
+			"label": "Created",
+			"uniqueId": "9rPIPDsG6wYN3B1oqJWny"
+		},
+		{
+			"id": "Plays",
+			"dataKey": "playCount",
 			"alignment": "center",
-			"label": "Favorite",
-			"uniqueId": "xiivP4WfoJeVt-VSJv_DZ",
-			"rowIndex": 4,
-			"resizable": true
+			"flexGrow": 1,
+			"label": "Play Count",
+			"uniqueId": "hWIbKji_qUT6EUkcxlnek"
 		}
 	],
 	"albumListColumns": [
@@ -1822,7 +1825,7 @@
 			"resizable": true,
 			"width": 50,
 			"label": "#",
-			"uniqueId": "wtp9YnP4XjH1cW_qRw0f1"
+			"uniqueId": "ueU_i4XKXjhbSsAl0vcK1"
 		},
 		{
 			"id": "Title",
@@ -1830,7 +1833,7 @@
 			"alignment": "left",
 			"flexGrow": 5,
 			"label": "Title (Combined)",
-			"uniqueId": "Klf6eDMB-PyUe-pHIVzK1"
+			"uniqueId": "EJqZWYFtQTjGfZXs8VIzz"
 		},
 		{
 			"id": "Tracks",
@@ -1838,7 +1841,7 @@
 			"alignment": "center",
 			"flexGrow": 1,
 			"label": "Track Count",
-			"uniqueId": "ndqk_7qlFG53viBq4Lshq"
+			"uniqueId": "tfYaCP5HnXFEQFDvk0KkR"
 		},
 		{
 			"id": "Duration",
@@ -1846,7 +1849,7 @@
 			"alignment": "center",
 			"flexGrow": 2,
 			"label": "Duration",
-			"uniqueId": "wX6crxsDhJgj2GE8WAc1S"
+			"uniqueId": "s_Rag70psLw93MWo_HypT"
 		},
 		{
 			"id": "Fav",
@@ -1854,7 +1857,7 @@
 			"alignment": "center",
 			"flexGrow": 1,
 			"label": "Favorite",
-			"uniqueId": "9WA8jtQw62t1I5DGD2oK8"
+			"uniqueId": "k_xiqXMJaP9AyyAuwnMTv"
 		}
 	],
 	"playlistListColumns": [

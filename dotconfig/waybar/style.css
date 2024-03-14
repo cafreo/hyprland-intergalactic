@@ -102,6 +102,7 @@ window#waybar {
 }
 
 #pulseaudio.muted,
+#pulseaudio.muted2,
 #pulseaudio.microphone.source-muted,
 #pulseaudio.muted.source-muted,
 #network.disconnected

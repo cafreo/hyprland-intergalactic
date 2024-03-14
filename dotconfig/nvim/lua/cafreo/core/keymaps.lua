@@ -2,6 +2,16 @@ local opts = { noremap = true, silent = false }
 
 local keymap = vim.keymap.set
 
+-- Functions
+
+function toggle_relativenumbers()
+    if (vim.opt.relativenumber == "true") then
+        vim.opt.relativenumber="false";
+    else
+        vim.opt.relativenumber="true";
+    end
+end
+
 -- Modes
 --   normal_mode = "n",
 --   insert_mode = "i",
@@ -16,6 +26,9 @@ local keymap = vim.keymap.set
 -- Quit neovim / go back to normal mode
 keymap("n", "<C-q>", vim.cmd.quit)
 keymap("i", "<C-q>", "<Esc>")
+
+-- Toggle settings
+keymap({"n", "i"}, "<C-n>", 'toggle_relativenumbers()<CR>')
 
 -- Copy to system clipboard
 keymap({"n", "v", "i"}, "<C-c>", '"+y')
@@ -55,6 +68,10 @@ keymap({"n"}, "q", ":bw<CR>")
 --keymap({"n"}, "/", ":buffer 7<CR>")
 --keymap({"n"}, "(", ":buffer 8<CR>")
 --keymap({"n"}, ")", ":buffer 9<CR>")
+
+-- Find
+keymap({"n"}, "f", "/")
+keymap({"n", "i"}, "<C-f>", '<C-o>:%s///gci<left><left><left><left>')
 
 -- Move text up and down
 keymap("v", "<S-Up>", ":m .+1<CR>==")

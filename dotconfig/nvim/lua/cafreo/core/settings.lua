@@ -25,7 +25,7 @@ vim.opt.showtabline = 2
 vim.opt.splitbelow = true
 vim.opt.splitright = true 
 vim.opt.cursorline = true
-vim.opt.relativenumber = false   
+vim.opt.relativenumber = true 
 vim.opt.numberwidth = 2  
 
 vim.opt.wrap = false

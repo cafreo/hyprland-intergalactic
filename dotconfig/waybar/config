@@ -84,12 +84,12 @@
 	"pulseaudio": {
 		// "scroll-step": 1, // %, can be a float
 		"states": {
-			"muted": 0,
+			"muted2": 0,
 		},
 		"format": "{icon}",
 		"format-muted": "",
+		"format-muted2": "",
 		"format-icons": {
-			"muted": "",
 			"headphone": "",
 			"hands-free": "",
 			"headset": "",
