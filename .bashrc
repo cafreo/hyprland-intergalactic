@@ -38,6 +38,7 @@ alias ip="curl ifconfig.me"
 alias fetch="neofetch"
 alias conv2mp4="ffmpeg -i $1 -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac ${s%.*}.mp4"
 alias searchssh="sudo nmap -p 22 192.168.178.0/24"
+alias rsync="rsync -arh --info=progress2"
 
 # ALIASES APPS
 alias lf=lfcd

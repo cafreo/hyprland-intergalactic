@@ -25,7 +25,7 @@ window {
 	anchor:			center;
 	x-offset:		0;
 	y-offset:		0;
-	border-color:		@selected;
+	border-color:		@active;
 }
 
 /** MAINBOX **/
@@ -33,7 +33,7 @@ window {
 mainbox {
 	padding:		6px;
 	border-radius:          0px 0px 14px 14px;
-	background-image:	@selected;
+	background-image:	@active;
 	children:		[ "horibox", "inputbar", "listview" ];
 }
 

@@ -314,25 +314,25 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     format = "%s\n%b\n%p"
-    background = "#201c28f2"
-    foreground = "#C8CACCf2"
-    highlight = "#C8CACCf2"
+    background = "#201c28f5"
+    foreground = "#C8CACCf5"
+    highlight = "#C8CACCf5"
     frame_color = "#EC9B3199"
     timeout = 4
     # Icon for notifications with low urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_normal]
-    background = "#201c28f2"
-    foreground = "#C8CACCf2"
+    background = "#201c28f5"
+    foreground = "#C8CACCf5"
     frame_color = "#DE5F21b3"
     timeout = 8
     # Icon for notifications with normal urgency, uncomment to enable
     #default_icon = /path/to/icon
 
 [urgency_critical]
-    background = "#201c28f2"
-    foreground = "#C8CACCf2"
+    background = "#201c28f5"
+    foreground = "#C8CACCf5"
     frame_color = "#D02311cc"
     timeout = 0
     # Icon for notifications with critical urgency, uncomment to enable
