@@ -14,7 +14,7 @@
 	"modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
 
 	// MODULES CONFIG
-	
+
 	"image#user": {
 		"exec": "echo ~/.config/icons/user.png",
 		"size": 32,
@@ -76,13 +76,18 @@
 		"format-source": "",
 		"format-source-muted": "",
 		"tooltip": true,
+		"scroll-step": 0,
 		"tooltip-format": "{format_source} {volume}%",
 		"on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
 	},
 
 	"pulseaudio": {
 		// "scroll-step": 1, // %, can be a float
+		"states": {
+			"muted": 0,
+		},
 		"format": "{icon}",
+		"format-muted": "",
 		"format-icons": {
 			"muted": "",
 			"headphone": "",
@@ -91,15 +96,14 @@
 			"phone": "",
 			"portable": "",
 			"car": "",
-			"default": ["", "", ""]
+			"default": ["", ""]
 		},
 		"tooltip": true,
 		"tooltip-format": "{icon} {volume}%",
 		"scroll-step": 5,
-		"on-click": "pactl set-sink-port 0 analog-output-lineout",
-		"on-click-right": "pactl set-sink-port 0 analog-output-headphones",
-		"on-click-middle": "pavucontrol",
-		//"on-click-middle": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+		"on-click": "~/.config/waybar/scripts/audio-output-switch.sh",
+		"on-click-right": "pavucontrol",
+		"on-click-middle": "~/.config/notify-send/scripts/notify_volumectl.sh toggle",
 	},
 
 	"network": {
@@ -194,5 +198,12 @@
 		"exec": "wttrbar",
 		"return-type": "json"
 	},
+
+
+"pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "vertical"
+},
 
 }
