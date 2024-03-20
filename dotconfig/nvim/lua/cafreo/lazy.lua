@@ -18,4 +18,3 @@ require("lazy").setup("cafreo.plugins",
 			notify = false,
 		},
 })
-
