@@ -61,6 +61,7 @@ map '§' :set ratios '1:4'; set preview true
 # MAKE KEYBINDS
 map md "make directory"
 map mf "make file"
+map mp "make playlist"
 
 # CHANGE KEYBINDS
 map po "change owner"

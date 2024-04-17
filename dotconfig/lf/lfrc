@@ -256,31 +256,6 @@ fi
  
 }}
 
-# CREATE (SOFT/HARD) LINK
-
-cmd "create (soft/hard) link" %{{
-    set -- $(cat ~/.local/share/lf/files)
-    mode="$1"
-    shift
-    if [ "$#" -lt 1 ]; then
-        lf -remote "send $id echo '  no files selected to create (soft/hard) link'"
-        exit 0
-    fi
-    case "$mode" in
-        # symbolically copy mode is indicating a soft link
-        copy)
-	ln -sr -t . -- "$@"
-	lf -remote "send $id echo '󰴛  soft link created'"
-	;;
-        # while a move mode is indicating a hard link
-        move) ln -t . -- "$@"
-	lf -remote "send $id echo '󰴚  hard link created'"
-	;;
-    esac
-    rm ~/.local/share/lf/files
-    lf -remote "send $id unselect"
-}}
-
 # COPY FILE NAME
 
 cmd "copy filename" &{{
@@ -356,6 +331,51 @@ cmd "make file" %{{
     read ans
     touch $ans
     lf -remote "send $id echo '󰝒  created file \"$ans\"'"
+}}
+
+# CREATE (SOFT/HARD) LINK
+
+cmd "create (soft/hard) link" %{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echo '  no files selected to create (soft/hard) link'"
+        exit 0
+    fi
+    case "$mode" in
+        # symbolically copy mode is indicating a soft link
+        copy)
+	ln -sr -t . -- "$@"
+	lf -remote "send $id echo '󰴛  soft link created'"
+	;;
+        # while a move mode is indicating a hard link
+        move) ln -t . -- "$@"
+	lf -remote "send $id echo '󰴚  hard link created'"
+	;;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send $id unselect"
+}}
+
+# CREATE PLAYLIST FILE
+
+cmd "make playlist" %{{
+	printf " 󰲸  create new playlist: "
+    read ans
+	playlist=$ans.m3u
+
+	if [ -f $playlist ]
+	then rm $playlist
+	fi
+
+	echo "#EXTM3U" >> $playlist
+	echo "#PLAYLIST:$ans" >> $playlist
+
+	for file in "$fx"; do
+		echo "$file" >> $playlist
+	done
+	lf -remote "send $id echo '󰲸  created playlist \"$ans\"'"
 }}
 
 # CHANGE
@@ -460,34 +480,40 @@ cmd unarchive &{{
 
 cmd "drag and drop" &{{
 	dragon-drop -a -x -T -i -s 96 $fx
+	lf -remote "send $id :reload;unselect"
 }}
 
 # CONVERT FILES
 
 cmd "convert to mp4" &{{
 	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
-	lf -remote "send $id echo '󰗠  successfully converted to mp4'" 
+	lf -remote "send $id echo '󰗠  successfully converted to mp4'"
+	lf -remote "send $id :reload;unselect"
 }}
 
 cmd "convert to gif" &{{
 	ffmpeg -i $fx -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${f%.*}.gif"
-	lf -remote "send $id echo '󰗠  successfully converted to gif'" 
+	lf -remote "send $id echo '󰗠  successfully converted to gif'"
+	lf -remote "send $id :reload;unselect"
 }}
 
 
 cmd "convert to mp3" &{{	
 	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
-	lf -remote "send $id echo '󰗠  successfully converted to mp3'" 
+	lf -remote "send $id echo '󰗠  successfully converted to mp3'"
+	lf -remote "send $id :reload;unselect"
 }}
 
 cmd "convert to png" &{{
 	ffmpeg -i $fx "${f%.*}.png"
-	lf -remote "send $id echo '󰗠  successfully converted to png'" 
+	lf -remote "send $id echo '󰗠  successfully converted to png'"
+	lf -remote "send $id :reload;unselect"
 }}
 
 cmd "convert to jpg" &{{
 	ffmpeg -i $fx "${f%.*}.jpg"
-	lf -remote "send $id echo '󰗠  successfully converted to jpg'" 
+	lf -remote "send $id echo '󰗠  successfully converted to jpg'"
+	lf -remote "send $id :reload;unselect"
 }}
 
 # OPEN FILE IN SPECIFIED APP
@@ -727,7 +753,6 @@ cmd test2 &{{
 
 	}}
 
-
 cmd test1 &{{
     set -- $(cat ~/.local/share/lf/files)
     mode="$1"
@@ -752,34 +777,11 @@ cmd test1 &{{
     done  
 }}
 
-# deprecated version. requires advcp
-cmd paste-alt1 &{{
-    set -- $(cat ~/.local/share/lf/files)
-    mode="$1"
-    shift
-    case "$mode" in
-        copy)
-            advcp -gri "$@" . | grep -Po --line-buffered "(?<=^\033\[K).+%$" | sed -nu 'n;p' |
-            while IFS= read -r line; do
-                lf -remote "send $id echo '$line'"
-            done
-            ;;
-        move)
-            mv -n -- "$@" .
-            ;;
-    esac
-    rm ~/.local/share/lf/files
-    lf -remote "send clear"
-    lf -remote "send $id echo 'done'"
-}}
-
 cmd debug %{{
 	
 	echo $fx
 
 }}
-
-
 
 
 cmd selectregex %{{
