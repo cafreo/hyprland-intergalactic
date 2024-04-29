@@ -39,7 +39,7 @@
 
  # scripts
  - rofi: [file-selector](https://gitlab.com/matclab/rofi-file-selector/-/tree/master/), [screenshot](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-screenshot.sh), [networkmanager](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-networkmanager.sh)
- - dunst: [hyprpicker](https://github.com/hyprwm/hyprpicker), [playerctl](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/dunst/dunst_playerctl.sh), [volumectl](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/dunst/dunst_volumectl.sh)
+ - notify: [hyprpicker](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_hyprpicker.sh), [playerctl](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_playerctl.sh), [volumectl](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_volumectl.sh)
 
  # misc
 
