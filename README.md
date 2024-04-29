@@ -51,6 +51,7 @@
  - [x] dolphin rice
  - [ ] combine rofi themes into one file (sorta kinda done)
  - [x] screenshot menu
+ - [ ] hyprdots port
 
  # credits
 thanks to [chris titus tech](https://github.com/ChrisTitusTech) for making me switch to arch and hyprland with his [hyprland-titus](https://github.com/ChrisTitusTech/hyprland-titus) project, [eric murphy](https://github.com/ericmurphyxyz) for getting some of the scripting done, [learn linux tv](https://www.youtube.com/channel/UCxQKHvKbmSzGMvUrVtJYnUA) for his [bash scripting tutorial series](https://www.youtube.com/playlist?list=PLT98CRl2KxKGj-VKtApD8-zCqSaN2mD4w) and all the developers of the projects that are listed above.
