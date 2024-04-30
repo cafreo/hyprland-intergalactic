@@ -35,3 +35,7 @@ vim.opt.list = false
 vim.opt.hidden = false
 vim.opt.splitbelow = false
 vim.opt.splitright = false
+
+vim.opt.expandtab = false
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4

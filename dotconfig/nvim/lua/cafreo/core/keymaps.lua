@@ -39,7 +39,6 @@ keymap({"n", "c"}, "<C-v>", ':set paste<CR>"+p<CR>:set nopaste<CR>')
 keymap("i", "<C-v>", '<C-r><C-o>+')
 keymap({"v"}, "<C-v>", '"_dP')
 
-
 -- Cut to system clipboard
 keymap({"v", "i"}, "<C-x>", '"+x')
 
@@ -47,6 +46,9 @@ keymap({"v", "i"}, "<C-x>", '"+x')
 keymap({"v"}, "<Bs>", '"_d')
 keymap({"v"}, "<Del>", '"_d')
 keymap({"n", "v", "i"}, "<S-Del>", '"_DELETE')
+
+-- Search and replace
+keymap({"n"}, "F", ':%s/-/-/g')
 
 -- Undo and Redo
 keymap({"n"}, "<C-z>", "u")
