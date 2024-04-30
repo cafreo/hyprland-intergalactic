@@ -60,6 +60,7 @@ map '§' :set ratios '1:4'; set preview true
 
 # MAKE KEYBINDS
 map md "make directory"
+map mD "make directory from selected files"
 map mf "make file"
 map mp "make playlist"
 
@@ -146,6 +147,20 @@ map Gx cd /mnt/X-POTRO-SSD/
 map Gm cd /mnt/
 map Gu cd /run/media/cafreo/
 
+# TMUX
+map Xn "open new tab"
+map Xa "create new session"
+map Xq "close current tab"
+map XQ "close current session"
+map X<left> "open previous tab"
+map X<right> "open next tab"
+map X<s-left> "move tab to left"
+map X<s-right> "move tab to right"
+map X1 "open tab 1"
+map X2 "open tab 2"
+map X3 "open tab 3"
+map X4 "open tab 4"
+
 # MISC
 map pf fzf_jump
 map pS "calculate size of all directories (could take a while)"
@@ -153,9 +168,12 @@ map ps "calculate size of directory"
 map pd "drag and drop"
 map pp "git pull"
 map pc "compare 2 or 4 videos simultaneously"
+map pt "copy text in image to clipboard"
+map pr "reload config file"
+map pR "reload config file for all instances"
 
 # TEST
-map Pt test
+map Pt test3
 map Pr selectregex
 map Pd debug
 
@@ -168,5 +186,5 @@ map mu "eject current media"
 #map ms mark-save
 
 # COMMAND MODE
-cmap <tab> cmd-menu-complete
+cmap <tab> "command autocomplete"
 

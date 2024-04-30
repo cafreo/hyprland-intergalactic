@@ -326,6 +326,14 @@ cmd "make directory" %{{
     lf -remote "send $id echo '󰉗  created directory \"$ans\"'"
 }}
 
+cmd "make directory from selected files" %{{
+    printf " 󰉗  create new directory: "
+    read ans
+    mkdir $ans
+	mv $fx $ans
+    lf -remote "send $id echo '󰉗  created directory \"$ans\"'"
+}}
+
 cmd "make file" %{{
     printf " 󰝒  create new file: "
     read ans
@@ -376,6 +384,7 @@ cmd "make playlist" %{{
 		echo "$file" >> $playlist
 	done
 	lf -remote "send $id echo '󰲸  created playlist \"$ans\"'"
+	lf -remote 'send :reload;unselect'	
 }}
 
 # CHANGE
@@ -467,7 +476,7 @@ cmd zipe ${{
 cmd unarchive &{{
   case "$f" in
       *.zip) unzip "$f" -d "${f%.zip}" ;;
-      *.7z) 7za e "$f" -o"${f%.7z}" ;;
+      *.7z) 7za e "$f" -o "${f%.7z}" ;;
       *.tar.gz) tar -xzvf "$f" ;;
       *.tar.xz) tar -xvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
@@ -621,6 +630,86 @@ cmd delete %{{
 	fi
 }}
 
+# TMUX / TABS
+
+cmd "open new tab" ${{
+	curdir=printf $(pwd)
+	tmux new-window -c "$curdir" "lf"
+}}
+
+cmd "create new session" ${{
+	lf -remote "send $id 'quit'"
+	tmux new-session "lf"
+}}
+
+cmd "close current tab" ${{
+	tmux kill-window
+}}
+
+cmd "close current session" ${{
+	printf " 󰭌  do you really want to close the current session? [y/n] "
+	read -r ans
+	if [ "$ans" = "y" ]; then
+		tmux kill-session
+	else
+		echo "  aborted"
+	fi
+}}
+
+cmd "open previous tab" ${{
+	tmux select-window -t -1
+}}
+
+cmd "open next tab" ${{
+	tmux select-window -t +1
+}}
+
+cmd "move tab to left" ${{
+	tmux swap-window -t -1
+	tmux select-window -t -1
+}}
+
+cmd "move tab to right" ${{
+	tmux swap-window -t +1
+	tmux select-window -t +1
+}}
+
+cmd "open tab 1" ${{
+	tmux select-window -t:1
+}}
+
+cmd "open tab 2" ${{
+	tmux select-window -t:2
+}}
+
+cmd "open tab 3" ${{
+	tmux select-window -t:3
+}}
+
+cmd "open tab 4" ${{
+	tmux select-window -t:4
+}}
+
+# COMMAND MODE
+
+cmd "command autocomplete" &{{
+    if [ "$lf_mode" = "command" ]; then
+        lf -remote "send $id complete-cmd"
+    else
+        lf -remote "send $id cmd-enter"
+    fi
+}}
+
+cmd complete-cmd :{{
+    # position cursor at the end of the first word
+    #cmd-home
+    cmd-word
+
+    # perform tab completion before running the command
+    cmd-complete
+    #cmd-enter
+}}
+
 # MISC
 
 cmd "git pull" %{{
@@ -659,6 +748,23 @@ nof=$(tcount $fx)
 	lf -remote "send $id :clear;unselect"
 }}
 
+cmd "copy text in image to clipboard" %{{
+	printf "   specify the language code: "
+    read -r ans
+
+	output=$(tesseract $f - -l $ans)
+	echo $output | wl-copy -o
+	
+	lf -remote "send $id echo '   text copied to clipboard '"
+}}
+
+cmd "reload config file" ${{
+	lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+cmd "reload config file for all instances" ${{
+	lf -remote "send source ~/.config/lf/lfrc"
+}}
 
 # WIP
 cmd "calculate size of all directories (could take a while)" ${{
