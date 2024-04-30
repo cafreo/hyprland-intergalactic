@@ -4,51 +4,26 @@
 
 source ~/.bashrc_cafreo
 
-# If not running interactively, don't do anything
+# SETTINGS
+source /usr/share/doc/pkgfile/command-not-found.bash
 [[ $- != *i* ]] && return
-
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-PS1='[\u@\h \W]\$ '
-
 HISTSIZE=2000
 HISTFILESIZE=2000
-
-export PATH=$PATH:/usr/local/bin:/usr/bin:/usr/bin/vendor_perl
-
-# STARSHIP PROMPT
+# starship
 eval "$(starship init bash)"
 PS1="\e[1;33m\u@\h \W$ \e[0;0m"
+#PS1='[\u@\h \W]\$ '
 
-# ALIASES SYSTEM
-# pacman/yay
-alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rs -"
-alias yayf="yay -Suy --devel; flatpak update; pacclean"
-alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
-alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
-# tools
-alias ssh="kitty +kitten ssh"
-alias gduh="gdu / --ignore-dirs /media,/mnt"
-alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, type'"
-alias fstype="findmnt -n -o FSTYPE -T ."
-alias swaylock="swaylock -C ~/.config/swaylock/config"
-alias computer="ollama run dolphin-mistral"
-alias mount!="sudo mount -av"
-alias ip="curl ifconfig.me"
-alias fetch="neofetch"
-alias conv2mp4="ffmpeg -i $1 -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac ${s%.*}.mp4"
-alias searchssh="sudo nmap -p 22 192.168.178.0/24"
-alias rsync="rsync -arh --info=progress2"
+# COLORS
+# ls/lf
+eval "$(dircolors ~/.dircolors)";
+# fzf
+export FZF_DEFAULT_OPTS='--color=fg:#c8cacc,bg:#201c28,hl:#de5f21 --color=fg+:#c8cacc,bg+:#2e2a36,hl+:#f5b83a --color=info:#da6a4c,prompt:#c8cacc,pointer:#f5b83a --color=marker:#f5b83a,spinner:#da6a4c,header:#74747a'
 
-# ALIASES APPS
-alias lf=lfcd
-alias nv="nvim"
-alias vim="nvim"
-alias ytdl="yt-dlp"
-alias ytdla="yt-dlp -x"
-alias minexmr='qutebrowser www.redditp.com/r/monerochan &>/dev/null & sudo xmrig'
-
-#alias setappvolume="set-app-volume"
+# AUTOSTART
+#if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#  exec tmux
+#fi
 
 # DEFAULT APPS
 export OPENER=/usr/bin/xdg-open
@@ -64,36 +39,50 @@ export VIDEO_EDITOR=/usr/bin/kdenlive
 export AUDIO_PLAYER=/usr/bin/mpv
 export AUDIO_EDITOR=/usr/bin/tenacity
 
-# lf wrapper
-LFCD="$HOME/.config/lf/lfcd.sh"
-     if [ -f "$LFCD" ]; then
-         source "$LFCD"
-     fi 
-
-# qt5
-#export QT_STYLE_OVERRIDE=qt5ct-style
-#export QT_QPA_PLATFORM=wayland
-#export QT_QPA_PLATFORMTHEME=qt5ct
-#export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export PATH=$PATH:/usr/local/bin:/usr/bin:/usr/bin/vendor_perl
 
 # CURSOR
 export XCURSOR_THEME=pixelfun3
 export XCURSOR_SIZE=36
 
+# ALIASES
+# pacman/yay
+alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rns -; yay -Yc"
+alias yayf="yay -Suy --devel; flatpak update; pacclean"
+alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
+alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
+alias pacdep="comm -23 <(pacman -Qtq) <(pacman -Qsq base base-devel)"
+# tools
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias ssh="kitty +kitten ssh"
+alias gduh="gdu / --ignore-dirs /media,/mnt"
+alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, type'"
+alias fstype="findmnt -n -o FSTYPE -T ."
+alias swaylock="swaylock -C ~/.config/swaylock/config"
+alias computer="ollama run dolphin-mistral"
+alias mount!="sudo mount -av"
+alias ip="curl ifconfig.me"
+alias fetch="neofetch"
+alias conv2mp4="ffmpeg -i $1 -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac ${s%.*}.mp4"
+alias searchssh="sudo nmap -p 22 192.168.178.0/24"
+alias rsync="rsync -arh --info=progress2"
+# apps
+alias lf=lfcd
+alias lfd="lf -config /dev/null"
+alias nv="nvim"
+alias vim="nvim"
+alias ytdl="yt-dlp"
+alias ytdla="yt-dlp -x"
+alias minexmr='qutebrowser www.redditp.com/r/monerochan &>/dev/null & sudo xmrig'
 
+# FUNCTIONS
 
-#LS_COLORS='OTHER_WRITABLE=34;46;46:STICKY_OTHER_WRITABLE=31;46;46:rs=0:di=01;33:ln=01;36:mh=00:pi=40;33:so=01;92:do=01;92:bd=40;33;01:cd=40;33;01:or=40;36;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=33;42:st=37;44:ex=01;36:*.tar=01;36:*.tgz=01;36:*.arc=01;36:*.arj=01;36:*.taz=01;36:*.lha=01;36:*.lz4=01;36:*.lzh=01;36:*.lzma=01;36:*.tlz=01;36:*.txz=01;36:*.tzo=01;36:*.t7z=01;36:*.zip=01;36:*.z=01;36:*.dz=01;36:*.gz=01;36:*.lrz=01;36:*.lz=01;36:*.lzo=01;36:*.xz=01;36:*.zst=01;36:*.tzst=01;36:*.bz2=01;36:*.bz=01;36:*.tbz=01;36:*.tbz2=01;36:*.tz=01;36:*.deb=01;36:*.rpm=01;36:*.jar=01;36:*.war=01;36:*.ear=01;36:*.sar=01;36:*.rar=01;36:*.alz=01;36:*.ace=01;36:*.zoo=01;36:*.cpio=01;36:*.7z=01;36:*.rz=01;36:*.cab=01;36:*.wim=01;36:*.swm=01;36:*.dwm=01;36:*.esd=00;36:*.avif=00;92:*.jpg=00;92:*.jpeg=00;92:*.mjpg=00;92:*.mjpeg=00;92:*.gif=00;92:*.bmp=00;92:*.pbm=00;92:*.pgm=00;92:*.ppm=00;92:*.tga=00;92:*.xbm=00;92:*.xpm=00;92:*.tif=00;92:*.tiff=00;92:*.png=00;92:*.svg=00;92:*.svgz=00;92:*.mng=00;92:*.pcx=00;92:*.mov=00;92:*.mpg=00;92:*.mpeg=00;92:*.m2v=00;92:*.mkv=00;92:*.webm=00;92:*.webp=00;92:*.ogm=00;92:*.mp4=00;92:*.m4v=00;92:*.mp4v=00;92:*.vob=00;92:*.qt=00;92:*.nuv=00;92:*.wmv=00;92:*.asf=00;92:*.rm=00;92:*.rmvb=00;92:*.flc=00;92:*.avi=00;92:*.fli=00;92:*.flv=00;92:*.gl=00;92:*.dl=00;92:*.xcf=00;92:*.xwd=00;92:*.yuv=00;92:*.cgm=00;92:*.emf=00;92:*.ogv=00;92:*.ogx=00;92:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:';
-#export LS_COLORS
+function lfcd () {
+    # `command` is needed in case `lfcd` is aliased to `lf`
+    cd "$(command lf -print-last-dir "$@")"
+}
 
-# ls/lf colors
-eval "$(dircolors ~/.dircolors)";
-
-# fzf colors
-export FZF_DEFAULT_OPTS='--color=fg:#c8cacc,bg:#201c28,hl:#de5f21 --color=fg+:#c8cacc,bg+:#2e2a36,hl+:#f5b83a --color=info:#da6a4c,prompt:#c8cacc,pointer:#f5b83a --color=marker:#f5b83a,spinner:#da6a4c,header:#74747a'
-
-source /usr/share/doc/pkgfile/command-not-found.bash
-
-# SCRIPTS
 function cv() {
 	if [ $# == 2 ];
 	then
@@ -128,3 +117,8 @@ function ya() {
 	fi
 	rm -f -- "$tmp"
 }
+
+# DEPRECATED
+
+#LS_COLORS='OTHER_WRITABLE=34;46;46:STICKY_OTHER_WRITABLE=31;46;46:rs=0:di=01;33:ln=01;36:mh=00:pi=40;33:so=01;92:do=01;92:bd=40;33;01:cd=40;33;01:or=40;36;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=33;42:st=37;44:ex=01;36:*.tar=01;36:*.tgz=01;36:*.arc=01;36:*.arj=01;36:*.taz=01;36:*.lha=01;36:*.lz4=01;36:*.lzh=01;36:*.lzma=01;36:*.tlz=01;36:*.txz=01;36:*.tzo=01;36:*.t7z=01;36:*.zip=01;36:*.z=01;36:*.dz=01;36:*.gz=01;36:*.lrz=01;36:*.lz=01;36:*.lzo=01;36:*.xz=01;36:*.zst=01;36:*.tzst=01;36:*.bz2=01;36:*.bz=01;36:*.tbz=01;36:*.tbz2=01;36:*.tz=01;36:*.deb=01;36:*.rpm=01;36:*.jar=01;36:*.war=01;36:*.ear=01;36:*.sar=01;36:*.rar=01;36:*.alz=01;36:*.ace=01;36:*.zoo=01;36:*.cpio=01;36:*.7z=01;36:*.rz=01;36:*.cab=01;36:*.wim=01;36:*.swm=01;36:*.dwm=01;36:*.esd=00;36:*.avif=00;92:*.jpg=00;92:*.jpeg=00;92:*.mjpg=00;92:*.mjpeg=00;92:*.gif=00;92:*.bmp=00;92:*.pbm=00;92:*.pgm=00;92:*.ppm=00;92:*.tga=00;92:*.xbm=00;92:*.xpm=00;92:*.tif=00;92:*.tiff=00;92:*.png=00;92:*.svg=00;92:*.svgz=00;92:*.mng=00;92:*.pcx=00;92:*.mov=00;92:*.mpg=00;92:*.mpeg=00;92:*.m2v=00;92:*.mkv=00;92:*.webm=00;92:*.webp=00;92:*.ogm=00;92:*.mp4=00;92:*.m4v=00;92:*.mp4v=00;92:*.vob=00;92:*.qt=00;92:*.nuv=00;92:*.wmv=00;92:*.asf=00;92:*.rm=00;92:*.rmvb=00;92:*.flc=00;92:*.avi=00;92:*.fli=00;92:*.flv=00;92:*.gl=00;92:*.dl=00;92:*.xcf=00;92:*.xwd=00;92:*.yuv=00;92:*.cgm=00;92:*.emf=00;92:*.ogv=00;92:*.ogx=00;92:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.swp=00;90:*.tmp=00;90:*.dpkg-dist=00;90:*.dpkg-old=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:';
+#export LS_COLORS
