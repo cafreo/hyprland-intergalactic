@@ -23,12 +23,27 @@ end
 --vim.g.mapleader = " "
 --keymap("n", "<leader>pv", vim.cmd.Ex)
 
+-- Reload config file
+keymap({"n", "i", "v"}, "<C-r>", ":so ~/.config/nvim/init.lua <CR>:so % <CR>")
+
 -- Quit neovim / go back to normal mode
 keymap("n", "<C-q>", vim.cmd.quit)
 keymap("i", "<C-q>", "<Esc>")
 
 -- Toggle settings
 keymap({"n", "i"}, "<C-n>", 'toggle_relativenumbers()<CR>')
+
+-- Select
+-- all
+keymap({"n", "i"}, "<C-a>", 'ggVG')
+-- current line
+keymap({"n", "i"}, "<C-l>", 'V')
+
+-- Format code
+keymap({"n", "i", "v"}, "<C-i>", 'gg=G')
+
+-- Insert at start of line
+keymap({"n", "i", "v"}, "<C-b>", ':1,1s/^/-/<left><left><left><left><left><left>')
 
 -- Copy to system clipboard
 keymap({"n", "v", "i"}, "<C-c>", '"+y')

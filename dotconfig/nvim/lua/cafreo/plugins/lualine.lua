@@ -7,7 +7,8 @@ return {
 
     local colors = {
       white = '#C8CACC',
-      black = '#201c28',
+      blackog = '#201c28',
+      black = '#2a2632',
       red = '#D12411',
       green = '#94D026',
       blue = '#2677D1',
