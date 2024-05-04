@@ -35,18 +35,22 @@ set icons true
 set drawbox true
 set ratios '1:2:2'
 set period 3
+set promptfmt " \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m"
 set cursorpreviewfmt "\033[7m"
-set borderfmt "\033[33m"
+set borderfmt "\033[33;1m"
 set ifs "\n"
 set timefmt 'Mon 02.01.2006 15:04'
 set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u:%g| %t| -> %l"
 set errorfmt "\033[7;31;47m   "
-set rulerfmt "  %a|  %p|  \033[7;35m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;34m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t"
+set rulerfmt "  %a|  %p|  \033[7;34m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;34m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t "
 set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
 set scrolloff 8
 set dircounts false
+set copyfmt "\033[7;33m"
+set cutfmt "\033[7;31m"
+set selectfmt "\033[7;34m"
 
 #
 #
@@ -68,8 +72,9 @@ cmd on-cd &{{
     GIT_PS1_SHOWUPSTREAM=auto
     GIT_PS1_COMPRESSSPARSESTATE=auto
     git=$(__git_ps1 "  %s") || true
-    fmt="\033[32;1m%u@%h\033[0m:\033[34;1m%w\033[0m\033[33;1m$git\033[0m"
-    lf -remote "send $id set promptfmt \"$fmt\""
+	#version=$(echo "lf($(lf -version))")
+    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[33;1m$git\033[0m"
+	lf -remote "send $id set promptfmt \"$fmt\""
 
 	# sorting
     case "$PWD" in
@@ -80,7 +85,7 @@ cmd on-cd &{{
             lf -remote "send $id set reverse"
 
   	    lf -remote "send $id top"
-            lf -remote "send $id echomsg 󱕇   changed sort mode to time"
+            lf -remote "send $id echo ' 󱕇  changed sort mode to time'"
             ;;
         *)
             # restore sorting on directory exit
@@ -89,7 +94,7 @@ cmd on-cd &{{
 		lf -remote "send $id set info size"
                 lf -remote "send $id set noreverse"
 
-                lf -remote "send $id echomsg 󰦛   restored sort mode to $lf_user_prev_sortby"
+                lf -remote "send $id echo ' 󰦛  restored sort mode to $lf_user_prev_sortby'"
                 lf -remote "send $id set user_prev_sortby ''"
                 #lf -remote "send $id top"
             fi
@@ -180,7 +185,7 @@ cmd paste &{{
 	shift
 	
 	if [[ $@ != "" ]]; then
-	lf -remote "send $id echo '󱥸  calculating files...'"
+	lf -remote "send $id echo ' 󱥸  calculating files...'"
 	nof=$(rsync -ar --dry-run --stats "$@" . | grep -F 'Number of files' |    cut -d' ' -f4 |    tr -d ,)
 
 	case "$mode" in
@@ -194,16 +199,16 @@ cmd paste &{{
 
 					stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 					while IFS= read -r line; do
-					lf -remote "send $id echo 󰆏  $line"
+					lf -remote "send $id echo ' 󰆏 '$line"
        					done
 
 					lf -remote "send $id :clear;reload"
-					lf -remote "send $id echo '  $nof file(s) copied successfully'"
+					lf -remote "send $id echo '   $nof file(s) copied successfully'"
 					notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
 					exit 0
 				else
-					#lf -remote "send $id echo '  aborted'"
-					lf -remote "send $id echo '  permission denied! one or more of the selected files are not owned by you and so can not be copied'"  
+					#lf -remote "send $id echo '   aborted'"
+					lf -remote "send $id echo '   permission denied! one or more of the selected files are not owned by you and so can not be copied'"  
 					exit 1
 			
 				fi
@@ -214,18 +219,18 @@ cmd paste &{{
 
 			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 			while IFS= read -r line; do
-        		lf -remote "send $id echo 󰆏  $line"
+        		lf -remote "send $id echo ' 󰆏 '$line"
 			done
 
 			lf -remote "send $id :clear;reload"	
-			lf -remote "send $id echo '  $nof file(s) copied successfully'"
+			lf -remote "send $id echo '   $nof file(s) copied successfully'"
 			notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
 			exit 0	
 	;;
 	move)
 		for file in "$@"; do
 			if ! [[ -O "$file" ]]; then	
-				lf -remote "send $id echo '  permission denied! one or more of the selected files are not owned by you and so can not be moved'"  
+				lf -remote "send $id echo '   permission denied! one or more of the selected files are not owned by you and so can not be moved'"  
 				exit 1
 			fi
 		done
@@ -234,16 +239,16 @@ cmd paste &{{
 
 			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 			while IFS= read -r line; do
-	        	lf -remote "send $id echo 󱀱  $line"
+	        	lf -remote "send $id echo ' 󱀱 '$line"
 		        done
         
 			if [ find $@ -type f | read ]; then
-	        	lf -remote "send $id echo '  not all files have been moved'";
+	        	lf -remote "send $id echo '   not all files have been moved'";
 		        else find $@ -type d -empty -delete
 			fi
         
 			lf -remote "send $id :clear;reload"
-			lf -remote "send $id echo '  $nof file(s) moved successfully'"
+			lf -remote "send $id echo '   $nof file(s) moved successfully'"
 			notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
   			exit 0
 	;;
@@ -262,30 +267,30 @@ cmd "copy filename" &{{
 	file=${f##*/}
 	name=${file%.*}
 	printf $name | wl-copy
-	lf -remote "send $id echo '󰢨  copied \"$name\" to clipboard'"
+	lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
 }}
 
 cmd "copy filename with extension" &{{
 	file=${f##*/}
 	name=${file%.*}
 	printf $file | wl-copy
-	lf -remote "send $id echo '󰢨  copied \"$file\" to clipboard'"
+	lf -remote "send $id echo ' 󰢨  copied \"$file\" to clipboard'"
 }}
 
 cmd "show filename with extension" &{{
 	file=${f##*/}
 	name=${file%.*}
-	lf -remote "send $id echo '  full file name: \"$file\"'"
+	lf -remote "send $id echo '   full file name: \"$file\"'"
 }}
 
 cmd "copy filepath" &{{
 	printf "$fx" | wl-copy
-	lf -remote "send $id echo '󰢨  copied \"$fx\" to clipboard'"
+	lf -remote "send $id echo ' 󰢨  copied \"$fx\" to clipboard'"
 }}
 
 cmd "copy path of current directory" &{{
 	printf $(pwd) | wl-copy
-	lf -remote "send $id echo '󰢨  copied \"$(pwd)\" to clipboard'"
+	lf -remote "send $id echo ' 󰢨  copied \"$(pwd)\" to clipboard'"
 }}
 
 # BULK RENAME FILES IN EDITOR
@@ -307,6 +312,7 @@ cmd undo-bulk-rename ${{
 }}
 
 # FUZZY FIND
+
 cmd fzf_jump ${{
   #lf -remote "send cd ~/"
   res="$(fd --hidden --ignore-case . | fzf --border --header='  jump to location')"
@@ -319,11 +325,12 @@ cmd fzf_jump ${{
 }}
 
 # CREATE DIRECTORIES & FILES
+
 cmd "make directory" %{{
     printf " 󰉗  create new directory: "
     read ans
     mkdir $ans
-    lf -remote "send $id echo '󰉗  created directory \"$ans\"'"
+    lf -remote "send $id echo ' 󰉗  created directory \"$ans\"'"
 }}
 
 cmd "make directory from selected files" %{{
@@ -331,14 +338,14 @@ cmd "make directory from selected files" %{{
     read ans
     mkdir $ans
 	mv $fx $ans
-    lf -remote "send $id echo '󰉗  created directory \"$ans\"'"
+    lf -remote "send $id echo ' 󰉗  created directory \"$ans\"'"
 }}
 
 cmd "make file" %{{
     printf " 󰝒  create new file: "
     read ans
     touch $ans
-    lf -remote "send $id echo '󰝒  created file \"$ans\"'"
+    lf -remote "send $id echo ' 󰝒  created file \"$ans\"'"
 }}
 
 # CREATE (SOFT/HARD) LINK
@@ -348,18 +355,18 @@ cmd "create (soft/hard) link" %{{
     mode="$1"
     shift
     if [ "$#" -lt 1 ]; then
-        lf -remote "send $id echo '  no files selected to create (soft/hard) link'"
+        lf -remote "send $id echo '   no files selected to create (soft/hard) link'"
         exit 0
     fi
     case "$mode" in
         # symbolically copy mode is indicating a soft link
         copy)
 	ln -sr -t . -- "$@"
-	lf -remote "send $id echo '󰴛  soft link created'"
+	lf -remote "send $id echo ' 󰴛  soft link created'"
 	;;
         # while a move mode is indicating a hard link
         move) ln -t . -- "$@"
-	lf -remote "send $id echo '󰴚  hard link created'"
+	lf -remote "send $id echo ' 󰴚  hard link created'"
 	;;
     esac
     rm ~/.local/share/lf/files
@@ -383,7 +390,7 @@ cmd "make playlist" %{{
 	for file in "$fx"; do
 		echo "$file" >> $playlist
 	done
-	lf -remote "send $id echo '󰲸  created playlist \"$ans\"'"
+	lf -remote "send $id echo ' 󰲸  created playlist \"$ans\"'"
 	lf -remote 'send :reload;unselect'	
 }}
 
@@ -399,7 +406,7 @@ cmd "change owner" %{{
   done
 
   lf -remote 'send :reload;unselect'
-  lf -remote "send $id echo '  changed owner of \"$file\" to \"$USER\"'"
+  lf -remote "send $id echo '   changed owner of \"$file\" to \"$USER\"'"
 }}
 
 cmd "change group" %{{
@@ -412,7 +419,7 @@ cmd "change group" %{{
   done
 
   lf -remote 'send :reload;unselect'
-  lf -remote "send $id echo '󰡉  changed group of \"$file\" to \"$ans\"'"
+  lf -remote "send $id echo ' 󰡉  changed group of \"$file\" to \"$ans\"'"
 }}
 
 cmd "change permissions" %{{
@@ -426,7 +433,7 @@ cmd "change permissions" %{{
   done
 
   lf -remote 'send :reload;unselect'
-  lf -remote "send $id echo '󰦝  set permissions to $perms '"
+  lf -remote "send $id echo ' 󰦝  set permissions to $perms '"
 }}
 
 # CALCULATE DIRECTORY SIZE
@@ -450,7 +457,7 @@ cmd zip %{{
     rsync -arh --info=progress2 -- "$ans".zip "$origd/"
     popd
     lf -remote 'send :reload;unselect'
-    lf -remote "send $id echo '󱝣  created zipfile \"$ans.zip\"'"
+    lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
     rm -rf "$tempd" 
 }}
 
@@ -481,7 +488,7 @@ cmd unarchive &{{
       *.tar.xz) tar -xvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
       *.tar) tar -xvf "$f" ;;
-      *) lf -remote "send $id echo '  unsupported format'" ;;
+      *) lf -remote "send $id echo '   unsupported format'" ;;
   esac
 }}
 
@@ -496,32 +503,32 @@ cmd "drag and drop" &{{
 
 cmd "convert to mp4" &{{
 	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
-	lf -remote "send $id echo '󰗠  successfully converted to mp4'"
+	lf -remote "send $id echo '   successfully converted to mp4'"
 	lf -remote "send $id :reload;unselect"
 }}
 
 cmd "convert to gif" &{{
 	ffmpeg -i $fx -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${f%.*}.gif"
-	lf -remote "send $id echo '󰗠  successfully converted to gif'"
+	lf -remote "send $id echo '   successfully converted to gif'"
 	lf -remote "send $id :reload;unselect"
 }}
 
 
 cmd "convert to mp3" &{{	
 	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
-	lf -remote "send $id echo '󰗠  successfully converted to mp3'"
+	lf -remote "send $id echo '   successfully converted to mp3'"
 	lf -remote "send $id :reload;unselect"
 }}
 
 cmd "convert to png" &{{
 	ffmpeg -i $fx "${f%.*}.png"
-	lf -remote "send $id echo '󰗠  successfully converted to png'"
+	lf -remote "send $id echo '   successfully converted to png'"
 	lf -remote "send $id :reload;unselect"
 }}
 
 cmd "convert to jpg" &{{
 	ffmpeg -i $fx "${f%.*}.jpg"
-	lf -remote "send $id echo '󰗠  successfully converted to jpg'"
+	lf -remote "send $id echo '   successfully converted to jpg'"
 	lf -remote "send $id :reload;unselect"
 }}
 
@@ -710,6 +717,54 @@ cmd complete-cmd :{{
     #cmd-enter
 }}
 
+# MODE SPECIFIC
+
+cmd "go to next file (filter mode)" &{{
+    if [ "$lf_mode" = "filter" ]; then
+        lf -remote "send $id down"
+    fi
+}}
+
+cmd "go to previous file (filter mode)" &{{
+    if [ "$lf_mode" = "search" ]; then
+        lf -remote "send $id search-up"
+    fi
+}}
+
+cmd "go to next file (search mode)" &{{
+    if [ "$lf_mode" = "search" ]; then
+        lf -remote "send $id search-next"
+    fi
+}}
+
+cmd "go to previous file (search mode)" &{{
+    if [ "$lf_mode" = "search" ]; then
+        lf -remote "send $id search-prev"
+    fi
+}}
+
+# HELP
+
+cmd "open documentation" ${{
+	lf -doc | $PAGER
+}}
+
+cmd "list maps" ${{
+	lf -remote "query $id maps" | $PAGER
+}}
+
+cmd "list cmaps" ${{
+	lf -remote "query $id cmaps" | $PAGER
+}}
+
+cmd "list commands" ${{
+	lf -remote "query $id cmds" | $PAGER
+}}
+
+cmd "display current lf version" ${{
+	lf -remote "send $id echo '   lf version: $(lf -version)'"
+}}
+
 # MISC
 
 cmd "git pull" %{{
@@ -727,7 +782,7 @@ nof=$(tcount $fx)
 		fname1=${array[0]##*/}
 		fname2=${array[1]##*/}
 
-		lf -remote "send $id echo '  playing now: $fname1 & $fname2'"
+		lf -remote "send $id echo '   playing now: $fname1 & $fname2'"
 		mpv "${array[0]}" --external-file="${array[1]}" --lavfi-complex='[vid1] [vid2] hstack [vo]'
 		
 	
@@ -738,11 +793,11 @@ nof=$(tcount $fx)
 		fname3=${array[2]##*/}
 		fname4=${array[3]##*/}
 
-		lf -remote "send $id echo '  playing now: $fname1, $fname2, $fname3 & $fname4'"
+		lf -remote "send $id echo '   playing now: $fname1, $fname2, $fname3 & $fname4'"
 		mpv "${array[0]}" --external-file="${array[1]}" --external-file="${array[2]}" --external-file="${array[3]}" --lavfi-complex='[vid1] [vid2] hstack [t1] ; [vid3] [vid4] hstack [t2] ; [t1] [t2] vstack [vo]'
 
 	else
-		lf -remote "send $id echo '  invalid number of videos selected (2 or 4 allowed)'"
+		lf -remote "send $id echo '   invalid number of videos selected (2 or 4 allowed)'"
 	fi
 
 	lf -remote "send $id :clear;unselect"
@@ -765,6 +820,7 @@ cmd "reload config file" ${{
 cmd "reload config file for all instances" ${{
 	lf -remote "send source ~/.config/lf/lfrc"
 }}
+
 
 # WIP
 cmd "calculate size of all directories (could take a while)" ${{
@@ -805,11 +861,11 @@ cmd test2 &{{
 
 		stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 		while IFS= read -r line; do
-        	lf -remote "send $id echo $line"
+        	lf -remote "send $id echo ' $line'"
         	done
         
 		lf -remote "send :clear;reload"
-		lf -remote "send $id echo '  $nof file(s) copied successfully'"
+		lf -remote "send $id echo '   $nof file(s) copied successfully'"
 		notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
         }
 
@@ -818,16 +874,16 @@ cmd test2 &{{
 
 		stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 		while IFS= read -r line; do
-	        lf -remote "send $id echo $line"
+	        lf -remote "send $id echo ' $line'"
 	        done
         
 		if [ find $@ -type f | read ]; then
-	        lf -remote "send $id echo '  not all files have been moved'";
+	        lf -remote "send $id echo '   not all files have been moved'";
 	        else rm -rf $@;
 	        fi
         
 		lf -remote "send :clear;reload"
-		lf -remote "send $id echo '  $nof file(s) moved successfully'"
+		lf -remote "send $id echo '   $nof file(s) moved successfully'"
 		notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
 	}
 
@@ -842,7 +898,7 @@ cmd test2 &{{
 			if [ "$ans" = "y" ]; then  
 				$(copyfunc)  
 			else  
-				lf -remote "send $id echo '  aborted'"  
+				lf -remote "send $id echo '   aborted'"  
 			fi
 
         move)
@@ -850,7 +906,7 @@ cmd test2 &{{
 		if [[ -O "$@" ]]; then  
 			$(movefunc)  
 		else  
-			lf -remote "send $id echo '  permission denied! one or more of the selected files are not owned by you and so can not be moved'"  
+			lf -remote "send $id echo '   permission denied! one or more of the selected files are not owned by you and so can not be moved'"  
 		fi
 
 	esac

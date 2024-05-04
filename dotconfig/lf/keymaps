@@ -12,6 +12,7 @@ map G
 map p
 map k
 map y
+map H
 
 # BASIC KEYBINDS
 map <esc> :setfilter '';unselect;clear
@@ -161,6 +162,13 @@ map X2 "open tab 2"
 map X3 "open tab 3"
 map X4 "open tab 4"
 
+# HELP
+map Hd "open documentation"
+map Hm1 "list maps"
+map Hm2 "list cmaps"
+map Hc "list commands"
+map Hv "display current lf version"
+
 # MISC
 map pf fzf_jump
 map pS "calculate size of all directories (could take a while)"
@@ -188,3 +196,7 @@ map mu "eject current media"
 # COMMAND MODE
 cmap <tab> "command autocomplete"
 
+cmap <down> "go to next file (filter mode)"
+cmap <up> "go to previous file (filter mode)"
+cmap <down> "go to next file (search mode)"
+cmap <up> "go to previous file (search mode)"

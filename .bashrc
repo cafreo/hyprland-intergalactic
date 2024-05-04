@@ -29,6 +29,7 @@ export FZF_DEFAULT_OPTS='--color=fg:#c8cacc,bg:#201c28,hl:#de5f21 --color=fg+:#c
 export OPENER=/usr/bin/xdg-open
 export TERMINAL=/usr/bin/kitty
 export EDITOR=/usr/bin/nvim
+export PAGER=/usr/bin/bat
 export BROWSER=/usr/bin/brave
 export READER=/usr/bin/zathura
 export TEXT_EDITOR=/usr/bin/lowriter
