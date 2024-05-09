@@ -63,7 +63,7 @@ files:
  - [mimeapps.list](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/mimeapps.list) for set default apps
 
 <details>
-  <summary>### optional</summary>
+  <summary><b>optional</b></summary>
 
 packages:
 

@@ -1,7 +1,7 @@
 <div align="center">
  <h1>intergalactic</h1>
  <p>config and style files for my hyprland intergalactic theme</p>
- <p>featuring the <a href="https://github.com/cafreo/hyprland-intergalactic/tree/main/dotconfig/lf">ultimate lf config</a></p>
+ <p>featuring the <a href="https://github.com/cafreo/hyprland-intergalactic/tree/main/dotconfig/lf"><i>ultimate lf config</i></a></p>
  <p><a href="https://github.com/zemmsoares/awesome-rices"> <img src="https://raw.githubusercontent.com/zemmsoares/awesome-rices/main/assets/awesome-rice-badge.svg"></a></p>
  </div>
  
