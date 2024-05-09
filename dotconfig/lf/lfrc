@@ -33,6 +33,7 @@ set incsearch true
 set incfilter true
 set icons true
 set drawbox true
+set roundbox true
 set ratios '1:2:2'
 set period 3
 set promptfmt " \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m"
@@ -42,7 +43,7 @@ set ifs "\n"
 set timefmt 'Mon 02.01.2006 15:04'
 set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u:%g| %t| -> %l"
 set errorfmt "\033[7;31;47m   "
-set rulerfmt "  %a|  %p|  \033[7;34m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;34m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t "
+set rulerfmt "  %a|  %p|  \033[7;34m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;35m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t "
 set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
@@ -51,6 +52,8 @@ set dircounts false
 set copyfmt "\033[7;33m"
 set cutfmt "\033[7;31m"
 set selectfmt "\033[7;34m"
+set truncatechar "~"
+set truncatepct "100"
 
 #
 #
@@ -71,9 +74,9 @@ cmd on-cd &{{
     GIT_PS1_SHOWUNTRACKEDFILES=auto
     GIT_PS1_SHOWUPSTREAM=auto
     GIT_PS1_COMPRESSSPARSESTATE=auto
-    git=$(__git_ps1 "  %s") || true
+    git=$(__git_ps1 " %s") || true
 	#version=$(echo "lf($(lf -version))")
-    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[33;1m$git\033[0m"
+    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m"
 	lf -remote "send $id set promptfmt \"$fmt\""
 
 	# sorting
@@ -726,8 +729,8 @@ cmd "go to next file (filter mode)" &{{
 }}
 
 cmd "go to previous file (filter mode)" &{{
-    if [ "$lf_mode" = "search" ]; then
-        lf -remote "send $id search-up"
+    if [ "$lf_mode" = "filter" ]; then
+        lf -remote "send $id up"
     fi
 }}
 

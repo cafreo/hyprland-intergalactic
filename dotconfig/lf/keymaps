@@ -126,8 +126,9 @@ map gm cd ~/Music
 map gM cd ~/MEGAsync
 map gi1 cd ~/Pictures
 map gi2 cd ~/Pictures/Screenshots
-map gp1 cd ~/Projects/Designing/
-map gp2 cd ~/Projects/Scripting/
+map gp1 cd ~/Projects/Designing
+map gp2 cd ~/Projects/Scripting
+map gp3 cd ~/Projects/Administrating
 map gv1 cd ~/Videos
 map gv2 cd "~/Videos/After Effects/cafreo"
 map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
