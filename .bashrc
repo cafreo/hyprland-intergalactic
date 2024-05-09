@@ -48,7 +48,7 @@ export XCURSOR_SIZE=36
 
 # ALIASES
 # pacman/yay
-alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rns -; yay -Yc"
+alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rns -; yay -Yc; flatpak uninstall --unused; sudo flatpak repair"
 alias yayf="yay -Suy --devel; flatpak update; pacclean"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
@@ -76,6 +76,7 @@ alias vim="nvim"
 alias ytdl="yt-dlp"
 alias ytdla="yt-dlp -x"
 alias minexmr='qutebrowser www.redditp.com/r/monerochan &>/dev/null & sudo xmrig'
+alias waybarr='killall -SIGUSR2 waybar'
 
 # FUNCTIONS
 
