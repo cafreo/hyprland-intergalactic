@@ -40,7 +40,7 @@
 
 # dependencies
 
-### essential
+<p><b>essential</b></p>
 
 packages:
 
