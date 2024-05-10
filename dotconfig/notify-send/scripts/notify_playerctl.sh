@@ -25,5 +25,5 @@ elif [ $(playerctl status) == "Paused" ]
 then
     notify-send -t 3000 -a "playerctl" "  Paused" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
 else
-    notify-send -t 3000 -a "playerctl" "  Nothing Playing" "<b>No player has been found</b>\n$csArtist" -u low -i "" -r 4533
+    notify-send -t 3000 -a "playerctl" "  Nothing Playing" "<b>No player has been found</b>" -u low -i "" -r 4533
 fi
