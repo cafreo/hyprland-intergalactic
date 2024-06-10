@@ -43,13 +43,13 @@ set ifs "\n"
 set timefmt 'Mon 02.01.2006 15:04'
 set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u:%g| %t| -> %l"
 set errorfmt "\033[7;31;47m   "
-set rulerfmt "  %a|  %p|  \033[7;34m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;35m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t "
+set rulerfmt "  %a|  %p|  \033[7;34m %s \033[0m|  \033[7;31m %m \033[0m|  \033[7;32m %c \033[0m|  \033[7;35m %f \033[0m| \033[7;97m %d \033[0m|  %i/%t "
 set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
 set scrolloff 8
 set dircounts false
-set copyfmt "\033[7;33m"
+set copyfmt "\033[7;32m"
 set cutfmt "\033[7;31m"
 set selectfmt "\033[7;34m"
 set truncatechar "~"
@@ -633,7 +633,8 @@ cmd delete %{{
 	printf "   delete $fx permanently? [y/n] " $fx
 	read -r ans
 	if [ "$ans" = "y" ]; then
-		rm -rv $fx | pv -l -s $(find $fx | wc -l) > /dev/null
+		rm -rv $fx
+		#| pv -l -s $(find $fx | wc -l) > /dev/null
 		echo "  deleted successfully"
 	else
 		echo "  aborted"

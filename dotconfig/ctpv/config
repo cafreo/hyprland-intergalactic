@@ -36,7 +36,6 @@ preview listrar application/vnd.rar ."rar" {{
 preview audio audio/* {{
 img(){
 	ffmpegthumbnailer -i "$f" -s 256 -o "$cache_f" 2>/dev/null
-	#exiftool -b "-Picture" "$f" > "$cache_f"
 }
 	meta="$(exiftool -S -Title -Artist -Album -Band -Track -Duration -FileSize -AudioBitrate -SampleRate -ChannelMode -FileName "$f" 2>&1)"
 	printf '%s\n' "$meta"

@@ -56,6 +56,14 @@ button:focus, button:active, button:hover {
     background-image: image(url("/home/cafreo/.config/icons/lock.png"), url("/home/cafreo/.config/icons/lock.png"));
 }
 
+#shutdown {
+    background-image: image(url("/home/cafreo/.config/icons/shutdown.png"), url("/home/cafreo/.config/icons/shutdown.png"));
+}
+
+#reboot {
+    background-image: image(url("/home/cafreo/.config/icons/reboot.png"), url("/home/cafreo/.config/icons/reboot.png"));
+}
+
 #logout {
     background-image: image(url("/home/cafreo/.config/icons/logout.png"), url("/home/cafreo/.config/icons/logout.png"));
 }
@@ -68,10 +76,6 @@ button:focus, button:active, button:hover {
     background-image: image(url("/home/cafreo/.config/icons/hibernate.png"), url("/home/cafreo/.config/icons/hibernate.png"));
 }
 
-#shutdown {
-    background-image: image(url("/home/cafreo/.config/icons/shutdown.png"), url("/home/cafreo/.config/icons/shutdown.png"));
-}
 
-#reboot {
-    background-image: image(url("/home/cafreo/.config/icons/reboot.png"), url("/home/cafreo/.config/icons/reboot.png"));
-}
+
+
