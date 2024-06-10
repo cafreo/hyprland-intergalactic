@@ -9,7 +9,7 @@ msgTag="playerctl"
 csTitle=$(playerctl metadata title)
 csArtist=$(playerctl metadata artist)
 csCoverUrl=$(playerctl metadata mpris:artUrl)
-csCover=$cache/csCover
+csCover=$cache/csCover.png
 csCoverImg=$(convert "$csCoverUrl" -flatten -thumbnail 160x160 $csCover)
 
 convert "$csCoverUrl" -flatten -thumbnail 160x160 $csCover
@@ -20,10 +20,10 @@ notify-send -C 4533
 
 if [ $(playerctl status) == "Playing" ]
 then
-    notify-send -t 3000 -a "playerctl" "  Now Playing" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
+    notify-send -t 3000 -a "playerctl" "  Now Playing" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
 elif [ $(playerctl status) == "Paused" ]
 then
-    notify-send -t 3000 -a "playerctl" "  Paused" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
+    notify-send -t 3000 -a "playerctl" "  Paused" "<b>$csTitle</b>\n$csArtist" -u low -i "$csCover" -r 4533
 else
-    notify-send -t 3000 -a "playerctl" "  Nothing Playing" "<b>No player has been found</b>" -u low -i "" -r 4533
+    notify-send -t 3000 -a "playerctl" "  Nothing Playing" "<b>No player has been found</b>" -u low -i "" -r 4533
 fi
