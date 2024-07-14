@@ -143,8 +143,7 @@ map gc5 cd ~/.config/nvim
 map gc6 cd ~/.config/icons
 
 # GO TO MOUNTED DIRECTORIES
-map Gca cd /mnt/CA-POTRO-EXT-HDD/
-map Gcb cd /mnt/CB-POTRO-EXT-HDD/
+map Ga cd /mnt/A-POTRO-NAS/
 map Gx cd /mnt/X-POTRO-SSD/
 map Gm cd /mnt/
 map Gu cd /run/media/cafreo/
