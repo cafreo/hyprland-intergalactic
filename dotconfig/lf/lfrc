@@ -81,7 +81,7 @@ cmd on-cd &{{
 
 	# sorting
     case "$PWD" in
-        ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Projects/Fonts | /mnt/CA-POTRO-EXT-HDD/Music)
+        ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Projects/Fonts | /mnt/A-POTRO-NAS/Media/Music)
             lf -remote "send $id set user_prev_sortby $lf_sortby"
             lf -remote "send $id set info time"
             lf -remote "send $id set sortby time"
@@ -198,7 +198,7 @@ cmd paste &{{
 				printf "   by copying these files the owner and group will be changed to the current user and group. continue? (y/n) "
 				read -r ans
 				if [ "$ans" = "y" ]; then
-					rsync -arh --info=progress2 -- "$@" . |
+					rsync -arhz --info=progress2 -- "$@" . |
 
 					stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 					while IFS= read -r line; do
@@ -238,7 +238,7 @@ cmd paste &{{
 			fi
 		done
 
-			rsync -arh --info=progress2 --remove-source-files -- "$@" . |
+			rsync -arhz --info=progress2 --remove-source-files -- "$@" . |
 
 			stdbuf -i0 -o0 -e0 tr '\r' '\n' |
 			while IFS= read -r line; do
@@ -455,24 +455,26 @@ cmd zip %{{
     origd="$(pwd)"
     tempd="$(mktemp -d)"
     pushd "$tempd"
-    rsync -arh --info=progress2 -- $fx . 
-    zip -r "$ans" *
-    rsync -arh --info=progress2 -- "$ans".zip "$origd/"
+    rsync -arhz --info=progress2 -- $fx . 
+    7z a -r -tzip "$ans" *
+    rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
     lf -remote 'send :reload;unselect'
     lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
     rm -rf "$tempd" 
 }}
 
-cmd zipe ${{
+cmd zipe %{{
     printf " 󱝣  create new encrypted zipfile: "
     read ans
+	printf " 󰯄  set password: "
+	read psw
     origd="$(pwd)"
     tempd="$(mktemp -d)"
     pushd "$tempd"
-    rsync -arh --info=progress2 -- $fx . 
-    zip -re "$ans" * &&
-    rsync -arh --info=progress2 -- "$ans".zip "$origd/"
+    rsync -arhz --info=progress2 -- $fx . 
+    7z a -r -tzip -p"$psw" "$ans" *
+    rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
     lf -remote 'send :reload;unselect'
     lf -remote "send $id echo ' 󱝣 created encrypted zipfile \"$ans.zip\"'"
@@ -485,8 +487,8 @@ cmd zipe ${{
 
 cmd unarchive &{{
   case "$f" in
-      *.zip) unzip "$f" -d "${f%.zip}" ;;
-      *.7z) 7za e "$f" -o "${f%.7z}" ;;
+      *.zip) 7z e "$f" -o"${f%.zip}" -y ;;
+      *.7z) 7z e "$f" -o"${f%.7z}" -y ;;
       *.tar.gz) tar -xzvf "$f" ;;
       *.tar.xz) tar -xvf "$f" ;;
       *.tar.bz2) tar -xjvf "$f" ;;
@@ -505,34 +507,54 @@ cmd "drag and drop" &{{
 # CONVERT FILES
 
 cmd "convert to mp4" &{{
-	ffmpeg -i $fx -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${f%.*}.mp4"
-	lf -remote "send $id echo '   successfully converted to mp4'"
+	for file in $fx
+		do
+			lf -remote "send $id echo ' 󱥸  converting file $(basename $file)'"
+			ffmpeg -i $file -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${file%.*}.mp4"
+		done
 	lf -remote "send $id :reload;unselect"
+	lf -remote "send $id echo '   successfully converted to mp4'"
 }}
 
 cmd "convert to gif" &{{
-	ffmpeg -i $fx -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${f%.*}.gif"
-	lf -remote "send $id echo '   successfully converted to gif'"
+	for file in $fx
+		do
+			lf -remote "send $id echo ' 󱥸  converting file $(basename $file)'"
+			ffmpeg -i $file -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${file%.*}.gif";
+		done
 	lf -remote "send $id :reload;unselect"
+	lf -remote "send $id echo '   successfully converted to gif'"
 }}
 
 
-cmd "convert to mp3" &{{	
-	ffmpeg -i $fx -vn -ar 44100 -ac 2 -b:a 320k "${f%.*}.mp3"
-	lf -remote "send $id echo '   successfully converted to mp3'"
+cmd "convert to mp3" &{{
+	for file in $fx
+		do
+			lf -remote "send $id echo ' 󱥸  converting file $(basename $file)'"
+			ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
+		done
 	lf -remote "send $id :reload;unselect"
+	lf -remote "send $id echo '   successfully converted to mp3'"
 }}
 
 cmd "convert to png" &{{
-	ffmpeg -i $fx "${f%.*}.png"
-	lf -remote "send $id echo '   successfully converted to png'"
+	for file in $fx
+		do
+			lf -remote "send $id echo ' 󱥸  converting file $(basename $file)'"
+			ffmpeg -i $fx "${f%.*}.png"
+		done
 	lf -remote "send $id :reload;unselect"
+	lf -remote "send $id echo '   successfully converted to png'"
 }}
 
 cmd "convert to jpg" &{{
-	ffmpeg -i $fx "${f%.*}.jpg"
-	lf -remote "send $id echo '   successfully converted to jpg'"
+	for file in $fx
+		do
+			lf -remote "send $id echo ' 󱥸  converting file $(basename $file)'"
+			ffmpeg -i $fx "${f%.*}.jpg"
+		done
 	lf -remote "send $id :reload;unselect"
+	lf -remote "send $id echo '   successfully converted to jpg'"
 }}
 
 # OPEN FILE IN SPECIFIED APP
