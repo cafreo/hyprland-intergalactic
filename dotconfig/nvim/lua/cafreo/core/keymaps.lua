@@ -31,19 +31,23 @@ keymap("n", "<C-q>", vim.cmd.quit)
 keymap("i", "<C-q>", "<Esc>")
 
 -- Toggle settings
-keymap({"n", "i"}, "<C-n>", 'toggle_relativenumbers()<CR>')
+keymap({"n", "i"}, "<C-n>", '<C-o>:set relativenumber!<CR>')
 
 -- Select
 -- all
 keymap({"n", "i"}, "<C-a>", 'ggVG')
 -- current line
-keymap({"n", "i"}, "<C-l>", 'V')
+keymap({"n", "i"}, "<C-l>", '^V$')
 
 -- Format code
 keymap({"n", "i", "v"}, "<C-i>", 'gg=G')
 
 -- Insert at start of line
-keymap({"n", "i", "v"}, "<C-b>", ':1,1s/^/-/<left><left><left><left><left><left>')
+keymap({"n", "i"}, "<C-j>", '<C-o>:1,1s!^!!<left>')
+keymap({"n", "i"}, "<CS-j>", '<C-o>:%s!^!!<left>')
+-- Insert at end of line
+keymap({"n", "i"}, "<C-k>", '<C-o>:1,1s!$!!<left>')
+keymap({"n", "i"}, "<CS-k>", '<C-o>:%s!$!!<left>')
 
 -- Copy to system clipboard
 keymap({"n", "v", "i"}, "<C-c>", '"+y')
@@ -63,13 +67,12 @@ keymap({"v"}, "<Del>", '"_d')
 keymap({"n", "v", "i"}, "<S-Del>", '"_DELETE')
 
 -- Search and replace
-keymap({"n"}, "F", ':%s/-/-/g')
+keymap({"n", "i"}, "<C-o>", '<C-o>:1,1s/-/-/<left><left><left><left><left><left><left><left>')
+keymap({"n", "i"}, "<CS-o>", '<C-o>:%s/-/-/g<left><left><left><left>')
 
 -- Undo and Redo
-keymap({"n"}, "<C-z>", "u")
-keymap({"i"}, "<C-z>", "<C-o>u")
-keymap({"n"}, "<C-S-z>", "<C-r>")
-keymap({"i"}, "<C-S-z>", "<C-o><C-r>")
+keymap({"n", "i"}, "<C-z>", "<C-o>u")
+keymap({"n", "i"}, "<CS-z>", "<C-o><C-r>")
 
 -- Navigate buffers
 keymap({"n"}, "<C-Insert>", ":enew | Dashboard<CR>")
@@ -96,4 +99,4 @@ keymap("v", "<S-Down>", ":m .-2<CR>==")
 
 -- Plugin Keymaps
 -- auto-save
-keymap({"n"}, "<f5>", ":ASToggle<CR>")
+keymap({"n"}, "<F5>", '<C-o>:ASToggle<CR>')
