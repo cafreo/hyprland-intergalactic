@@ -12,6 +12,7 @@ return {
 			"dockerfile",
 			"go",
 			"html",
+			"hyprlang",
 			"java",
 			"javascript",
 			"json",

@@ -45,7 +45,8 @@
  # misc
 
  - startpage: [my own](https://github.com/cafreo/startpage)
- 
+ - colorscheme: [nvim](https://github.com/cafreo/intergalactic.nvim )
+
  # to do
  - [ ] eww/ags bar
  - [x] switch from micro to neovim
