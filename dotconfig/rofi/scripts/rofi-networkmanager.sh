@@ -9,5 +9,5 @@ if [ -z "$chosen" ]; then
 echo "No New Network selected"
 
 else
-    nmcli c up "$chosen" | dunstify -t 3000 -a "nmcli" -b "New Connection" "<b>$chosen</b>" -u low -i ~/.config/icons/wifi.svg
+    nmcli c up "$chosen" | notify-send -t 3000 -a "nmcli" "New Connection" "<b>$chosen</b>" -u low -i ~/.config/icons/wifi.svg
 fi

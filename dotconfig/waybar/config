@@ -60,8 +60,9 @@
 		"states": {
 			"high": 80,
 		},
-		"on-click": "kitty -e 'btop'"
-	},
+		"on-click": "~/.config/rofi/scripts/rofi-cpupower.sh",
+		"on-click-right": "kitty -e 'btop'"
+		},
 
 	"custom/gammastep": {
 		"format": "{}",
