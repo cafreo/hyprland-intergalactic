@@ -18,4 +18,4 @@ mullvad relay set location ch-zrh-wg-00$(echo $(( $RANDOM % 4 + 1 )))
 #mullvad relay set location de-dus-wg-00$(echo $(( $RANDOM % 2 + 1 )))mullvad connect
 mullvad connect
 sleep 2
-notify-send -t 3000 -a "mlvd" "Mullvad" "<b>$(mullvad status)</b>" -u low -i ~/.config/icons/wifi.svg
+notify-send -t 3000 -a "mlvd" "Mullvad" "<b>$(mullvad status | head -n 1)</b>" -u low -i ~/.config/icons/wifi.svg
