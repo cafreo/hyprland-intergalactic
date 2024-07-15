@@ -99,4 +99,4 @@ keymap("v", "<S-Down>", ":m .-2<CR>==")
 
 -- Plugin Keymaps
 -- auto-save
-keymap({"n"}, "<F5>", '<C-o>:ASToggle<CR>')
+keymap({"n"}, "<C-F5>", '<C-o>:ASToggle<CR>')

@@ -17,4 +17,3 @@ vim.cmd('colorscheme intergalactic')
 -- colors.Normal = { bg = colors.background_color, fg = colors.foreground_color }
 
 --vim.api.nvim_set_hl(0, 'LineNr', { fg = colors.green} )
-
