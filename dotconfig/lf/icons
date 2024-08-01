@@ -10,22 +10,6 @@
 # These examples require Nerd Fonts or a compatible font to be used.
 # See https://www.nerdfonts.com for more information.
 
-# default values from lf (with matching order)
-# ln      l       # LINK
-# or      l       # ORPHAN
-# tw      t       # STICKY_OTHER_WRITABLE
-# ow      d       # OTHER_WRITABLE
-# st      t       # STICKY
-# di      d       # DIR
-# pi      p       # FIFO
-# so      s       # SOCK
-# bd      b       # BLK
-# cd      c       # CHR
-# su      u       # SETUID
-# sg      g       # SETGID
-# ex      x       # EXEC
-# fi      -       # FILE
-
 # file types (with matching order)
 ln      󰌷       # LINK
 or      󰌸       # ORPHAN
@@ -57,7 +41,7 @@ fi      󰈔       # FILE
 *.mdx           
 *.markdown      
 *.rmd           
-*.json          
+*.json             
 *.webmanifest   
 *.js            
 *.mjs           
@@ -148,9 +132,9 @@ fi      󰈔       # FILE
 *.leex          
 *.heex          
 *.vim           
-*.ai            
-*.psd           
-*.psb           
+*.ai               00;38;2;239;175;57
+*.psd              00;38;2;31;116;214
+*.psb              00;38;2;31;116;214
 *.ts            
 *.tsx           
 *.jl            
@@ -211,7 +195,7 @@ fi      󰈔       # FILE
 *Gulpfile.ls            
 *Dropbox                
 *.DS_Store              
-*LICENSE                
+*LICENSE                󰿃
 *React.jsx              
 *Procfile               
 *Dockerfile             
@@ -361,17 +345,18 @@ Vagrantfile             
 *.xspf  󰎈
 
 # document formats
-*.odt	󰈙
-*.doc 	󰈙
-*.docx	󰈙
-*.ods	󰱾
-*.csv	󰱾
-*.xls 	󰱾
-*.xlsx	󰱾
-*.odp	󰈧
-*.ppt 	󰈧
-*.pptx	󰈧
-*.pdf   
+*.txt   󰈙 
+*.odt	󰈙   00;38;2;31;162;214
+*.doc 	󰈙   00;38;2;31;162;214
+*.docx	󰈙   00;38;2;31;162;214
+*.ods	󰱾   00;38;2;150;214;31
+*.csv	󰱾   00;38;2;150;214;31
+*.xls 	󰱾   00;38;2;150;214;31
+*.xlsx	󰱾   00;38;2;150;214;31
+*.odp	󰈧   00;38;2;230;93;26
+*.ppt 	󰈧   00;38;2;230;93;26
+*.pptx	󰈧   00;38;2;230;93;26
+*.pdf      00;38;2;203;32;16
 *.xml	󰈮
 
 # game formats
@@ -394,10 +379,10 @@ Vagrantfile             
 *.inf 	󰋼
 *.ttf	
 *.otf	
-*.exe   󰖳
+*.exe   󰖳   00;38;2;31;162;214
 *.pdn 󰃣
 *.clip 󰃣 
-*.opml 
+*.opml     00;38;2;230;93;26
 *.m3u 󰲸
 *.kdbx 󰈡
 *.key 󱆄
