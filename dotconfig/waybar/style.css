@@ -110,6 +110,12 @@ window#waybar {
     background-color: rgba(203, 34, 17, 0.3);
 }
 
+#battery {
+    background: linear-gradient(90deg, rgba(150, 214, 31, 0) 0%, rgba(150, 214, 31, 0) 20%, rgba(150, 214, 31, 0.3) 45%, rgba(150, 214, 31, 0.3) 50%, rgba(150, 214, 31, 0) 60%, rgba(150, 214, 31, 0) 100%); 
+    background-size: 1000% 1000%;
+    animation: charge 6s ease infinite;
+}
+
 #clock {
     background-color: rgba(203, 34, 17, 0.3);
     animation: daycycle 60s ease infinite;

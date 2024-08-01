@@ -57,7 +57,7 @@
     }
 }
 
-/** HIGH CPU USAGE **/
+/** HIGH CPU USAGE / LOW BATTERY **/
 
 @keyframes breathehigh {
     0% {
@@ -69,6 +69,26 @@
     100% {
         background-color: rgba(203, 34, 17, 0.3);
 	}
+}
+
+/** BATTERY **/
+
+@keyframes charge { 
+    0% {
+        background-position: 100% 50%;
+	}
+    25% {
+        background-position: 65% 50%;
+    }
+    50% {
+        background-position: 55% 50%;
+    }
+	90% {
+		background-position: 10% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	} 
 }
 
 /** CLOCK **/
