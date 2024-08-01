@@ -12,6 +12,9 @@
 configuration {
 	modi:                       "run,drun,window,filebrowser";
 	show-icons:                 true;
+    hover-select:               true;
+    me-select-entry:            '';
+    me-accept-entry:            "MousePrimary";
 	display-drun:               "";
 	drun-display-format:        "{name}";
 }
