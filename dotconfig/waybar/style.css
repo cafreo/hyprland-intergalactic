@@ -110,10 +110,15 @@ window#waybar {
     background-color: rgba(203, 34, 17, 0.3);
 }
 
-#battery {
-    background: linear-gradient(90deg, rgba(150, 214, 31, 0) 0%, rgba(150, 214, 31, 0) 20%, rgba(150, 214, 31, 0.3) 45%, rgba(150, 214, 31, 0.3) 50%, rgba(150, 214, 31, 0) 60%, rgba(150, 214, 31, 0) 100%); 
+#battery.charging, #battery.plugged {
+	background: linear-gradient(90deg, rgba(150, 214, 31, 0) 0%, rgba(150, 214, 31, 0) 20%, rgba(150, 214, 31, 0.3) 45%, rgba(150, 214, 31, 0.3) 50%, rgba(150, 214, 31, 0) 60%, rgba(150, 214, 31, 0) 100%); 
     background-size: 1000% 1000%;
     animation: charge 6s ease infinite;
+}
+
+#battery.critical:not(.charging) {
+	background-color: rgba(203, 34, 17, 0.3);
+	animation: breathehigh 4s ease infinite;
 }
 
 #clock {
@@ -152,26 +157,6 @@ tooltip label {
 }
 
 /** WIP **/
-
-#battery {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-#battery.charging, #battery.plugged {
-    color: #ffffff;
-    background-color: #26A65B;
-}
-
-#battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
 
 #pulseaudio-slider slider {
     min-height: 0px;
