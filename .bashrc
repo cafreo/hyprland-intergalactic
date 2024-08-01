@@ -57,11 +57,12 @@ alias pacdep="comm -23 <(pacman -Qtq) <(pacman -Qsq base base-devel)"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias ssh="kitty +kitten ssh"
-alias gduh="gdu / --ignore-dirs /media,/mnt"
+alias gduh="gdu / --ignore-dirs /media,/mnt,/srv,/export"
 alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, type'"
 alias fstype="findmnt -n -o FSTYPE -T ."
 alias swaylock="swaylock -C ~/.config/swaylock/config"
 alias computer="ollama run dolphin-mistral"
+alias computerf='ollama list | awk -F: "NR>1 && !/reviewer/ {system(\"ollama pull \"$1)}"'
 alias mount!="sudo mount -av"
 alias ip="curl ifconfig.me"
 alias fetch="neofetch"
