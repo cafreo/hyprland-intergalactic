@@ -318,7 +318,6 @@ Vagrantfile             
 *.flv   󰕧
 *.gl    󰕧
 *.dl    󰕧
-*.xcf   󰕧
 *.xwd   󰕧
 *.yuv   󰕧
 *.cgm   󰕧
@@ -386,6 +385,7 @@ Vagrantfile             
 *.m3u 󰲸
 *.kdbx 󰈡
 *.key 󱆄
+*.xcf 
 
 # custom folders
 home/   󱂵

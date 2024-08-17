@@ -92,7 +92,9 @@ EXEC 00;34
 # executable bit actually set.
 #.sh 01;32
 #.csh 01;32
-# archives or compressed (bright red)
+# reset
+.xcf 0
+# archives or compressed 
 .tar 01;36
 .tgz 01;36
 .arc 01;36
@@ -160,6 +162,7 @@ EXEC 00;34
 .svgz 00;36
 .mng 00;36
 .pcx 00;36
+.webp 00;36
 # video formats
 .mov 00;35
 .mpg 00;35
@@ -167,7 +170,6 @@ EXEC 00;34
 .m2v 00;35
 .mkv 00;35
 .webm 00;35
-.webp 00;35
 .ogm 00;35
 .mp4 00;35
 .m4v 00;35
@@ -185,7 +187,6 @@ EXEC 00;34
 .flv 00;35
 .gl 00;35
 .dl 00;35
-.xcf 00;35
 .xwd 00;35
 .yuv 00;35
 .cgm 00;35
