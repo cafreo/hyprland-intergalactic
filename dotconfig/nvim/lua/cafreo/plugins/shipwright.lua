@@ -1,0 +1,4 @@
+return {
+	'rktjmp/shipwright.nvim',
+}
+

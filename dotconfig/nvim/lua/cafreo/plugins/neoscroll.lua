@@ -1,5 +1,8 @@
 return {
   "karb94/neoscroll.nvim",
+--  keys = {
+--    {"<C-f>", false},
+--    },
   config = function ()
     require('neoscroll').setup {
       hide_cursor = false,

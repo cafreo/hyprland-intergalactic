@@ -29,6 +29,7 @@ keymap({"n", "i", "v"}, "<C-r>", ":so ~/.config/nvim/init.lua <CR>:so % <CR>")
 -- Quit neovim / go back to normal mode
 keymap("n", "<C-q>", vim.cmd.quit)
 keymap("i", "<C-q>", "<Esc>")
+keymap("n", "<Esc>", ":nohlsearch<CR><Esc>")
 
 -- Toggle settings
 keymap({"n", "i"}, "<C-n>", '<C-o>:set relativenumber!<CR>')
@@ -66,13 +67,11 @@ keymap({"v"}, "<Bs>", '"_d')
 keymap({"v"}, "<Del>", '"_d')
 keymap({"n", "v", "i"}, "<S-Del>", '"_DELETE')
 
--- Search and replace
-keymap({"n", "i"}, "<C-o>", '<C-o>:1,1s/-/-/<left><left><left><left><left><left><left><left>')
-keymap({"n", "i"}, "<CS-o>", '<C-o>:%s/-/-/g<left><left><left><left>')
-
 -- Undo and Redo
-keymap({"n", "i"}, "<C-z>", "<C-o>u")
-keymap({"n", "i"}, "<CS-z>", "<C-o><C-r>")
+keymap({"n"}, "<C-z>", "u")
+keymap({"i"}, "<C-z>", "<C-o>u")
+keymap({"n"}, "<C-S-z>", "<C-r>")
+keymap({"i"}, "<C-S-z>", "<C-o><C-r>")
 
 -- Navigate buffers
 keymap({"n"}, "<C-Insert>", ":enew | Dashboard<CR>")
@@ -91,7 +90,8 @@ keymap({"n"}, "q", ":bw<CR>")
 
 -- Find
 keymap({"n"}, "f", "/")
-keymap({"n", "i"}, "<C-f>", '<C-o>:%s///gci<left><left><left><left>')
+keymap({"n", "i"}, "<C-f>", ':1,1s/-/-/<left><left><left><left><left><left><left><left>')
+-- keymap({"n", "i"}, "<CS-f>", '<C-o>:%s///gci<left><left><left><left>')
 
 -- Move text up and down
 keymap("v", "<S-Up>", ":m .+1<CR>==")
