@@ -22,8 +22,8 @@ set number true
 set relativenumber false
 set hiddenfiles '.*:lost+found:*.log'
 set globsearch false
+set globfilter false
 set dirfirst true
-set hidden false
 set history true
 set mouse false
 set preview true
@@ -31,7 +31,6 @@ set sortby 'natural'
 set info 'size'
 set incsearch true
 set incfilter true
-set icons true
 set drawbox true
 set roundbox true
 set ratios '1:2:2'
@@ -81,7 +80,7 @@ cmd on-cd &{{
 
 	# sorting
     case "$PWD" in
-        ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Projects/Fonts | /mnt/A-POTRO-NAS/Media/Music)
+        ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Fonts | /mnt/A-POTRO-NAS/Media/Music)
             lf -remote "send $id set user_prev_sortby $lf_sortby"
             lf -remote "send $id set info time"
             lf -remote "send $id set sortby time"
@@ -124,6 +123,23 @@ cmd on-redraw &{{
         lf -remote "send $id set preview true"
     fi 
 }}
+
+# ON FOCUS
+
+cmd on-focus-gained :{{
+    set cursorparentfmt "\033[7m"
+    set cursoractivefmt "\033[7m"
+    set cursorpreviewfmt "\033[7m"
+}}
+
+cmd on-focus-lost :{{
+    set cursorparentfmt "\033[7m"
+    set cursoractivefmt "\033[7m"
+    set cursorpreviewfmt "\033[7m"
+}}
+
+# set initial values upon startup
+on-focus-gained
 
 # ON QUIT
 
@@ -275,14 +291,12 @@ cmd "copy filename" &{{
 
 cmd "copy filename with extension" &{{
 	file=${f##*/}
-	name=${file%.*}
 	printf $file | wl-copy
 	lf -remote "send $id echo ' 󰢨  copied \"$file\" to clipboard'"
 }}
 
 cmd "show filename with extension" &{{
 	file=${f##*/}
-	name=${file%.*}
 	lf -remote "send $id echo '   full file name: \"$file\"'"
 }}
 
@@ -302,16 +316,13 @@ cmd bulk-rename ${{
 
     renamer -p $(basename -a -- $fx)
 
-    lf -remote "send $id load"
-    lf -remote "send $id unselect"
-
+    lf -remote "send $id :reload;unselect"
 }}
 
 cmd undo-bulk-rename ${{
 	renamer -u
 
-	lf -remote "send $id load"
-	lf -remote "send $id unselect"
+	lf -remote "send $id :reload;unselect"
 }}
 
 # FUZZY FIND
@@ -387,14 +398,14 @@ cmd "make playlist" %{{
 	then rm $playlist
 	fi
 
-	echo "#EXTM3U" >> $playlist
-	echo "#PLAYLIST:$ans" >> $playlist
+	#echo "#EXTM3U" >> $playlist
+	#echo "#PLAYLIST:$ans" >> $playlist
 
-	for file in "$fx"; do
+	for file in "$fs"; do
 		echo "$file" >> $playlist
 	done
-	lf -remote "send $id echo ' 󰲸  created playlist \"$ans\"'"
 	lf -remote 'send :reload;unselect'	
+	lf -remote "send $id echo ' 󰲸  created playlist \"$ans\"'"
 }}
 
 # CHANGE
@@ -459,9 +470,9 @@ cmd zip %{{
     7z a -r -tzip "$ans" *
     rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
+	rm -rf "$tempd" 
     lf -remote 'send :reload;unselect'
     lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
-    rm -rf "$tempd" 
 }}
 
 cmd zipe %{{
@@ -476,25 +487,32 @@ cmd zipe %{{
     7z a -r -tzip -p"$psw" "$ans" *
     rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
+	rm -rf "$tempd"
     lf -remote 'send :reload;unselect'
     lf -remote "send $id echo ' 󱝣 created encrypted zipfile \"$ans.zip\"'"
-    rm -rf "$tempd" 
+    
 }}
-
 
 #cmd zip %zip -r "$fx" "$fx"
 #cmd zipe %zip -re "$fx.zip" "$fx"
 
 cmd unarchive &{{
-  case "$f" in
-      *.zip) 7z e "$f" -o"${f%.zip}" -y ;;
-      *.7z) 7z e "$f" -o"${f%.7z}" -y ;;
-      *.tar.gz) tar -xzvf "$f" ;;
-      *.tar.xz) tar -xvf "$f" ;;
-      *.tar.bz2) tar -xjvf "$f" ;;
-      *.tar) tar -xvf "$f" ;;
-      *) lf -remote "send $id echo '   unsupported format'" ;;
-  esac
+	for file in $fx
+		do
+			case "$file" in
+			*.zip) 7z e "$file" -o"${file%.zip}" -y ;;
+			*.7z) 7z e "$file" -o"${file%.7z}" -y ;;
+			*.gz) gunzip -c "$file" ;;
+			*.tar.zst) tar --zstd -xvf "$file" --one-top-level ;;
+			*.tar.gz) tar -xzvf "$file" --one-top-level ;;
+			*.tar.xz) tar -xvf "$file" --one-top-level ;;
+			*.tar.bz2) tar -xjvf "$file" --one-top-level ;;
+			*.tar) tar -xvf "$file" -C --one-top-level ;;
+			*) lf -remote "send $id echo '   unsupported format'" ;;
+			esac
+		done
+	lf -remote "send $id :reload;unselect"
+	lf -remote "send $id echo '   successfully extracted archive(s)'"
 }}
 
 # DRAG AND DROP FILES
@@ -555,6 +573,15 @@ cmd "convert to jpg" &{{
 		done
 	lf -remote "send $id :reload;unselect"
 	lf -remote "send $id echo '   successfully converted to jpg'"
+}}
+
+# REMOVE METADATA
+
+cmd "remove metadata" %{{
+    exiftool -all= -overwrite_original $fx
+    lf -remote 'send :reload;unselect'	
+	lf -remote "send $id echo '   all metadata has been removed"
+
 }}
 
 # OPEN FILE IN SPECIFIED APP
@@ -636,6 +663,7 @@ cmd trash %{{
     if [ "$ans" = "y" ]; then
         trash-put $fx
         echo "  moved to trash bin successfully"
+        lf -remote "send $id :reload;unselect"
     else
         echo "  aborted"
     fi
@@ -658,6 +686,7 @@ cmd delete %{{
 		rm -rv $fx
 		#| pv -l -s $(find $fx | wc -l) > /dev/null
 		echo "  deleted successfully"
+        lf -remote "send $id :reload;unselect"
 	else
 		echo "  aborted"
 	fi
@@ -849,6 +878,25 @@ cmd "reload config file for all instances" ${{
 
 
 # WIP
+
+# DUPLICATE FILE
+
+cmd "duplicate file" %{{
+  for file in "$fx"
+  do
+	file=${file##*/}
+    name=${file%%.*}
+    ext=${file##*.}
+    add="(Copy)"
+    a=$(basename $file $ext)
+    printf "$a"
+    #cp $file$add*$ext
+    #rsync -arhz "$file" ./"$name$add.$ext"
+    #lf -remote 'send :reload;unselect'
+    #lf -remote "send $id echo ' 󰆑  created duplicate of \"$file\"'"
+  done 
+}}
+
 cmd "calculate size of all directories (could take a while)" ${{
 	lf -remote $id "send $id set info size"
 	lf -remote $id "send $id set dircounts false"
@@ -890,7 +938,7 @@ cmd test2 &{{
         	lf -remote "send $id echo ' $line'"
         	done
         
-		lf -remote "send :clear;reload"
+		lf -remote "send :clear;load"
 		lf -remote "send $id echo '   $nof file(s) copied successfully'"
 		notify-send "lf file manager - status" "  $nof file(s) copied successfully" -i " "
         }
@@ -908,7 +956,7 @@ cmd test2 &{{
 	        else rm -rf $@;
 	        fi
         
-		lf -remote "send :clear;reload"
+		lf -remote "send :clear;load"
 		lf -remote "send $id echo '   $nof file(s) moved successfully'"
 		notify-send "lf file manager - status" "  $nof file(s) moved successfully" -i " "
 	}

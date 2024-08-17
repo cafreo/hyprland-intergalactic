@@ -16,6 +16,7 @@ map H
 
 # BASIC KEYBINDS
 map <esc> :setfilter '';unselect;clear
+cmap <esc> :cmd-escape;cmd-interrupt;
 map c copy
 map x cut
 map v paste
@@ -81,6 +82,7 @@ map ka1 "convert to mp3"
 map ki1 "convert to png"
 map ki2 "convert to jpg"
 map ki3 "convert to gif"
+map krm "remove metadata"
 
 # TRASH KEYBINDS
 map br "restore trashed file"
@@ -175,10 +177,11 @@ map pS "calculate size of all directories (could take a while)"
 map ps "calculate size of directory"
 map pd "drag and drop"
 map pp "git pull"
-map pc "compare 2 or 4 videos simultaneously"
+map pk "compare 2 or 4 videos simultaneously"
 map pt "copy text in image to clipboard"
 map pr "reload config file"
 map pR "reload config file for all instances"
+map pc "duplicate file"
 
 # TEST
 map Pt test3
