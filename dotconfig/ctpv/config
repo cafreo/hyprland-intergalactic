@@ -1,51 +1,94 @@
 preview list7z application/x-7z-compressed ."7z" {{
-	printf "Archive: "$f"\n\n"
-    7z l "$f" | awk 'NR>2{print p2} {p2=p; p=$0}'| awk 'NR > 19 { print }' | awk '{ print $6}'
+    printf "Archive: "$f"\n\n"
+        7z l "$f" | awk 'NR>2{print p2} {p2=p; p=$0}'| awk 'NR > 19 { print }' | awk '{ print $6}'
 }}
 
 preview listzip application/zip ."zip" {{
-	printf "Archive: "$f"\n\n"
-    unzip -Z1 "$f"
+    printf "Archive: "$f"\n\n"
+        unzip -Z1 "$f"
 }}
 
 preview listtar application/x-tar ."tar" {{
-	printf "Archive: "$f"\n\n"
-    tar -tvf "$f" | awk '{ print $6}'
+    printf "Archive: "$f"\n\n"
+        tar -tvf "$f" | awk '{ print $6}'
 }}
 
 preview listtargz application/x-compressed-tar ."tar.gz" {{
-	printf "Archive: "$f"\n\n"
-    tar -tzvf "$f" | awk '{ print $6}'
+    printf "Archive: "$f"\n\n"
+        tar -tzvf "$f" | awk '{ print $6}'
 }}
 
 preview listtarxz application/x-xz-compressed-tar ."tar.xz" {{
-	printf "Archive: "$f"\n\n"
-   	tar -tvf "$f" | awk '{ print $6}'
+    printf "Archive: "$f"\n\n"
+        tar -tvf "$f" | awk '{ print $6}'
 }}
 
 preview listtarbz2 application/x-bzip2-compressed-tar ."tar.bz2" {{
-	printf "Archive: "$f"\n\n"
-    tar -tjvf "$f" | awk '{ print $6}'
+    printf "Archive: "$f"\n\n"
+        tar -tjvf "$f" | awk '{ print $6}'
 }}
 
 preview listrar application/vnd.rar ."rar" {{
-	printf "Archive: "$f"\n\n"
-    rar lb "$f"
+    printf "Archive: "$f"\n\n"
+        rar lb "$f"
 }}
 
 preview audio audio/* {{
-img(){
-	ffmpegthumbnailer -i "$f" -s 256 -o "$cache_f" 2>/dev/null
-}
-	meta="$(exiftool -S -Title -Artist -Album -Band -Track -Duration -FileSize -AudioBitrate -SampleRate -ChannelMode -FileName "$f" 2>&1)"
-	printf '%s\n' "$meta"
-	y=$((y + $(printf '%s\n\n' "$meta" | wc -l)))
-	convert_and_show_image img
+    audio(){
+        ffmpegthumbnailer -i "$f" -o "$cache_f" -s 256 -c "jpg" -q 8 2>/dev/null
+    }
+    meta="$(exiftool -S -Title -Artist -Album -Band -Track -Duration -FileSize -AudioBitrate -SampleRate -ChannelMode -FileName "$f" 2>&1)"
+    printf '%s\n' "$meta"
+    y=$((y + $(printf '%s\n\n' "$meta" | wc -l)))
+
+    convert_and_show_image audio
 }}
 
-# WIP
-#preview audio audio/* {{
-#	file="~/.cache/ctpv/audiopreviewtxt"
-#	meta="$(ffmpeg -i "$f" -hide_banner -f ffmetadata ~/.cache/ctpv/audiopreviewtxt)"
-#	printf "$file" | awk 'NR > 7 { print }'
+preview font font/* application/vnd.oasis.opendocument.formula-template ."otf" {{
+    font() {
+        file=${f##*/}
+        name=${file%.*}
+        magick -size 620x360 xc:"#ffffff" -gravity center -pointsize 36 -font "$f" -fill "#000000" -annotate +0+0 "$name\nABCDEFGHIJKLM\nNOPQRSTUVWXYZ\nabcdefghijklm\nnopqrstuvwxyz\n1234567890\n!?%&@$€()[]{}" -flatten "$cache_f.jpg" 2> /dev/null &&
+        mv -- "$cache_f.jpg" "$cache_f"
+}
+
+    convert_and_show_image font
+}}
+
+preview psd image/vnd.adobe.photoshop ."psd" image/x-xcf ."xcf" {{
+    psd() {
+        magick "$f"[0] -flatten "$cache_f.jpg" 2> /dev/null &&
+            mv -- "$cache_f.jpg" "$cache_f"
+    }
+
+    convert_and_show_image psd
+}}
+
+preview video video/* {{
+    video() {
+        ffmpegthumbnailer -i "$f" -o "$cache_f" -c "jpeg" -s 0 -q 8 -t 50% 2>/dev/null
+    }
+
+    convert_and_show_image video
+}}
+
+# DEPRECATED
+
+# old font preview via fontimage (fontforge)
+
+#preview font font/* {{
+#font() {
+#	fontimage -o "$cache_f.jpg" --pixelsize 26 --fontname "$f" --pixelsize 20 --text "" --pixelsize 36 --text "ABCDEFGHIJKLM" --text "NOPQRSTUVWXYZ" --pixelsize 10 --text "" --pixelsize 36 --text "abcdefghijklm" --text "nopqrstuvwxyz" --pixelsize 10 --text "" --pixelsize 36 --text "123456789" --text "!?%&@$€()[]{}" 2> /dev/null &&
+#		mv -- "$cache_f.jpg" "$cache_f"
+#}
+
+# psd file preview via a gif, which shows all layers (can take very long to load, seems buggy and can also crash)
+
+#preview psd image/vnd.adobe.photoshop ."psd" {{
+#    psd() {
+#        magick "$f" "$cache_f.gif" 2> /dev/null &&
+#        mv -- "$cache_f.gif" "$cache_f"
+#    }
+#
+#convert_and_show_image psd
 #}}
