@@ -110,11 +110,11 @@ on-cd
 # ON REDRAWING THE WINDOW
 
 cmd on-redraw &{{
-    if (( $lf_width <= 60 )); then
+    if [ $lf_width -le 60 ]; then
     	lf -remote "send $id set preview false"
         lf -remote "send $id set ratios 1"
         
-    elif (( $lf_width > 60 && $lf_width <= 90 )); then
+    elif [ $lf_width -le 90 ]; then
         lf -remote "send $id set ratios 1:1"
         lf -remote "send $id set preview true"
 
@@ -314,13 +314,13 @@ cmd "copy path of current directory" &{{
 
 cmd bulk-rename ${{
 
-    renamer -p $(basename -a -- $fx)
+    massren -v $(basename -a -- $fx)
 
     lf -remote "send $id :reload;unselect"
 }}
 
 cmd undo-bulk-rename ${{
-	renamer -u
+	massren -u
 
 	lf -remote "send $id :reload;unselect"
 }}
@@ -460,7 +460,7 @@ cmd "calculate size of directory" &{{
 
 # ARCHIVES
 
-cmd zip %{{
+cmd zip ${{
     printf " 󱝣  create new zipfile: "
     read ans
     origd="$(pwd)"
@@ -496,12 +496,12 @@ cmd zipe %{{
 #cmd zip %zip -r "$fx" "$fx"
 #cmd zipe %zip -re "$fx.zip" "$fx"
 
-cmd unarchive &{{
+cmd unarchive %{{
 	for file in $fx
 		do
 			case "$file" in
-			*.zip) 7z e "$file" -o"${file%.zip}" -y ;;
-			*.7z) 7z e "$file" -o"${file%.7z}" -y ;;
+			*.zip) 7z x "$file" -o"${file%.zip}" -y ;;
+			*.7z) 7z x "$file" -o"${file%.7z}" -y ;;
 			*.gz) gunzip -c "$file" ;;
 			*.tar.zst) tar --zstd -xvf "$file" --one-top-level ;;
 			*.tar.gz) tar -xzvf "$file" --one-top-level ;;
@@ -816,7 +816,7 @@ cmd "list commands" ${{
 	lf -remote "query $id cmds" | $PAGER
 }}
 
-cmd "display current lf version" ${{
+cmd "display current lf version" %{{
 	lf -remote "send $id echo '   lf version: $(lf -version)'"
 }}
 
