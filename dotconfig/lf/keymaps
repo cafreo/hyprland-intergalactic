@@ -15,6 +15,7 @@ map y
 map H
 
 # BASIC KEYBINDS
+map q quit
 map <esc> :setfilter '';unselect;clear
 cmap <esc> :cmd-escape;cmd-interrupt;
 map c copy
@@ -146,13 +147,13 @@ map gc6 cd ~/.config/icons
 
 # GO TO MOUNTED DIRECTORIES
 map Ga cd /mnt/A-POTRO-NAS/
-map Gx cd /mnt/X-POTRO-SSD/
+map Gx cd ~/Extern/
 map Gm cd /mnt/
 map Gu cd /run/media/cafreo/
 
 # TMUX
 map Xn "open new tab"
-map Xa "create new session"
+#map Xa "create new session"
 map Xq "close current tab"
 map XQ "close current session"
 map X<left> "open previous tab"
@@ -183,11 +184,6 @@ map pr "reload config file"
 map pR "reload config file for all instances"
 map pc "duplicate file"
 
-# TEST
-map Pt test3
-map Pr selectregex
-map Pd debug
-
 map ma "mount all available devices"
 map mu "eject current media"
 
@@ -198,7 +194,6 @@ map mu "eject current media"
 
 # COMMAND MODE
 cmap <tab> "command autocomplete"
-
 cmap <down> "go to next file (filter mode)"
 cmap <up> "go to previous file (filter mode)"
 cmap <down> "go to next file (search mode)"

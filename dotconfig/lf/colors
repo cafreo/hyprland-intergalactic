@@ -1,0 +1,167 @@
+# Colors for filenames in lf
+
+# file types (with matching order)
+ln      01;36   # LINK
+or      40;31;01   # ORPHAN
+tw      01;32 # STICKY_OTHER_WRITABLE
+ow      01;32 # OTHER_WRITABLE
+st      00;32   # STICKY
+di      01;33   # DIR
+pi      40;33      # FIFO
+so      01;35   # SOCK
+bd      40;33;01   # BLK
+cd      40;33;01   # CHR
+su      37;41   # SETUID
+sg      30;43   # SETGID
+ex      00;34   # EXEC
+fi      00      # FILE
+
+# archives or compressed
+*.tar   01;36
+*.tgz   01;36
+*.arc   01;36
+*.arj   01;36
+*.taz   01;36
+*.lha   01;36
+*.lz4   01;36
+*.lzh   01;36
+*.lzma  01;36
+*.tlz   01;36
+*.txz   01;36
+*.tzo   01;36
+*.t7z   01;36
+*.zip   01;36
+*.xpi   01;36
+*.z     01;36
+*.dz    01;36
+*.gz    01;36
+*.lrz   01;36
+*.lz    01;36
+*.lzo   01;36
+*.xz    01;36
+*.zst   01;36
+*.tzst  01;36
+*.bz2   01;36
+*.bz    01;36
+*.tbz   01;36
+*.tbz2  01;36
+*.tz    01;36
+*.deb   01;36
+*.rpm   01;36
+*.jar   01;36
+*.war   01;36
+*.ear   01;36
+*.sar   01;36
+*.rar   01;36
+*.alz   01;36
+*.ace   01;36
+*.zoo   01;36
+*.cpio  01;36
+*.7z    01;36
+*.rz    01;36
+*.cab   01;36
+*.wim   01;36
+*.swm   01;36
+*.dwm   01;36
+*.esd   01;36
+
+# image formats
+*.jpg   00;36
+*.JPG   00;36
+*.jpeg  00;36
+*.mjpg  00;36
+*.mjpeg 00;36
+*.jxl   00;36
+*.JXL   00;36
+*.webp  00;36
+*.gif   00;36
+*.bmp   00;36
+*.pbm   00;36
+*.pgm   00;36
+*.ppm   00;36
+*.tga   00;36
+*.xbm   00;36
+*.xpm   00;36
+*.tif   00;36
+*.tiff  00;36
+*.png   00;36
+*.svg   00;36
+*.svgz  00;36
+*.mng   00;36
+*.odg   00;36
+
+# video formats
+*.pcx   00;36
+*.mov   00;36
+*.mpg   00;36
+*.mpeg  00;36
+*.m2v   00;36
+*.mkv   00;36
+*.webm  00;36
+*.ogm   00;36
+*.mp4   00;36
+*.m4v   00;36
+*.mp4v  00;36
+*.vob   00;36
+*.qt    00;36
+*.nuv   00;36
+*.wmv   00;36
+*.asf   00;36
+*.rm    00;36
+*.rmvb  00;36
+*.flc   00;36
+*.avi   00;36
+*.fli   00;36
+*.flv   00;36
+*.gl    00;36
+*.dl    00;36
+*.xwd   00;36
+*.yuv   00;36
+*.cgm   00;36
+*.emf   00;36
+*.ogv   00;36
+*.ogx   00;36
+
+# audio formats
+*.aac   00;32
+*.au    00;32
+*.flac  00;32
+*.m4a   00;32
+*.mid   00;32
+*.midi  00;32
+*.mka   00;32
+*.mp3   00;32
+*.mpc   00;32
+*.ogg   00;32
+*.ra    00;32
+*.wav   00;32
+*.oga   00;32
+*.opus  00;32
+*.spx   00;32
+*.xspf  00;32
+
+# backup files
+*~ 00;30
+*# 00;30
+.bak 00;30
+.crdownload 00;30
+.dpkg-dist 00;30
+.dpkg-new 00;30
+.dpkg-old 00;30
+.dpkg-tmp 00;30
+.old 00;30
+.orig 00;30
+.part 00;30
+.rej 00;30
+.rpmnew 00;30
+.rpmorig 00;30
+.rpmsave 00;30
+.swp 00;30
+.tmp 00;30
+.ucf-dist 00;30
+.ucf-new 00;30
+.ucf-old 00;30
+
+# other formats
+
+
