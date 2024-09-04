@@ -1,215 +1,210 @@
 {
-	// BASIC SETTINGS
-	
-	"layer": "top", // Waybar at top layer
-	"position": "top", // Waybar position (top|bottom|left|right)
-	"height": 46, // Waybar height (to be removed for auto height)
-	// "width": 1280, // Waybar width
-	"spacing": 4, // Gaps between modules (4px)
+    // BASIC SETTINGS
 
-	// MODULES ORDER
-	
-	"modules-left": ["image#user", "hyprland/window"],
-	"modules-center": ["hyprland/workspaces"],
-	"modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "battery", "clock", "tray"],
+    "layer": "top", // Waybar at top layer
+        "position": "top", // Waybar position (top|bottom|left|right)
+        "height": 46, // Waybar height (to be removed for auto height)
+                      // "width": 1280, // Waybar width
+        "spacing": 4, // Gaps between modules (4px)
 
-	// MODULES CONFIG
+        // MODULES ORDER
 
-	"image#user": {
-		"exec": "echo ~/.config/icons/user.png",
-		"size": 32,
-		"on-click": "wlogout"
-	},
+        "modules-left": ["image#user", "hyprland/window"],
+        "modules-center": ["hyprland/workspaces"],
+        "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
 
-	"hyprland/window": {
-		"format": " {}",
-		"separate-outputs": true
-	},
+        // MODULES CONFIG
 
-	"hyprland/workspaces": {
-		"all-outputs": true,
-		"format": "{icon}",
-		"on-click": "activate",
-		// "on-click-right": "close",
-		"on-scroll-up": "hyprctl dispatch workspace e+1",
-		"on-scroll-down": "hyprctl dispatch workspace e-1",
-		"sort-by-number": true,
-		"format-icons": {
-				"1": "",
-				"2": "",
-				"3": "",
-				"4": "",
-				"5": "",
-				"6": "",		
-				"focused": "",
-				"default": ""
-			}
-	},
+        "image#user": {
+            "exec": "echo ~/.config/icons/user.png",
+            "size": 32,
+            "on-click": "wlogout"
+        },
 
+        "hyprland/window": {
+            "format": " {}",
+            "separate-outputs": true
+        },
 
-	"hyprland/submap": {
-		"format": "  {}",
-		"max-length": 8,
-		"tooltip": false
-	},
-
-	"cpu": {
-		"format": "  {usage}%",
-		"tooltip": true,
-		"interval": 4,
-		"states": {
-			"high": 80,
-		},
-		"on-click": "~/.config/rofi/scripts/rofi-cpupower.sh",
-		"on-click-right": "kitty -e 'btop'"
-		},
-
-	"custom/gammastep": {
-		"format": "{}",
-		"interval": 4,
-		"on-update": "",
-		"exec": "$HOME/.config/waybar/scripts/gammastep.sh",
-		"on-click": "$HOME/.config/waybar/scripts/gammastep.sh toggle"
-	},
-
-	"pulseaudio#microphone": {
-		"format": "{format_source}",
-		"format-source": "",
-		"format-source-muted": "",
-		"tooltip": true,
-		"scroll-step": 0,
-		"tooltip-format": "{format_source} {volume}%",
-		"on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
-	},
-
-	"pulseaudio": {
-		// "scroll-step": 1, // %, can be a float
-		"states": {
-			"muted2": 0,
-		},
-		"format": "{icon}",
-		"format-muted": "",
-		"format-muted2": "",
-		"format-icons": {
-			"headphone": "",
-			"hands-free": "",
-			"headset": "",
-			"phone": "",
-			"portable": "",
-			"car": "",
-			"default": ["", ""]
-		},
-		"tooltip": true,
-		"tooltip-format": "{icon} {volume}%",
-		"scroll-step": 5,
-		"on-click": "~/.config/waybar/scripts/audio-output-switch.sh",
-		"on-click-right": "pavucontrol",
-		"on-click-middle": "~/.config/notify-send/scripts/notify_volumectl.sh toggle",
-	},
-
-	"network": {
-		// "interface": "wlp2*", // (Optional) To force the use of this interface
-		//"format-wifi": "{essid} ({signalStrength}%) ",
-		"interval": 4,
-		"format-ethernet": "  {bandwidthUpBits}    {bandwidthDownBits}",
-		"format-wifi": "  {bandwidthUpBits}    {bandwidthDownBits}",
-		"tooltip-format": "  {ifname}: {ipaddr} via {gwaddr}/{cidr}",
-		"format-linked": "{ifname} (No IP) ",
-		"format-disconnected": "  down",
-		"on-click": "~/.config/rofi/scripts/rofi-networkmanager.sh",
-		"on-click-right": "kitty -e 'nethogs'"
-	},
-
-	"battery": {
-		"interval": 4,
-		"tooltip": true,
-		"tooltip-format": "{timeTo} ({health}%)",
-		"states": {
-			// "good": 95,
-			"warning": 30,
-			"critical": 15
-		},
-		"format": "{icon} {capacity}%",
-		"format-charging": " {capacity}%",
-		"format-plugged": " {capacity}%",
-		"format-time": "{H}h {M}m",
-		"format-alt": "{icon} {time}",
-		// "format-good": "", // An empty format will hide the module
-		// "format-full": "",
-		"format-icons": ["", "", "", "", ""]
-	},
-
-	"clock": {
-		// "timezone": "America/New_York",
-		"interval": 60,
-		"tooltip-format": "<big>Calendar</big>\n<tt><small>{calendar}</small></tt>",
-		//"format-alt": "{:%d.%m.%Y}",
-		"calendar": {
-			"mode": "month",
-			"weeks-pos": "left",
-			"format": {
-				//"months":     "<span color='#C8CACC'><b>{}</b></span>",
-				"days":       "<span color='#C8CACC'><b>{}</b></span>",
-				"weeks":      "<span color='#E9862D'><b>W{}</b></span>",
-				"weekdays":   "<span color='#F5B83A'><b>{}</b></span>",
-				"today":      "<span color='#D02311' ><b>{}</b></span>"
-			}
-		},    
-		"on-click-right": "kitty -e 'calcurse'"
-	},
-
-	"tray": {
-		"icon-size": 18,
-		"spacing": 10
-	},
-
-	// WIP
-	
-	"battery#bat2": {
-		"bat": "BAT2"
-	},
-
-	"custom/playerctl": {
-		"format": "{icon}",
-		"return-type": "json",
-		"max-length": 64,
-		"exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-		"on-click-middle": "playerctl play-pause",
-		"on-click": "playerctl previous",
-		"on-click-right": "playerctl next",
-		"format-icons": {
-			"Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
-			"Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
-		},
-	},
-
-	"custom/playerlabel": {
-		"format": "<span>{}</span>",
-		"return-type": "json",
-		"max-length": 48,
-		"exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-		"on-click-middle": "playerctl play-pause",
-		"on-click": "playerctl previous",
-		"on-click-right": "playerctl next",
-		"format-icons": {
-			"Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
-			"Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
-		},
-	},
-
-	"custom/weather": {
-		"format": "{}° ",
-		"tooltip": true,
-		"interval": 3600,
-		"exec": "wttrbar",
-		"return-type": "json"
-	},
+        "hyprland/workspaces": {
+            "all-outputs": true,
+            "format": "{icon}",
+            "on-click": "activate",
+            // "on-click-right": "close",
+            "on-scroll-up": "hyprctl dispatch workspace e+1",
+            "on-scroll-down": "hyprctl dispatch workspace e-1",
+            "sort-by-number": true,
+            "format-icons": {
+                "1": "",
+                "2": "",
+                "3": "",
+                "4": "",
+                "5": "",
+                "6": "",		
+                "focused": "",
+                "default": ""
+            }
+        },
 
 
-"pulseaudio/slider": {
-    "min": 0,
-    "max": 100,
-    "orientation": "vertical"
-},
+        "hyprland/submap": {
+            "format": "  {}",
+            "max-length": 8,
+            "tooltip": false
+        },
+
+        "cpu": {
+            "format": "  {usage}%",
+            "tooltip": true,
+            "interval": 6,
+            "states": {
+                "high": 80,
+            },
+            "on-click": "~/.config/rofi/scripts/rofi-cpupower.sh",
+            "on-click-right": "kitty -e 'btop'"
+        },
+
+        "custom/gammastep": {
+            "format": "{}",
+            "interval": 8,
+            "on-update": "",
+            "exec": "$HOME/.config/waybar/scripts/gammastep.sh",
+            "on-click": "$HOME/.config/waybar/scripts/gammastep.sh toggle"
+        },
+
+        "pulseaudio#microphone": {
+            "format": "{format_source}",
+            "format-source": "",
+            "format-source-muted": "",
+            "tooltip": true,
+            "scroll-step": 0,
+            "tooltip-format": "{format_source} {volume}%",
+            "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        },
+
+        "pulseaudio": {
+            // "scroll-step": 1, // %, can be a float
+            "states": {
+                "muted2": 0,
+            },
+            "format": "{icon}",
+            "format-muted": "",
+            "format-muted2": "",
+            "format-icons": {
+                "headphone": "",
+                "hands-free": "",
+                "headset": "",
+                "phone": "",
+                "portable": "",
+                "car": "",
+                "default": ["", ""]
+            },
+            "tooltip": true,
+            "tooltip-format": "{icon} {volume}%",
+            "scroll-step": 5,
+            "on-click": "~/.config/waybar/scripts/audio-output-switch.sh",
+            "on-click-right": "pavucontrol",
+            "on-click-middle": "~/.config/notify-send/scripts/notify_volumectl.sh toggle",
+        },
+
+        "network": {
+            // "interface": "wlp2*", // (Optional) To force the use of this interface
+            //"format-wifi": "{essid} ({signalStrength}%) ",
+            "interval": 6,
+            "format-ethernet": "  {bandwidthUpBits}    {bandwidthDownBits}",
+            "tooltip-format": "  {ifname}: {ipaddr} via {gwaddr}/{cidr}",
+            "format-linked": "{ifname} (No IP) ",
+            "format-disconnected": "  down",
+            "on-click": "~/.config/rofi/scripts/rofi-networkmanager.sh",
+            "on-click-right": "kitty -e 'nethogs'"
+        },
+
+        "clock": {
+            // "timezone": "America/New_York",
+            "interval": 60,
+            "tooltip-format": "<big>Calendar</big>\n<tt><small>{calendar}</small></tt>",
+            //"format-alt": "{:%d.%m.%Y}",
+            "calendar": {
+                "mode": "month",
+                "weeks-pos": "left",
+                "format": {
+                    //"months":     "<span color='#C8CACC'><b>{}</b></span>",
+                    "days":       "<span color='#C8CACC'><b>{}</b></span>",
+                    "weeks":      "<span color='#E9862D'><b>W{}</b></span>",
+                    "weekdays":   "<span color='#F5B83A'><b>{}</b></span>",
+                    "today":      "<span color='#D02311' ><b>{}</b></span>"
+                }
+            },    
+            "on-click-right": "kitty -e 'calcurse'"
+        },
+
+        "tray": {
+            "icon-size": 18,
+            "spacing": 10
+        },
+
+        // WIP
+
+        "battery": {
+            "states": {
+                // "good": 95,
+                "warning": 30,
+                "critical": 15
+            },
+            "format": "{capacity}% {icon}",
+            "format-charging": "{capacity}% ",
+            "format-plugged": "{capacity}% ",
+            "format-alt": "{time} {icon}",
+            // "format-good": "", // An empty format will hide the module
+            // "format-full": "",
+            "format-icons": ["", "", "", "", ""]
+        },
+
+        "battery#bat2": {
+            "bat": "BAT2"
+        },
+
+        "custom/playerctl": {
+            "format": "{icon}",
+            "return-type": "json",
+            "max-length": 64,
+            "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+            "on-click-middle": "playerctl play-pause",
+            "on-click": "playerctl previous",
+            "on-click-right": "playerctl next",
+            "format-icons": {
+                "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
+                "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
+            },
+        },
+
+        "custom/playerlabel": {
+            "format": "<span>{}</span>",
+            "return-type": "json",
+            "max-length": 48,
+            "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+            "on-click-middle": "playerctl play-pause",
+            "on-click": "playerctl previous",
+            "on-click-right": "playerctl next",
+            "format-icons": {
+                "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
+                "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
+            },
+        },
+
+        "custom/weather": {
+            "format": "{}° ",
+            "tooltip": true,
+            "interval": 3600,
+            "exec": "wttrbar",
+            "return-type": "json"
+        },
+
+
+        "pulseaudio/slider": {
+            "min": 0,
+            "max": 100,
+            "orientation": "vertical"
+        },
 
 }
