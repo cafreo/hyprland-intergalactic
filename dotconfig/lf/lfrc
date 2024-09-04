@@ -485,7 +485,7 @@ cmd zipe %{{
 #cmd zipe %zip -re "$fx.zip" "$fx"
 
 cmd unarchive &{{
-    for file in $fx do
+    for file in $fx; do
         case $file in
             *.zip) 7z x "$file" -o"${file%.zip}" -y ;;
             *.7z) 7z x "$file" -o"${file%.7z}" -y ;;
@@ -513,7 +513,7 @@ cmd "drag and drop" &{{
 # CONVERT FILES
 
 cmd "convert to mp4" &{{
-    for file in $fx do
+    for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp4'"
         ffmpeg -i $file -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${file%.*}.mp4"
     done
@@ -523,7 +523,7 @@ cmd "convert to mp4" &{{
 }}
 
 cmd "convert to gif" &{{
-    for file in $fx do
+    for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
         ffmpeg -i $file -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${file%.*}.gif";
     done
@@ -533,7 +533,7 @@ cmd "convert to gif" &{{
 }}
 
 cmd "convert to mp3" &{{
-    for file in $fx do
+    for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) mp3'"
         ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
     done
@@ -543,7 +543,7 @@ cmd "convert to mp3" &{{
 }}
 
 cmd "convert to png" &{{
-    for file in $fx do
+    for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
         ffmpeg -i $fx "${f%.*}.png"
     done
@@ -553,7 +553,7 @@ cmd "convert to png" &{{
 }}
 
 cmd "convert to jpg" &{{
-    for file in $fx do
+    for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         ffmpeg -i $fx "${f%.*}.jpg"
     done
