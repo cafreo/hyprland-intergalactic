@@ -11,7 +11,7 @@
 
         "modules-left": ["image#user", "hyprland/window"],
         "modules-center": ["hyprland/workspaces"],
-        "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "clock", "tray"],
+        "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "battery", "clock", "tray"],
 
         // MODULES CONFIG
 
@@ -109,15 +109,34 @@
 
         "network": {
             // "interface": "wlp2*", // (Optional) To force the use of this interface
-            //"format-wifi": "{essid} ({signalStrength}%) ",
             "interval": 6,
             "format-ethernet": "  {bandwidthUpBits}    {bandwidthDownBits}",
+            "format-wifi": "  {bandwidthUpBits}    {bandwidthDownBits}",
             "tooltip-format": "  {ifname}: {ipaddr} via {gwaddr}/{cidr}",
             "format-linked": "{ifname} (No IP) ",
             "format-disconnected": "  down",
             "on-click": "~/.config/rofi/scripts/rofi-networkmanager.sh",
             "on-click-right": "kitty -e 'nethogs'"
         },
+
+        "battery": {
+		"interval": 4,
+		"tooltip": true,
+		"tooltip-format": "{timeTo} ({health}%)",
+		"states": {
+			// "good": 95,
+			"warning": 30,
+			"critical": 15
+		},
+		"format": "{icon} {capacity}%",
+		"format-charging": " {capacity}%",
+		"format-plugged": " {capacity}%",
+		"format-time": "{H}h {M}m",
+		"format-alt": "{icon} {time}",
+		// "format-good": "", // An empty format will hide the module
+		// "format-full": "",
+		"format-icons": ["", "", "", "", ""]
+	    },
 
         "clock": {
             // "timezone": "America/New_York",
@@ -144,25 +163,6 @@
         },
 
         // WIP
-
-        "battery": {
-            "states": {
-                // "good": 95,
-                "warning": 30,
-                "critical": 15
-            },
-            "format": "{capacity}% {icon}",
-            "format-charging": "{capacity}% ",
-            "format-plugged": "{capacity}% ",
-            "format-alt": "{time} {icon}",
-            // "format-good": "", // An empty format will hide the module
-            // "format-full": "",
-            "format-icons": ["", "", "", "", ""]
-        },
-
-        "battery#bat2": {
-            "bat": "BAT2"
-        },
 
         "custom/playerctl": {
             "format": "{icon}",
