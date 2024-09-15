@@ -10,13 +10,13 @@ button {
     font-weight: bold;
 	background-color: rgba(32,28,40,0.8);
 	border-style: solid;
-	border-width: 8px;
+	border-width: 12px;
 	border-color: rgba(200,202,204,0.05);
-	border-radius: 14px;
-	margin: 10px;
+	border-radius: 32px;
+	margin: 20px;
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: 20%;
+	background-size: 35%;
 }
 
 button:focus, button:active, button:hover {

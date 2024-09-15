@@ -18,7 +18,7 @@
         "image#user": {
             "exec": "echo ~/.config/icons/user.png",
             "size": 32,
-            "on-click": "wlogout"
+            "on-click": "wlogout -m 120 -L 240 -R 240"
         },
 
         "hyprland/window": {
@@ -120,7 +120,7 @@
         },
 
         "battery": {
-		"interval": 4,
+		"interval": 8,
 		"tooltip": true,
 		"tooltip-format": "{timeTo} ({health}%)",
 		"states": {
