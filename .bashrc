@@ -7,8 +7,10 @@ source ~/.bashrc_cafreo
 # SETTINGS
 source /usr/share/doc/pkgfile/command-not-found.bash
 [[ $- != *i* ]] && return
-HISTSIZE=2000
-HISTFILESIZE=2000
+shopt -s histappend
+PROMPT_COMMAND="history -a; history -c; history -r;$PROMPT_COMMAND"
+HISTSIZE=4000
+HISTFILESIZE=4000
 # starship
 eval "$(starship init bash)"
 PS1="\e[1;33m\u@\h \W$ \e[0;0m"
@@ -48,7 +50,7 @@ export XCURSOR_SIZE=36
 
 # ALIASES
 # pacman/yay
-alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rns -; yay -Yc; flatpak uninstall --unused; sudo flatpak repair"
+alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rns -; yaycache -rvk3; yaycache -ruvk0; yay -Yc; flatpak uninstall --unused; sudo flatpak repair"
 alias yayf="yay -Suy --devel; flatpak update; pacclean"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
@@ -61,7 +63,7 @@ alias gduh="gdu / --ignore-dirs /media,/mnt,/srv,/export"
 alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, type'"
 alias fstype="findmnt -n -o FSTYPE -T ."
 alias swaylock="swaylock -C ~/.config/swaylock/config"
-alias computer="ollama run dolphin-mistral"
+alias computer="ollama run llama3.1"
 alias computerf='ollama list | awk -F: "NR>1 && !/reviewer/ {system(\"ollama pull \"$1)}"'
 alias mount!="sudo mount -av"
 alias ip="curl ifconfig.me"
