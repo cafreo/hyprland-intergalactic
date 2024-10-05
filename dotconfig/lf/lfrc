@@ -189,6 +189,53 @@ cmd "reverse sorting order" &{{
     lf -remote "send $id top"
 }}
 
+# SELECT
+
+cmd "select all elements" %{{
+    lf -remote "send $id glob-select *"
+}}
+
+cmd "select all directories" %{{
+   if [ "$lf_hidden" = 'false' ]; then
+        find "$PWD" -mindepth 1 -maxdepth 1 -type d -not -name '.*' -print0
+    else
+        find "$PWD" -mindepth 1 -maxdepth 1 -type d -print0
+    fi |
+    sed 's/ /\\ /g' |
+    xargs -0 -I{} lf -remote "send $id toggle {}" 
+}}
+
+cmd "select all files" %{{
+    if [ "$lf_hidden" = 'false' ]; then
+        find "$PWD" -mindepth 1 -maxdepth 1 -type f -not -name '.*' -print0
+    else
+        find "$PWD" -mindepth 1 -maxdepth 1 -type f -print0
+    fi |
+    sed 's/ /\\ /g' |
+    xargs -0 -I{} lf -remote "send $id toggle {}"
+}}
+
+cmd "select all mp4 files" %{{
+    lf -remote "send $id glob-select *.mp4"
+}}
+
+cmd "select all png files" %{{
+    lf -remote "send $id glob-select *.png"
+}}
+
+cmd "select all jpg files" %{{
+    lf -remote "send $id glob-select *.jpg"
+    lf -remote "send $id glob-select *.jpeg"
+}}
+
+cmd "select all gif files" %{{
+    lf -remote "send $id glob-select *.gif"
+}}
+
+cmd "select all mp3 files" %{{
+    lf -remote "send $id glob-select *.mp3"
+}}
+
 # COPY FILES AND SHOW PROGRESS
 
 #cmd paste $cp-p --lf-paste $id # requires cp-p. package seems to be not maintained anymore and the progress is not quite right, if you use multiple files
@@ -449,7 +496,7 @@ cmd "calculate size of directory" &{{
 
 # ARCHIVES
 
-cmd zip ${{
+cmd zip %{{
     printf " 󱝣  create new zipfile: "
     read ans
     origd="$(pwd)"
@@ -464,11 +511,11 @@ cmd zip ${{
     lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
 }}
 
-cmd zipe %{{
-    printf " 󱝣  create new encrypted zipfile: "
-    read ans
-    printf " 󰯄  set password: "
-    read psw
+cmd zipe ${{
+    #printf " 󱝣  create new encrypted zipfile: "
+    #read ans
+    #printf " 󰯄  set password: "
+    #read psw
     origd="$(pwd)"
     tempd="$(mktemp -d)"
     pushd "$tempd"
@@ -522,26 +569,6 @@ cmd "convert to mp4" &{{
     lf -remote "send $id echo '   successfully converted to mp4'"
 }}
 
-cmd "convert to gif" &{{
-    for file in $fx; do
-        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
-        ffmpeg -i $file -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${file%.*}.gif";
-    done
-
-    lf -remote "send $id :reload;unselect"
-    lf -remote "send $id echo '   successfully converted to gif'"
-}}
-
-cmd "convert to mp3" &{{
-    for file in $fx; do
-        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) mp3'"
-        ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
-    done
-
-    lf -remote "send $id :reload;unselect"
-    lf -remote "send $id echo '   successfully converted to mp3'"
-}}
-
 cmd "convert to png" &{{
     for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
@@ -560,6 +587,26 @@ cmd "convert to jpg" &{{
 
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to jpg'"
+}}
+
+cmd "convert to gif" &{{
+    for file in $fx; do
+        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
+        ffmpeg -i $file -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${file%.*}.gif";
+    done
+
+    lf -remote "send $id :reload;unselect"
+    lf -remote "send $id echo '   successfully converted to gif'"
+}}
+
+cmd "convert to mp3" &{{
+    for file in $fx; do
+        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) mp3'"
+        ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
+    done
+
+    lf -remote "send $id :reload;unselect"
+    lf -remote "send $id echo '   successfully converted to mp3'"
 }}
 
 # REMOVE METADATA

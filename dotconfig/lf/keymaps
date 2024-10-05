@@ -37,7 +37,6 @@ map F filter
 map h set hidden!
 map u :unselect;clear
 map t :toggle;down
-map T :unselect;invert
 map i invert
 map <c-q> quit
 map <up> up
@@ -48,6 +47,17 @@ map <s-down> half-down
 map <s-pgdn> bottom
 map <left> updir
 map <right> open
+
+# SELECT
+map A "select all elements"
+map TA "select all elements"
+map Td "select all directories"
+map Tf "select all files"
+map Tv1 "select all mp4 files"
+map Ti1 "select all png files"
+map Ti2 "select all jpg files"
+map Ti3 "select all gif files"
+map Ta1 "select all mp3 files"
 
 # COPY FILE NAME
 map yy "copy filename"
@@ -79,10 +89,10 @@ map au unarchive
 
 # CONVERT KEYBINDS
 map kv1 "convert to mp4"
-map ka1 "convert to mp3"
 map ki1 "convert to png"
 map ki2 "convert to jpg"
 map ki3 "convert to gif"
+map ka1 "convert to mp3"
 map krm "remove metadata"
 
 # TRASH KEYBINDS
@@ -151,7 +161,7 @@ map Gx cd ~/Extern/
 map Gm cd /mnt/
 map Gu cd /run/media/cafreo/
 
-# TMUX
+# TABS
 map Xn "open new tab"
 #map Xa "create new session"
 map Xq "close current tab"
@@ -174,7 +184,7 @@ map Hv "display current lf version"
 
 # MISC
 map pf fzf_jump
-map pS "calculate size of all directories (could take a while)"
+#map pS "calculate size of all directories (could take a while)"
 map ps "calculate size of directory"
 map pd "drag and drop"
 map pp "git pull"
