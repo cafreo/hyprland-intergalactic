@@ -1,31 +1,28 @@
-* {
-	background-image: none;
-}
 window {
-	background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.4);
 }
+
 button {
-	color: #C8CACC;
+    color: #C8CACC;
     font-size: 24px;
     font-weight: bold;
-	background-color: rgba(32,28,40,0.8);
-	border-style: solid;
-	border-width: 12px;
-	border-color: rgba(200,202,204,0.05);
-	border-radius: 32px;
-	margin: 20px;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 35%;
+    background-color: rgba(32,28,40,0.8);
+    border-style: solid;
+    border-width: 12px;
+    border-color: rgba(200,202,204,0.05);
+    border-radius: 32px;
+    margin: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%;
 }
 
 button:focus, button:active, button:hover {
-	color: #C8CACC;
-	border-color: rgba(238, 176, 56, 0.6);
-	background-color: rgba(203, 34, 17, 0.55);
-	background-image: linear-gradient(rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
-	outline-style: none;
-	transition-property: background-color, background-image, border-color, padding, margin;
+    color: #C8CACC;
+    border-color: rgba(238, 176, 56, 0.6);
+    background-color: rgba(203, 34, 17, 0.55);
+    outline-style: none;
+    transition-property: background-color, background-image, border-color, padding, margin;
     transition-duration: .6s;
     animation: breathehover 5s ease infinite;
     animation-delay: 1.8s;
@@ -33,7 +30,7 @@ button:focus, button:active, button:hover {
 
 @keyframes breathehover {
     0% {
-      background-color: rgba(203, 34, 17, 0.55);
+        background-color: rgba(203, 34, 17, 0.55);
     }
     50% {
         background-color: rgba(203, 34, 17, 0.8);
@@ -41,15 +38,6 @@ button:focus, button:active, button:hover {
     100% {
         background-color: rgba(203, 34, 17, 0.55);
     }
-}
-
-#lock,
-#logout,
-#suspend,
-#hibernate,
-#shutdown,
-#reboot {
-   
 }
 
 #lock {
@@ -75,7 +63,3 @@ button:focus, button:active, button:hover {
 #hibernate {
     background-image: image(url("/home/cafreo/.config/icons/hibernate.png"), url("/home/cafreo/.config/icons/hibernate.png"));
 }
-
-
-
-
