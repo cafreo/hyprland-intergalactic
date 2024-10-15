@@ -41,12 +41,21 @@ map i invert
 map <c-q> quit
 map <up> up
 map <s-up> half-up
+map <pgup> page-up
 map <s-pgup> top
 map <down> down
+map <pgdown> page-down
 map <s-down> half-down
 map <s-pgdn> bottom
 map <left> updir
 map <right> open
+
+# MOUSE
+map <m-1> updir
+map <m-2> open
+map <m-3> :toggle;down
+map <m-up> up
+map <m-down> down
 
 # SELECT
 map A "select all elements"
@@ -170,6 +179,8 @@ map X<left> "open previous tab"
 map X<right> "open next tab"
 map X<s-left> "move tab to left"
 map X<s-right> "move tab to right"
+map <s-left> "open previous tab"
+map <s-right> "open next tab"
 map X1 "open tab 1"
 map X2 "open tab 2"
 map X3 "open tab 3"

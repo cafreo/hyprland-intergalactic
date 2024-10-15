@@ -25,7 +25,7 @@ set globsearch false
 set globfilter false
 set dirfirst true
 set history true
-set mouse false
+set mouse true
 set preview true
 set sortby 'natural'
 set info 'size'
@@ -741,7 +741,7 @@ cmd "create new session" ${{
 
 cmd "close current tab" ${{
     #tmux kill-window
-    kitten @ close tab
+    kitten @ close-tab
 }}
 
 cmd "close current session" ${{
@@ -749,7 +749,7 @@ cmd "close current session" ${{
     read -r ans
     if [ "$ans" = "y" ]; then
         #tmux kill-session
-        kitten @ close tab -m all
+        kitten @ close-tab -m all
     else
         echo "  aborted"
     fi
