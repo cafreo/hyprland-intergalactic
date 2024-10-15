@@ -44,17 +44,17 @@
 
 packages:
 
+ - [kitty terminal](https://github.com/kovidgoyal/kitty) for tabs and native image support in terminal
  - [ctpv](https://github.com/NikitaIvanovV/ctpv) to preview images (it is recommended to use the kitty terminal for this. otherwise you have to configure it yourself)
+ - [exiftool](https://github.com/exiftool/exiftool) to preview file information and remove metadata from files
  - [rsync](https://github.com/RsyncProject/rsync) to copy and move files
  - [trash-cli](https://github.com/sindresorhus/trash-cli) to use the recycle bin
  - [wl-clipboard](https://github.com/bugaevc/wl-clipboard) to use the clipboard
  - [pipe-rename](https://github.com/marcusbuffett/pipe-rename) to bulk rename files
- - [zip](https://infozip.sourceforge.net/Zip.html) to handle zip files
  - [p7zip](https://github.com/p7zip-project/p7zip) to handle 7z files
  - [tar](https://www.gnu.org/software/tar/) to handle tar.* files
  - [perl-file-mimeinfo](https://github.com/mbeijen/File-MimeInfo) to declare default apps to open certain file types
  - [dragon-drop](https://github.com/mwh/dragon) to drap and drop files
- - [tmux](https://github.com/tmux/tmux) to use tabs
  - [ffmpeg](https://github.com/FFmpeg/FFmpeg) to convert files
 
 files:
@@ -67,12 +67,12 @@ files:
 
 packages:
 
- - [kitty terminal](https://github.com/kovidgoyal/kitty) for native image support in terminal
  - [udiskie](https://github.com/coldfix/udiskie) to mount usb devices
  - [git](https://github.com/git/git) to show git information and pull changes
  - [mpv](https://github.com/mpv-player/mpv) to display multiple videos simultaneously
  - [tesseract](https://github.com/tesseract-ocr/tesseract) to detect text in images
  - [fzf](https://github.com/junegunn/fzf) to fuzzy find files
+ - [gzip](https://git.savannah.gnu.org/cgit/gzip.git) to handle gz files
 
 files: 
 
@@ -85,7 +85,7 @@ files:
  - [ ] paste: ask if files should be overwritten
  - [ ] rename: autocomplete
  - [ ] archives: extract multiple archives at once
- - [ ] tabs: fix image preview not working in tmux
+ - [x] tabs: fix image preview not working in tmux (switched to kitty for tabs)
 
 # credits
 thanks to [eric murphy](https://github.com/ericmurphyxyz), [luke smith](https://github.com/LukeSmithxyz), & [brodie robertson](https://github.com/BrodieRobertson), for showcasing lf and some config options in their videos and [learn linux tv](https://www.youtube.com/channel/UCxQKHvKbmSzGMvUrVtJYnUA) for his [bash scripting tutorial series](https://www.youtube.com/playlist?list=PLT98CRl2KxKGj-VKtApD8-zCqSaN2mD4w) and all the developers of the projects that are listed above.
