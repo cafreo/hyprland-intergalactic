@@ -80,7 +80,7 @@ cmd on-cd &{{
     lf -remote "send $id set promptfmt \"$fmt\""
 
     # sorting
-    case "$PWD" in ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Fonts | /mnt/A-POTRO-NAS/Media/Music)
+    case "$PWD" in ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Fonts | /mnt/A-POTRO-NAS/Library/Media/Music)
         lf -remote "send $id set user_prev_sortby $lf_sortby"
         lf -remote "send $id set info time"
         lf -remote "send $id set sortby time"
@@ -362,7 +362,7 @@ cmd undo-bulk-rename ${{
 
 # FUZZY FIND
 
-cmd fzf_jump ${{
+cmd "start fuzzy finder" ${{
 #lf -remote "send cd ~/"
     res="$(fd --hidden --ignore-case . | fzf --border --header='  jump to location')"
         if [ -f "$res" ]; then
@@ -496,14 +496,14 @@ cmd "calculate size of directory" &{{
 
 # ARCHIVES
 
-cmd zip %{{
+cmd "create zipfile" %{{
     printf " 󱝣  create new zipfile: "
     read ans
     origd="$(pwd)"
     tempd="$(mktemp -d)"
     pushd "$tempd"
     rsync -arhz --info=progress2 -- $fx . 
-    7z a -r -tzip "$ans" *
+    7z a -r -tzip *
     rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
     rm -rf "$tempd" 
@@ -511,16 +511,16 @@ cmd zip %{{
     lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
 }}
 
-cmd zipe ${{
-    #printf " 󱝣  create new encrypted zipfile: "
-    #read ans
+cmd "create encrypted zipfile" ${{
+    printf " 󱝣  create new encrypted zipfile: "
+    read ans
     #printf " 󰯄  set password: "
     #read psw
     origd="$(pwd)"
     tempd="$(mktemp -d)"
     pushd "$tempd"
     rsync -arhz --info=progress2 -- $fx . 
-    7z a -r -tzip -p"$psw" "$ans" *
+    7z a -mem=AES256 -mx4 -tzip "$ans" -p
     rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
     rm -rf "$tempd"
@@ -531,7 +531,7 @@ cmd zipe ${{
 #cmd zip %zip -r "$fx" "$fx"
 #cmd zipe %zip -re "$fx.zip" "$fx"
 
-cmd unarchive &{{
+cmd "extract archive" &{{
     for file in $fx; do
         case $file in
             *.zip) 7z x "$file" -o"${file%.zip}" -y ;;

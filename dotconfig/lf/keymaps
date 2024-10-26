@@ -92,9 +92,9 @@ map pm "change permissions"
 map pg "change group"
 
 # ZIP KEYBINDS
-map azu zip
-map aze zipe 
-map au unarchive
+map azu "create zipfile"
+map aze "create encrypted zipfile" 
+map au "extract archive"
 
 # CONVERT KEYBINDS
 map kv1 "convert to mp4"
@@ -140,35 +140,40 @@ map gb cd ~/.local/share/Trash/files
 map gt cd ~/.local/share/Trash/files
 map gd cd ~/Downloads
 map gD cd ~/Documents
+map ge cd ~/Extern
 map gf cd ~/Flow
-map gg1 cd ~/Git
-map gg2 cd ~/Git/Repos/hyprland-intergalactic
-map ggc cd ~/Git/Clones
+map ggg cd ~/Git
+map gg1 cd ~/Git/Repos/hyprland-intergalactic
+map gg2 cd ~/Git/Clones
 map gm cd ~/Music
 map gM cd ~/MEGAsync
-map gi1 cd ~/Pictures
-map gi2 cd ~/Pictures/Screenshots
+map gii cd ~/Pictures
+map gi1 cd ~/Pictures/Screenshots
 map gp1 cd ~/Projects/Designing
 map gp2 cd ~/Projects/Scripting
 map gp3 cd ~/Projects/Administrating
-map gv1 cd ~/Videos
-map gv2 cd "~/Videos/After Effects/cafreo"
-map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
+map gvv cd ~/Videos
+map gv1 cd "~/Videos/After Effects/cafreo"
+map gv2 cd "~/Videos/After Effects/P.U.P.P.Y"
 map gV cd ~/Vault
 
 # GO TO USER CONFIG DIRECORIES KEYBINDS
-map gc1 cd ~/.config
-map gc2 cd ~/.config/hypr
-map gc3 cd ~/.config/rofi
-map gc4 cd ~/.config/lf
-map gc5 cd ~/.config/nvim
-map gc6 cd ~/.config/icons
+map gcc cd ~/.config
+map gc1 cd ~/.config/hypr
+map gc2 cd ~/.config/rofi
+map gc3 cd ~/.config/lf
+map gc4 cd ~/.config/nvim
+map gc5 cd ~/.config/icons
 
 # GO TO MOUNTED DIRECTORIES
-map Ga cd /mnt/A-POTRO-NAS/
-map Gx cd ~/Extern/
-map Gm cd /mnt/
-map Gu cd /run/media/cafreo/
+map Gaa cd /mnt/A-POTRO-NAS
+map Ga1 cd /mnt/A-POTRO-NAS/Library/Media
+map Ga2 cd /mnt/A-POTRO-NAS/Library/Torrents
+map Ga3 cd /mnt/A-POTRO-NAS/Backups
+map Gat cd /mnt/A-POTRO-NAS/.Trash-1000/files
+map Gx cd ~/Extern
+map Gm cd /mnt
+map Gu cd /run/media/cafreo
 
 # TABS
 map Xn "open new tab"
@@ -194,7 +199,7 @@ map Hc "list commands"
 map Hv "display current lf version"
 
 # MISC
-map pf fzf_jump
+map pf "start fuzzy finder"
 #map pS "calculate size of all directories (could take a while)"
 map ps "calculate size of directory"
 map pd "drag and drop"
