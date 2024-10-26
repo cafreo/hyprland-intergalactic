@@ -2,7 +2,7 @@
 
 sleep 0.1
 
-chosen=$(nmcli -g NAME c show | rofi -dmenu -p "network" -theme ~/.config/rofi/modes/list.rasi)
+chosen=$(nmcli -g NAME c show | rofi -dmenu -i -p "network" -theme ~/.config/rofi/modes/list.rasi)
 
 if [ -z "$chosen" ]; then
 
