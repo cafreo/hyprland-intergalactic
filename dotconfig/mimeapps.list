@@ -2,28 +2,25 @@
 
 [Default Applications]
 x-scheme-handler/geo=openstreetmap-geo-handler.desktop;
-x-scheme-handler/http=brave-browser.desktop
-x-scheme-handler/https=brave-browser.desktop
+x-scheme-handler/http=mullvad-browser.desktop
+x-scheme-handler/https=mullvad-browser.desktop
 x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop;
 x-scheme-handler/ravenreader=Raven Reader.desktop;
-application/json=codium-usercreated-1.desktop;
 video/mp4=mpv.desktop;
 video/x-matroska=mpv.desktop;
-application/xml=codium.desktop;
 application/pdf=org.pwmt.zathura-pdf-poppler.desktop;
 text/csv=libreoffice-calc.desktop;
 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-calc.desktop;
 text/plain=nvim.desktop;
 application/vnd.oasis.opendocument.text=libreoffice-writer.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
-text/html=brave-browser.desktop
-x-scheme-handler/about=brave-browser.desktop
-x-scheme-handler/unknown=brave-browser.desktop
+text/html=chromium.desktop
 audio/mpeg=mpv.desktop;
-video/vnd.avi=mpv-usercreated-1.desktop;
+video/vnd.avi=mpv.desktop;
 image/png=qimgv.desktop;
 image/jpeg=qimgv.desktop;
 audio/ac3=mpv.desktop;
 image/gif=qimgv.desktop;
 image/webp=qimgv.desktop;
-image/svg+xml=qimgv-usercreated-1.desktop;
+image/svg+xml=qimgv.desktop;
+application/xml=nvim.desktop;
