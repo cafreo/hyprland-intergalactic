@@ -1,26 +1,26 @@
 return {
   "karb94/neoscroll.nvim",
---  keys = {
---    {"<C-f>", false},
---    },
   config = function ()
-    require('neoscroll').setup {
+    require('neoscroll').setup ({
+        mappings = {},
       hide_cursor = false,
-      easing_function = sine,
-    }
+      easing = sine,
+    })
+    
+    neoscroll = require('neoscroll')
+  local keymap = {
+    ["<PageUp>"]   = function() neoscroll.ctrl_b({ duration = 120 }) end;
+    ["<PageDown>"] = function() neoscroll.ctrl_f({ duration = 120 }) end; 
+    ["<S-Up>"]     = function() neoscroll.ctrl_u({ duration = 120 }) end;
+    ["<S-Down>"]   = function() neoscroll.ctrl_d({ duration = 120 }) end;
+    ["<S-PageUp>"] = function() neoscroll.scroll(-9999999999, { duration = 120 }) end;
+    ["<S-PageDown>"] = function() neoscroll.scroll(99999999999, { duration = 120 }) end;
+}
 
-    local m = {}
--- Syntax: m[keys] = {function, {function arguments}}
-m['<S-Up>'] = {'scroll', {'-vim.wo.scroll', 'true', '120'}}
-m['<S-Down>'] = {'scroll', { 'vim.wo.scroll', 'true', '120'}}
-m['<PageUp>'] = {'scroll', {'-vim.api.nvim_win_get_height(0)', 'true', '120'}}
-m['<PageDown>'] = {'scroll', { 'vim.api.nvim_win_get_height(0)', 'true', '120'}}
-m['<C-y>'] = {'scroll', {'-0.10', 'false', '100'}}
-m['<C-e>'] = {'scroll', { '0.10', 'false', '100'}}
-m['zt']    = {'zt', {'250'}}
-m['zz']    = {'zz', {'250'}}
-m['zb']    = {'zb', {'250'}}
+local modes = { 'n', 'v', 'x' }
+for key, func in pairs(keymap) do
+  vim.keymap.set(modes, key, func)
+end
 
-require('neoscroll.config').set_mappings(m)
-  end
+end
 }

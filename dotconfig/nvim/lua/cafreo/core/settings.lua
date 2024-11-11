@@ -9,7 +9,7 @@ vim.opt.relativenumber = true
 vim.opt.incsearch = true
 vim.opt.inccommand = "split"
 
-vim.opt.smartindent = true
+
 
 vim.opt.undofile = true
 vim.opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
@@ -31,6 +31,7 @@ vim.opt.numberwidth = 2
 vim.opt.wrap = false
 vim.opt.linebreak = true
 vim.opt.list = false
+--vim.opt.listchars:append "eol:|"
 
 vim.opt.hidden = false
 vim.opt.splitbelow = false
@@ -39,4 +40,6 @@ vim.opt.splitright = false
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.cindent = true
