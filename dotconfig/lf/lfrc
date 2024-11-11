@@ -53,6 +53,7 @@ set cutfmt "\033[7;31m"
 set selectfmt "\033[7;34m"
 set truncatechar "~"
 set truncatepct "100"
+set showbinds true
 
 #
 #
@@ -166,13 +167,13 @@ cmd "sort by time" &{{
     lf -remote "send $id top"
 }}
 
-cmd "sort by ctime" &{{
+cmd "sort by change time" &{{
     lf -remote "send $id set sortby ctime"
     lf -remote "send $id set info ctime"
     lf -remote "send $id top"
 }}
 
-cmd "sort by atime" &{{
+cmd "sort by access time" &{{
     lf -remote "send $id set sortby atime"
     lf -remote "send $id set info atime"
     lf -remote "send $id top"
@@ -219,6 +220,10 @@ cmd "select all mp4 files" %{{
     lf -remote "send $id glob-select *.mp4"
 }}
 
+cmd "select all mkv files" %{{
+    lf -remote "send $id glob-select *.mkv"
+}}
+
 cmd "select all png files" %{{
     lf -remote "send $id glob-select *.png"
 }}
@@ -234,6 +239,10 @@ cmd "select all gif files" %{{
 
 cmd "select all mp3 files" %{{
     lf -remote "send $id glob-select *.mp3"
+}}
+
+cmd "select all wav files" %{{
+    lf -remote "send $id glob-select *.wav"
 }}
 
 # COPY FILES AND SHOW PROGRESS
@@ -536,6 +545,7 @@ cmd "extract archive" &{{
         case $file in
             *.zip) 7z x "$file" -o"${file%.zip}" -y ;;
             *.7z) 7z x "$file" -o"${file%.7z}" -y ;;
+            *.rar) 7z x "$file" -o"${file%.rar}" -y ;;
             *.tar.zst) tar --zstd -xf "$file" --one-top-level ;;
             *.tar.gz) tar -xzf "$file" --one-top-level ;;
             *.tar.xz) tar -xf "$file" --one-top-level ;;
@@ -601,7 +611,7 @@ cmd "convert to gif" &{{
 
 cmd "convert to mp3" &{{
     for file in $fx; do
-        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) mp3'"
+        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp3'"
         ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
     done
 

@@ -63,10 +63,12 @@ map TA "select all elements"
 map Td "select all directories"
 map Tf "select all files"
 map Tv1 "select all mp4 files"
+map Tv2 "select all mkv files"
 map Ti1 "select all png files"
 map Ti2 "select all jpg files"
 map Ti3 "select all gif files"
 map Ta1 "select all mp3 files"
+map Ta2 "select all wav files"
 
 # COPY FILE NAME
 map yy "copy filename"
@@ -113,8 +115,8 @@ map bg cd ~/.local/share/Trash/files
 map sn "sort by natural"
 map ss "sort by size"
 map st "sort by time"
-map sc "sort by ctime"
-map sa "sort by atime"
+map sc "sort by change time"
+map sa "sort by access time"
 map se "sort by extension"
 map sr "reverse sorting order"
 
@@ -142,34 +144,34 @@ map gd cd ~/Downloads
 map gD cd ~/Documents
 map ge cd ~/Extern
 map gf cd ~/Flow
-map ggg cd ~/Git
-map gg1 cd ~/Git/Repos/hyprland-intergalactic
-map gg2 cd ~/Git/Clones
+map gg1 cd ~/Git
+map gg2 cd ~/Git/Repos/hyprland-intergalactic
+map gg3 cd ~/Git/Clones
 map gm cd ~/Music
 map gM cd ~/MEGAsync
-map gii cd ~/Pictures
-map gi1 cd ~/Pictures/Screenshots
+map gi1 cd ~/Pictures
+map gi2 cd ~/Pictures/Screenshots
 map gp1 cd ~/Projects/Designing
 map gp2 cd ~/Projects/Scripting
 map gp3 cd ~/Projects/Administrating
-map gvv cd ~/Videos
-map gv1 cd "~/Videos/After Effects/cafreo"
-map gv2 cd "~/Videos/After Effects/P.U.P.P.Y"
+map gv1 cd ~/Videos
+map gv2 cd "~/Videos/After Effects/cafreo"
+map gv3 cd "~/Videos/After Effects/P.U.P.P.Y"
 map gV cd ~/Vault
 
 # GO TO USER CONFIG DIRECORIES KEYBINDS
-map gcc cd ~/.config
-map gc1 cd ~/.config/hypr
-map gc2 cd ~/.config/rofi
-map gc3 cd ~/.config/lf
-map gc4 cd ~/.config/nvim
-map gc5 cd ~/.config/icons
+map gc1 cd ~/.config
+map gc2 cd ~/.config/hypr
+map gc3 cd ~/.config/rofi
+map gc4 cd ~/.config/lf
+map gc5 cd ~/.config/nvim
+map gc6 cd ~/.config/icons
 
 # GO TO MOUNTED DIRECTORIES
-map Gaa cd /mnt/A-POTRO-NAS
-map Ga1 cd /mnt/A-POTRO-NAS/Library/Media
-map Ga2 cd /mnt/A-POTRO-NAS/Library/Torrents
-map Ga3 cd /mnt/A-POTRO-NAS/Backups
+map Ga1 cd /mnt/A-POTRO-NAS
+map Ga2 cd /mnt/A-POTRO-NAS/Library/Media
+map Ga3 cd /mnt/A-POTRO-NAS/Library/Torrents
+map Ga4 cd /mnt/A-POTRO-NAS/Backups
 map Gat cd /mnt/A-POTRO-NAS/.Trash-1000/files
 map Gx cd ~/Extern
 map Gm cd /mnt
