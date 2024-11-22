@@ -34,6 +34,7 @@ map f search
 map / search
 map <space> search
 map F filter
+map <c-f> "start fuzzy finder"
 map h set hidden!
 map u :unselect;clear
 map t :toggle;down
@@ -76,6 +77,7 @@ map yx "copy filename with extension"
 map ys "show filename with extension"
 map yd "copy path of current directory"
 map yp "copy filepath"
+map yt "copy text in image to clipboard"
 
 # SET RATIO
 map "!" :set ratios '1:2:2'; set preview true
@@ -94,12 +96,13 @@ map pm "change permissions"
 map pg "change group"
 
 # ZIP KEYBINDS
-map azu "create zipfile"
-map aze "create encrypted zipfile" 
+map az1 "create zipfile"
+map az2 "create encrypted zipfile" 
 map au "extract archive"
 
 # CONVERT KEYBINDS
 map kv1 "convert to mp4"
+map kv2 "convert to mkv"
 map ki1 "convert to png"
 map ki2 "convert to jpg"
 map ki3 "convert to gif"
@@ -123,18 +126,19 @@ map sr "reverse sorting order"
 # OPEN IN APP KEYBINDS
 map og "open in gui app"
 map oc "open in terminal"
+map od "open in drag and drop menu"
 map om "set default app to open filetype"
 map oe "open in default editor"
 map e "open in default editor"
 map ob "open in default browser"
-map or "open in default pdf reader"
+map op "open in default pdf reader"
 map ot "open in default text editor"
-map oiv "open in default image viewer"
-map oie "open in default image editor"
-map ovp "open in default video player"
-map ove "open in default video editor"
-map oap "open in default audio player"
-map oae "open in default audio editor"
+map oi1 "open in default image viewer"
+map oi2 "open in default image editor"
+map ov1 "open in default video player"
+map ov2 "open in default video editor"
+map oa1 "open in default audio player"
+map oa2 "open in default audio editor"
 
 # GO TO USER FILES DIRECTORIES KEYBINDS
 map gh cd ~/
@@ -196,18 +200,15 @@ map X4 "open tab 4"
 # HELP
 map Hd "open documentation"
 map Hm1 "list maps"
-map Hm2 "list cmaps"
+map Hm2 "list command maps"
 map Hc "list commands"
 map Hv "display current lf version"
 
 # MISC
-map pf "start fuzzy finder"
 #map pS "calculate size of all directories (could take a while)"
 map ps "calculate size of directory"
-map pd "drag and drop"
 map pp "git pull"
 map pk "compare 2 or 4 videos simultaneously"
-map pt "copy text in image to clipboard"
 map pr "reload config file"
 map pR "reload config file for all instances"
 map pc "duplicate file"
@@ -216,9 +217,9 @@ map ma "mount all available devices"
 map mu "eject current media"
 
 # BOOKMARKS KEYBINDS
-#map "#" mark-load
-#map md mark-remove
-#map ms mark-save
+map Ms mark-save
+map Md mark-remove
+map Ml mark-load
 
 # COMMAND MODE
 cmap <tab> "command autocomplete"

@@ -1,4 +1,4 @@
-#
+
 #
 # ▄▀▀ ██▀ ▀█▀ ▀█▀ █ █▄ █ ▄▀  ▄▀▀
 # ▄██ █▄▄  █   █  █ █ ▀█ ▀▄█ ▄██
@@ -197,7 +197,7 @@ cmd "select all elements" %{{
 }}
 
 cmd "select all directories" %{{
-   if [ "$lf_hidden" = 'false' ]; then
+    if [ "$lf_hidden" = 'false' ]; then
         find "$PWD" -mindepth 1 -maxdepth 1 -type d -not -name '.*' -print0
     else
         find "$PWD" -mindepth 1 -maxdepth 1 -type d -print0
@@ -512,7 +512,7 @@ cmd "create zipfile" %{{
     tempd="$(mktemp -d)"
     pushd "$tempd"
     rsync -arhz --info=progress2 -- $fx . 
-    7z a -r -tzip *
+    7z a -r -tzip "$ans" *
     rsync -arhz --info=progress2 -- "$ans".zip "$origd/"
     popd
     rm -rf "$tempd" 
@@ -562,7 +562,7 @@ cmd "extract archive" &{{
 
 # DRAG AND DROP FILES
 
-cmd "drag and drop" &{{
+cmd "open in drag and drop menu" &{{
     dragon-drop -a -x -T -i -s 96 $fx
     lf -remote "send $id :reload;unselect"
 }}
@@ -577,6 +577,16 @@ cmd "convert to mp4" &{{
 
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to mp4'"
+}}
+
+cmd "convert to mkv" &{{
+    for file in $fx; do
+        lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mkv'"
+        ffmpeg -i $file -codec copy "${file%.*}.mkv"
+    done
+
+    lf -remote "send $id :reload;unselect"
+    lf -remote "send $id echo '   successfully converted to mkv'"
 }}
 
 cmd "convert to png" &{{
@@ -695,7 +705,7 @@ cmd "mount all available devices" %{{
 }}
 
 cmd "eject current media" %{{
-    udiskie-umount -f "$f"
+    sync && udiskie-umount -f "$f"
 }}
 
 # TRASH BIN
@@ -862,7 +872,7 @@ cmd "list maps" ${{
     lf -remote "query $id maps" | $PAGER
 }}
 
-cmd "list cmaps" ${{
+cmd "list command maps" ${{
     lf -remote "query $id cmaps" | $PAGER
 }}
 
