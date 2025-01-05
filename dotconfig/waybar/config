@@ -120,9 +120,11 @@
         },
 
         "battery": {
+        //"bat": "BAT0",
+        //"adapter": "ucsi-source-psy-USBC000:002",
 		"interval": 8,
 		"tooltip": true,
-		"tooltip-format": "{timeTo} ({health}%)",
+		"tooltip-format": "   {time}   {power}W   {health}%",
 		"states": {
 			// "good": 95,
 			"warning": 30,
