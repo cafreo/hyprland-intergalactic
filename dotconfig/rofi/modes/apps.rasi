@@ -78,7 +78,7 @@ element selected {
 
 element-icon {
 	padding:		10px;
-	size:                   56px;
+	size:                   64px;
 }
 
 element-text {
