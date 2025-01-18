@@ -35,6 +35,11 @@ window#waybar {
     animation: breatheimg 12s ease infinite;
 }
 
+#image:hover {
+    background-color: rgba(245, 184, 58, 0.5); 
+    animation-delay: 0.5s; 
+}
+
 /** WORKSPACES **/
 
 #workspaces button {
@@ -45,7 +50,7 @@ window#waybar {
 #workspaces button:hover {
     background-color: rgba(245, 184, 58, 0.2);
     animation: breathehover 5s ease infinite;
-    animation-delay: 1s;
+    animation-delay: 0.5s;
 }
 
 #workspaces button.active {
@@ -93,6 +98,39 @@ window#waybar {
     background-color: transparent;
 }
 
+#submap:hover,
+#custom-gammastep:hover,
+#clock:hover,
+#battery:hover,
+#battery.plugged:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#temperature:hover,
+#backlight:hover,
+#network:hover,
+#pulseaudio:hover,
+#pulseaudio.microphone:hover,
+#pulseaudio.muted.microphone:hover,
+#pulseaudio-slider:hover,
+#wireplumbe:hover,
+#custom-media:hover,
+#mode:hover,
+#idle_inhibitor:hover,
+#scratchpad:hover,
+#mpris:hover,
+#mpd:hover
+{
+    background-color: rgba(245, 184, 58, 0.2);
+    animation: breathehover 5s ease infinite;
+    animation-delay: 0.5s;
+}
+
+#tray:hover {
+    background-color: inherit;
+}
+
+
 #submap {
     background-color: rgba(238, 176, 56, 0.2);
 }
@@ -108,7 +146,7 @@ window#waybar {
 #pulseaudio.muted.source-muted,
 #network.disconnected
 {
-    background-color: rgba(203, 34, 17, 0.3);
+    background-image: linear-gradient(0deg, rgba(203, 34, 17, 0.3), rgba(203, 34, 17, 0.3));
 }
 
 #battery.charging {
@@ -123,7 +161,7 @@ window#waybar {
 }
 
 #clock {
-    background-color: rgba(203, 34, 17, 0.3);
+    background-image: linear-gradient(0deg, rgba(203, 34, 17, 0.3), rgba(203, 34, 17, 0.3));
     animation: daycycle 60s ease infinite;
 }
 
