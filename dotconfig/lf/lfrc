@@ -245,6 +245,10 @@ cmd "select all wav files" %{{
     lf -remote "send $id glob-select *.wav"
 }}
 
+cmd "select all flac files" %{{
+    lf -remote "send $id glob-select *.flac"
+}}
+
 # COPY FILES AND SHOW PROGRESS
 
 #cmd paste $cp-p --lf-paste $id # requires cp-p. package seems to be not maintained anymore and the progress is not quite right, if you use multiple files
@@ -420,18 +424,18 @@ cmd "create (soft/hard) link" %{{
 
     case "$mode" in
 # symbolically copy mode is indicating a soft link
-        copy)
-            ln -sr -t . -- "$@"
+        copy) ln -sr -t . -- "$@"
+            lf -remote "send $id :unselect;clear"
             lf -remote "send $id echo ' 󰴛  soft link created'"
         ;;
 # while a move mode is indicating a hard link
         move) ln -t . -- "$@"
+            lf -remote "send $id :unselect;clear"
             lf -remote "send $id echo ' 󰴚  hard link created'"
         ;;
     esac
-    
-    rm ~/.local/share/lf/files
-    lf -remote "send $id unselect"
+     
+    rm ~/.local/share/lf/files 
 }}
 
 # CREATE PLAYLIST FILE
@@ -667,7 +671,11 @@ cmd "open in default browser" ${{
 }}
 
 cmd "open in default pdf reader" ${{
-    $READER "$f"
+    $PDF_READER "$f"
+}}
+
+cmd "open in default pdf editor" ${{
+    $PDF_EDITOR "$f"
 }}
 
 cmd "open in default text editor" ${{

@@ -33,7 +33,8 @@ export TERMINAL=/usr/bin/kitty
 export EDITOR=/usr/bin/nvim
 export PAGER=/usr/bin/bat
 export BROWSER=/usr/bin/brave
-export READER=/usr/bin/zathura
+export PDF_READER=/usr/bin/zathura
+export PDF_EDITOR=/usr/bin/evince
 export TEXT_EDITOR=/usr/bin/lowriter
 export IMAGE_VIEWER=/usr/bin/qimgv
 export IMAGE_EDITOR=/usr/bin/gimp
@@ -57,6 +58,7 @@ alias status="sudo systemctl status"
 # pacman/yay
 alias pacclean="paccache -rvk2; paccache -ruvk0; sudo pacman -Qdtq | sudo pacman -Rns -; yaycache -rvk3; yaycache -ruvk0; yay -Yc; flatpak uninstall --unused; sudo flatpak repair"
 alias yayf="yay -Suy --devel; flatpak update; pacclean"
+alias yayd="yay -Rns"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
 alias pacdep="comm -23 <(pacman -Qtq) <(pacman -Qsq base base-devel)"
@@ -69,6 +71,7 @@ alias duff="duf -hide special -output 'mountpoint, size, used, avail, usage, typ
 alias fstype="findmnt -n -o FSTYPE -T ."
 alias swaylock="swaylock -C ~/.config/swaylock/config"
 alias computer="ollama run llama3.1"
+alias computer2="ollama run dolphin-mistral"
 alias computerf='ollama list | awk -F: "NR>1 && !/reviewer/ {system(\"ollama pull \"$1)}"'
 alias mount!="sudo mount -av"
 alias ip="curl ifconfig.me"
