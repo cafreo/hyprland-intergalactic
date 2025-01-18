@@ -7,14 +7,13 @@ mkdir -p $cache
 hyprpicker -f hex -a &&
 
 value=$(wl-paste)
-img="$cache/hyprpicker.png"
+img="$cache/hyprpicker.jpg"
 
 touch $img
 
 if [[ $value =~ ^#.* ]]; then
-    convert -size 64x64 xc:"$value" $img
+    magick -define jpeg:size=80x80 -thumbnail 80x80 xc:"$value" $img
     notify-send -t 3000 -a "hyprpicker" "HEX color copied" "<b>$value</b>" -u low -i "$img"
-
-    else
+else
     exit
 fi
