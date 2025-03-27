@@ -10,7 +10,6 @@ map gg
 map m
 map G
 map p
-map k
 map y
 map H
 
@@ -21,7 +20,7 @@ cmap <esc> :cmd-escape;cmd-interrupt;
 map c copy
 map x cut
 map v paste
-map l "create (soft/hard) link"
+map V "create (soft/hard) link"
 map <enter> open
 map <c-r> reload
 map <delete> delete
@@ -35,9 +34,9 @@ map / search
 map <space> search
 map F filter
 map <c-f> "start fuzzy finder"
-map h set hidden!
+map . set hidden!
 map u :unselect;clear
-map t :toggle;down
+map t :toggle;down 
 map i invert
 map <c-q> quit
 map <up> up
@@ -71,6 +70,7 @@ map Ti3 "select all gif files"
 map Ta1 "select all mp3 files"
 map Ta2 "select all wav files"
 map Ta3 "select all flac files"
+map Ta4 "select all m4a files"
 
 # COPY FILE NAME
 map yy "copy filename"
@@ -102,13 +102,13 @@ map az2 "create encrypted zipfile"
 map au "extract archive"
 
 # CONVERT KEYBINDS
-map kv1 "convert to mp4"
-map kv2 "convert to mkv"
-map ki1 "convert to png"
-map ki2 "convert to jpg"
-map ki3 "convert to gif"
-map ka1 "convert to mp3"
-map krm "remove metadata"
+map Cv1 "convert to mp4"
+map Cv2 "convert to mkv"
+map Ci1 "convert to png"
+map Ci2 "convert to jpg"
+map Ci3 "convert to gif"
+map Ca1 "convert to mp3"
+map Crm "remove metadata"
 
 # TRASH KEYBINDS
 map br "restore trashed file"
@@ -128,7 +128,7 @@ map sr "reverse sorting order"
 map og "open in gui app"
 map oc "open in terminal"
 map od "open in drag and drop menu"
-map od "set default app to open filetype"
+map oD "set default app to open filetype"
 map oe "open in default editor"
 map e "open in default editor"
 map ob "open in default browser"

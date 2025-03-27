@@ -37,6 +37,7 @@ set ratios '1:2:2'
 set period 3
 set promptfmt " \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m"
 set cursorpreviewfmt "\033[7m"
+set autoquit false
 set borderfmt "\033[33;1m"
 set ifs "\n"
 set timefmt 'Mon 02.01.2006 15:04'
@@ -80,8 +81,8 @@ cmd on-cd &{{
     fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m"
     lf -remote "send $id set promptfmt \"$fmt\""
 
-    # sorting
-    case "$PWD" in ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Fonts | /mnt/A-POTRO-NAS/Library/Media/Music)
+    # sorting in specified directories
+    case "$PWD" in ~/Pictures/Screenshots | ~/Pictures/Andere\ Bilder/Personen | ~/Downloads | ~/Flow | ~/Documents/Scan | ~/Fonts | /mnt/A-POTRO-NAS/Library/Media/Music )
         lf -remote "send $id set user_prev_sortby $lf_sortby"
         lf -remote "send $id set info time"
         lf -remote "send $id set sortby time"
@@ -91,6 +92,7 @@ cmd on-cd &{{
         lf -remote "send $id echo ' 󱕇  changed sort mode to time'"
             ;;
         *)
+
     # restore sorting on directory exit
         if [[ "$lf_user_prev_sortby" != "" ]]; then
             lf -remote "send $id set sortby $lf_user_prev_sortby"
@@ -247,6 +249,10 @@ cmd "select all wav files" %{{
 
 cmd "select all flac files" %{{
     lf -remote "send $id glob-select *.flac"
+}}
+
+cmd "select all m4a files" %{{
+    lf -remote "send $id glob-select *.m4a"
 }}
 
 # COPY FILES AND SHOW PROGRESS
@@ -596,7 +602,7 @@ cmd "convert to mkv" &{{
 cmd "convert to png" &{{
     for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
-        ffmpeg -i $fx "${f%.*}.png"
+        ffmpeg -i $file "${file%.*}.png"
     done
 
     lf -remote "send $id :reload;unselect"
@@ -606,7 +612,7 @@ cmd "convert to png" &{{
 cmd "convert to jpg" &{{
     for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
-        ffmpeg -i $fx "${f%.*}.jpg"
+        ffmpeg -i $file "${file%.*}.jpg"
     done
 
     lf -remote "send $id :reload;unselect"
@@ -616,7 +622,7 @@ cmd "convert to jpg" &{{
 cmd "convert to gif" &{{
     for file in $fx; do
         lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
-        ffmpeg -i $file -filter_complex "fps=15,scale=480:-1:flags=lanczos,split [o1] [o2];[o1] palettegen [p]; [o2] fifo [o3];[o3] [p] paletteuse" "${file%.*}.gif";
+        ffmpeg -i $file -filter_complex "fps=15, scale='max(640,iw)':'max(480,ih)'[s]; [s]split[a][b]; [a]palettegen[palette]; [b][palette]paletteuse" "${file%.*}.gif";
     done
 
     lf -remote "send $id :reload;unselect"
