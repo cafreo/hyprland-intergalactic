@@ -10,17 +10,17 @@
  ### desktop
  
  <div align="center">
- <p><img width=49% src="/src/branch/main/screenshots/screenshots/screenshot1.png"/> <img width=49% src="screenshots/screenshot2.png"/></p>
- <p><img width=49% src="/screenshots/screenshot3.png"/> <img width=49% src="/screenshots/screenshot4.png"/></p>
+ <p><img width=49% src="screenshots/screenshot1.png"/> <img width=49% src="screenshots/screenshot2.png"/></p>
+ <p><img width=49% src="screenshots/screenshot3.png"/> <img width=49% src="screenshots/screenshot4.png"/></p>
  </div>
  
  ### menus
  
-  <p><img width=77% src="/screenshots/screenshot5.png"/></p>
+  <p><img width=77% src="screenshots/screenshot5.png"/></p>
  
  ### logout
  
-<p><img width=49% src="/screenshots/screenshot7.png"/> <img width=49% src="/screenshots/screenshot6.png"/></p>
+<p><img width=49% src="screenshots/screenshot7.png"/> <img width=49% src="screenshots/screenshot6.png"/></p>
  
  # system
  - os: [arch linux](https://archlinux.org)
