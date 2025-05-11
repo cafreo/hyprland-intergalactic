@@ -34,14 +34,22 @@ preview listrar application/vnd.rar ."rar" {{
 }}
 
 preview audio audio/* {{
-    audio(){
-        ffmpegthumbnailer -i "$f" -o "$cache_f" -s 256 -c "jpg" -q 8 2>/dev/null
-    }
-    meta="$(exiftool -S -Title -Artist -Album -Band -Track -Duration -FileSize -AudioBitrate -SampleRate -ChannelMode -FileName "$f" 2>&1)"
-    printf '%s\n' "$meta"
-    y=$((y + $(printf '%s\n\n' "$meta" | wc -l)))
+        meta="$(exiftool -d "%d.%m.%Y" -S -Title -Artist -Album -Band -Track -Duration -DateTimeOriginal -FileSize -AudioBitrate -SampleRate -ChannelMode -FileName -- "$f")"
+        echo -e "$meta\n"
+    
+        y=$(( y + $(echo -e "$meta\n" | wc -l) ))
 
-    convert_and_show_image audio
+        if exists ffmpegthumbnailer; then
+
+            audio(){
+                ffmpegthumbnailer -i "$f" -o "$cache_f" -s 256 -c "jpg" -q 8 2>/dev/null
+            }
+
+            convert_and_show_image audio
+
+        else 
+            echo -e "for coverart previews please install 'ffmpegthumbnailer'\n"
+        fi
 }}
 
 preview font font/* application/vnd.oasis.opendocument.formula-template ."otf" {{
@@ -58,18 +66,23 @@ preview font font/* application/vnd.oasis.opendocument.formula-template ."otf" {
 preview psd image/vnd.adobe.photoshop ."psd" image/x-xcf ."xcf" {{
     psd() {
         magick "$f"[0] -flatten "$cache_f.jpg" 2> /dev/null &&
-            mv -- "$cache_f.jpg" "$cache_f"
+        mv -- "$cache_f.jpg" "$cache_f"
     }
 
     convert_and_show_image psd
 }}
 
 preview video video/* {{
-    video() {
-        ffmpegthumbnailer -i "$f" -o "$cache_f" -c "jpeg" -s 0 -q 8 -t 50% 2>/dev/null
-    }
+    if exists ffmpegthumbnailer; then
+        video() {
+            ffmpegthumbnailer -i "$f" -o "$cache_f" -c "jpeg" -s 0 -q 8 -t 50% 2>/dev/null
+        }
+        convert_and_show_image video
 
-    convert_and_show_image video
+    else
+        exiftool "$f"
+        echo -e "for thumbnail previews please install 'ffmpegthumbnailer'\n"
+    fi
 }}
 
 # DEPRECATED

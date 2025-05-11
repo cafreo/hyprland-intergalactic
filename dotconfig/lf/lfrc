@@ -342,14 +342,30 @@ cmd paste &{{
 cmd "copy filename" &{{
     file=${f##*/}
     name=${file%.*}
-    printf $name | wl-copy
-    lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf $name | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf $name | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+        else
+            lf -remote "send $id echo '   please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
 }}
 
 cmd "copy filename with extension" &{{
     file=${f##*/}
-    printf $file | wl-copy
-    lf -remote "send $id echo ' 󰢨  copied \"$file\" to clipboard'"
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf $file | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$file\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf $file | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+        else
+            lf -remote "send $id echo '   please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
 }}
 
 cmd "show filename with extension" &{{
@@ -358,32 +374,56 @@ cmd "show filename with extension" &{{
 }}
 
 cmd "copy filepath" &{{
-    printf "$fx" | wl-copy
-    lf -remote "send $id echo ' 󰢨  copied \"$fx\" to clipboard'"
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf "$fx" | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$fx\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf "$fx" | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$fx\" to clipboard'"
+        else
+            lf -remote "send $id echo '   please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
 }}
 
 cmd "copy path of current directory" &{{
-    printf $(pwd) | wl-copy
-    lf -remote "send $id echo ' 󰢨  copied \"$(pwd)\" to clipboard'"
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf $(pwd) | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$(pwd)\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf $(pwd) | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$(pwd)\" to clipboard'"
+        else
+            lf -remote "send $id echo '   please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
 }}
 
 # BULK RENAME FILES IN EDITOR
 
 cmd bulk-rename ${{
-    massren -v $(basename -a -- $fx)
-    lf -remote "send $id :reload;unselect"
+    if command -v massren 2>&1 >/dev/null; then
+        massren -v $(basename -a -- $fx)
+        lf -remote "send $id :reload;unselect"
+    else
+        lf -remote "send $id echo '   please install massren'" 
+    fi
 }}
 
 cmd undo-bulk-rename ${{
-    massren -u
-    lf -remote "send $id :reload;unselect"
+    if command -v massren 2>&1 >/dev/null; then
+        massren -u
+        lf -remote "send $id :reload;unselect"
+    else
+        lf -remote "send $id echo '   please install massren'" 
+    fi
 }}
 
 # FUZZY FIND
 
 cmd "start fuzzy finder" ${{
 #lf -remote "send cd ~/"
-    res="$(fd --hidden --ignore-case . | fzf --border --header='  jump to location')"
+    res="$(fd --hidden --ignore-case . | fzf --style full --list-label='   jump to location ' --list-border --list-border=rounded --header-first --color 'list-border:#EFB038,list-label:#CB2211')"
         if [ -f "$res" ]; then
             cmd="select"
         elif [ -d "$res" ]; then
