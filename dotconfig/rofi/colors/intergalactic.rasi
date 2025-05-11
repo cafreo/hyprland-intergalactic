@@ -12,8 +12,9 @@
     background2:    #2a2632ff;
     background-alt: linear-gradient(to bottom, #d02311, #f5b83a);
     foreground:     #bcbcbcff;
+    frame:          linear-gradient(60deg, rgba(203, 17, 131, 0.5), rgba(203, 34, 17, 0.5), rgba(238, 176, 23, 0.5));  
     selected:       linear-gradient(30deg, rgba(203, 34, 17, 0.50), rgba(238, 176, 56, 0.50));
-    active:         linear-gradient(60deg, rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
-    active-alt:     linear-gradient(230deg, rgba(203, 34, 17, 0.6), rgba(238, 176, 56, 0.6));
+    active:         linear-gradient(180deg, rgba(203, 17, 131, 0.6), rgba(203, 34, 17, 0.6));
+    active-alt:     linear-gradient(240deg, rgba(203, 17, 131, 0.6), rgba(203, 34, 17, 0.6), rgba(238, 176, 23, 0.6));
     urgent:         #E06C75FF;
 }

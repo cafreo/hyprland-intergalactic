@@ -19,7 +19,7 @@ button {
 
 button:focus, button:active, button:hover {
     color: #C8CACC;
-    border-color: rgba(238, 176, 56, 0.6);
+    border-color: rgba(238, 176, 23, 0.6);
     background-color: rgba(203, 34, 17, 0.55);
     outline-style: none;
     transition-property: background-color, background-image, border-color, padding, margin;

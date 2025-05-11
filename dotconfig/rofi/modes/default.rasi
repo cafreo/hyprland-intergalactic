@@ -21,4 +21,4 @@ configuration {
 
 /** IMPORT GLOBAL SETTINGS **/
 @import				"~/.config/rofi/themes/intergalactic.rasi"
-@import                         "~/.config/rofi/colors/intergalactic.rasi"
+@import             "~/.config/rofi/colors/intergalactic.rasi"
