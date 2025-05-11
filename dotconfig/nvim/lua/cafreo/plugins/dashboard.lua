@@ -23,6 +23,13 @@ return{
     		--for doom theme
     		
     		center = {
+            {
+    			icon = "󱑎  ",
+    			desc = "recent files",
+  				key = "r",
+  				key_format = " | %s",
+    			action = "Telescope oldfiles",
+			},
 			{
                 icon = "󰻭  ",
                 desc = "new file",
@@ -44,15 +51,6 @@ return{
                 key_format = " | %s",
                 action = "Telescope file_browser toggle_hidden=true",
             },
-
-            
-			{
-    			icon = "󱑎  ",
-    			desc = "recent files",
-  				key = "r",
-  				key_format = " | %s",
-    			action = "Telescope oldfiles",
-			},
 			{
                 icon = "󰗼  ",
                 desc = "quit",
