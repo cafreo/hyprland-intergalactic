@@ -1,5 +1,5 @@
-#Bashtop Adapta theme
-#by olokelo
+# bashtop intergalactic theme
+# by cafreo
 
 # Colors should be in 6 or 2 character hexadecimal or single spaced rgb decimal: "#RRGGBB", "#BW" or "0-255 0-255 0-255"
 # example for white: "#ffffff", "#ff" or "255 255 255".
@@ -22,7 +22,7 @@ theme[title]="#C8CACC"
 theme[hi_fg]="#61646b"
 
 # Background color of selected item in processes box
-theme[selected_bg]="#DE5F21"
+theme[selected_bg]="#DD6914"
 
 # Foreground color of selected item in processes box
 theme[selected_fg]="#C8CACC"
@@ -31,31 +31,31 @@ theme[selected_fg]="#C8CACC"
 theme[inactive_fg]="#61646b"
 
 # Misc colors for processes box including mini cpu graphs, details memory graph and details status text
-theme[proc_misc]="#DE5F21"
+theme[proc_misc]="#DD6914"
 
 # Cpu box outline color
-theme[cpu_box]="#DE5F21"
+theme[cpu_box]="#DD6914"
 
 # Memory/disks box outline color
-theme[mem_box]="#DE5F21"
+theme[mem_box]="#DD6914"
 
 # Net up/down box outline color
-theme[net_box]="#DE5F21"
+theme[net_box]="#DD6914"
 
 # Processes box outline color
-theme[proc_box]="#DE5F21"
+theme[proc_box]="#DD6914"
 
 # Box divider line and small boxes line color
 theme[div_line]="#61646b"
 
 # Temperature graph colors
-theme[temp_start]="#EFB038"
-theme[temp_mid]="#DE5F21"
+theme[temp_start]="#EEB017"
+theme[temp_mid]="#DD6914"
 theme[temp_end]="#CB2211"
 
 # CPU graph colors
-theme[cpu_start]="#EFB038"
-theme[cpu_mid]="#DE5F21"
+theme[cpu_start]="#EEB017"
+theme[cpu_mid]="#DD6914"
 theme[cpu_end]="#CB2211"
 
 # Mem/Disk free meter
@@ -69,9 +69,9 @@ theme[cached_mid]="#D16548"
 theme[cached_end]="#D16548"
 
 # Mem/Disk available meter
-theme[available_start]="#EFB038"
-theme[available_mid]="#EFB038"
-theme[available_end]="#EFB038"
+theme[available_start]="#EEB017"
+theme[available_mid]="#EEB017"
+theme[available_end]="#EEB017"
 
 # Mem/Disk used meter
 theme[used_start]="#CB2211"
@@ -79,11 +79,11 @@ theme[used_mid]="#CB2211"
 theme[used_end]="#CB2211"
 
 # Download graph colors
-theme[download_start]="#EFB038"
-theme[download_mid]="#DE5F21"
+theme[download_start]="#EEB017"
+theme[download_mid]="#DD6914"
 theme[download_end]="#CB2211"
 
 # Upload graph colors
-theme[upload_start]="#EFB038"
-theme[upload_mid]="#DE5F21"
+theme[upload_start]="#EEB017"
+theme[upload_mid]="#DD6914"
 theme[upload_end]="#CB2211"

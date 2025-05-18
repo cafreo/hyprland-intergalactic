@@ -51,6 +51,13 @@ return{
                 key_format = " | %s",
                 action = "Telescope file_browser toggle_hidden=true",
             },
+            {
+                icon = "󰩦  ",
+                desc = "plugins",
+                key = "p",
+                key_format = " | %s",
+                action = "Lazy",
+            },
 			{
                 icon = "󰗼  ",
                 desc = "quit",
