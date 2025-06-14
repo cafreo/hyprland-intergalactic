@@ -12,14 +12,15 @@ map G
 map p
 map y
 map H
+map M
 
 # BASIC KEYBINDS
 map q quit
-map <esc> :setfilter '';unselect;clear
-cmap <esc> :cmd-escape;cmd-interrupt;
+map <esc> :setfilter '';unselect;on-select;clear
+cmap <esc> :cmd-escape;cmd-interrupt
 map c copy
 map x cut
-map v paste
+map v "paste-custom"
 map V "create (soft/hard) link"
 map <enter> open
 map <c-r> reload
@@ -35,9 +36,9 @@ map <space> search
 map F filter
 map <c-f> "start fuzzy finder"
 map . set hidden!
-map u :unselect;clear
-map t :toggle;down 
-map i invert
+map u :unselect;on-select;clear
+map t :toggle;on-select;down 
+map i :invert;on-select
 map <c-q> quit
 map <up> up
 map <s-up> half-up
@@ -49,6 +50,8 @@ map <s-down> half-down
 map <s-pgdn> bottom
 map <left> updir
 map <right> open
+map <c-left> jump-prev
+map <c-right> jump-next
 
 # MOUSE
 map <m-1> updir
@@ -57,28 +60,37 @@ map <m-3> :toggle;down
 map <m-up> up
 map <m-down> down
 
+# SORT KEYBINDS
+map sn "󰖽  sort by natural"
+map ss "󱎉  sort by size"
+map st "󱕇  sort by time"
+map sc "󱕇  sort by change time"
+map sa "󱕇  sort by access time"
+map se "󰖽  sort by extension"
+map sr "󰒽  reverse sorting order"
+
 # SELECT
-map A "select all elements"
-map TA "select all elements"
-map Td "select all directories"
-map Tf "select all files"
-map Tv1 "select all mp4 files"
-map Tv2 "select all mkv files"
-map Ti1 "select all png files"
-map Ti2 "select all jpg files"
-map Ti3 "select all gif files"
-map Ta1 "select all mp3 files"
-map Ta2 "select all wav files"
-map Ta3 "select all flac files"
-map Ta4 "select all m4a files"
+map A "󰒆  select all elements"
+map TA "󰒆  select all elements"
+map Td "󰒆  select all directories"
+map Tf "󰒆  select all files"
+map Tv1 "󰾂  select all mp4 files"
+map Tv2 "󰾂  select all mkv files"
+map Ti1 "󰾂  select all png files"
+map Ti2 "󰾂  select all jpg files"
+map Ti3 "󰾂  select all gif files"
+map Ta1 "󰾂  select all mp3 files"
+map Ta2 "󰾂  select all wav files"
+map Ta3 "󰾂  select all flac files"
+map Ta4 "󰾂  select all m4a files"
 
 # COPY FILE NAME
-map yy "copy filename"
-map yx "copy filename with extension"
-map ys "show filename with extension"
-map yd "copy path of current directory"
-map yp "copy filepath"
-map yt "copy text in image to clipboard"
+map yy "  copy filename"
+map yx "  copy filename with extension"
+map ys "  show filename with extension"
+map yd "  copy path of current directory"
+map yp "  copy filepath"
+map yt "  copy text in image to clipboard"
 
 # SET RATIO
 map "!" :set ratios '1:2:2'; set preview true
@@ -86,61 +98,52 @@ map '"' :set ratios '1:3'; set preview false
 map '§' :set ratios '1:4'; set preview true
 
 # MAKE KEYBINDS
-map md "make directory"
-map mD "make directory from selected files"
-map mf "make file"
-map mp "make playlist"
+map md "󰉗  make directory"
+map mD "󰉗  make directory from selected files"
+map mf "󰝒  make file"
+map mp "󰲸  make playlist"
 
 # CHANGE KEYBINDS
-map po "change owner"
-map pm "change permissions"
-map pg "change group"
+map Mo "  change owner"
+map Mg "󰡉  change group"
+map Mm "󰦝  change permissions"
 
 # ZIP KEYBINDS
-map az1 "create zipfile"
-map az2 "create encrypted zipfile" 
-map au "extract archive"
+map az1 "󱝣  create zipfile"
+map az2 "󱝗  create encrypted zipfile" 
+map au "󱉛  extract archive"
 
 # CONVERT KEYBINDS
-map Cv1 "convert to mp4"
-map Cv2 "convert to mkv"
-map Ci1 "convert to png"
-map Ci2 "convert to jpg"
-map Ci3 "convert to gif"
-map Ca1 "convert to mp3"
-map Crm "remove metadata"
-
-# TRASH KEYBINDS
-map br "restore trashed file"
-map be "empty trash bin"
-map bg cd ~/.local/share/Trash/files
-
-# SORT KEYBINDS
-map sn "sort by natural"
-map ss "sort by size"
-map st "sort by time"
-map sc "sort by change time"
-map sa "sort by access time"
-map se "sort by extension"
-map sr "reverse sorting order"
+map Cv1 "  convert to mp4"
+map Cv2 "  convert to mkv"
+map Ci1 "  convert to png"
+map Ci2 "  convert to jpg"
+map Ci3 "  convert to gif"
+map Ca1 "  convert to mp3"
+map Crm "󱀷  remove metadata"
 
 # OPEN IN APP KEYBINDS
-map og "open in gui app"
-map oc "open in terminal"
-map od "open in drag and drop menu"
-map oD "set default app to open filetype"
-map oe "open in default editor"
-map e "open in default editor"
-map ob "open in default browser"
-map op1 "open in default pdf reader"
-map op2 "open in default pdf editor"
-map ot "open in default text editor"
-map oi1 "open in default image viewer"
-map oi2 "open in default image editor"
-map ov1 "open in default video player"
-map ov2 "open in default video editor"
-map oa1 "open in default audio player"
-map oa2 "open in default audio editor"
+map og "  open in gui app"
+map oc "  open in terminal"
+map oD "󱕷  set default app to open filetype"
+map od "  open in drag and drop menu"
+map oe "󱩼  open in default editor"
+map e "󱩼  open in default editor"
+map ot "󰷈  open in default text editor"
+map ob "  open in default browser"
+map op1 "󰈦  open in default pdf reader"
+map op2 "󰈦  open in default pdf editor"
+map oi1 "󰋩  open in default image viewer"
+map oi2 "󰋩  open in default image editor"
+map ov1 "󰃽  open in default video player"
+map ov2 "󰃽  open in default video editor"
+map oa1 "󰎄  open in default audio player"
+map oa2 "󰎄  open in default audio editor"
+
+# TRASH KEYBINDS
+map br "󰠙  restore trashed file"
+map be "󰗨  empty trash bin"
+map bg cd ~/.local/share/Trash/files
 
 # GO TO USER FILES DIRECTORIES KEYBINDS
 map gh cd ~/
@@ -184,44 +187,20 @@ map Gm cd /mnt
 map Gu cd /run/media/cafreo
 
 # TABS
-map Xn "open new tab"
+map Xn "󰝜  open new tab"
 #map Xa "create new session"
-map Xq "close current tab"
-map XQ "close current session"
-map X<left> "open previous tab"
-map X<right> "open next tab"
-map X<s-left> "move tab to left"
-map X<s-right> "move tab to right"
-map <s-left> "open previous tab"
-map <s-right> "open next tab"
-map X1 "open tab 1"
-map X2 "open tab 2"
-map X3 "open tab 3"
-map X4 "open tab 4"
-
-# HELP
-map Hd "open documentation"
-map Hm1 "list maps"
-map Hm2 "list command maps"
-map Hc "list commands"
-map Hv "display current lf version"
-
-# MISC
-#map pS "calculate size of all directories (could take a while)"
-map ps "calculate size of directory"
-map pp "git pull"
-map pk "compare 2 or 4 videos simultaneously"
-map pr "reload config file"
-map pR "reload config file for all instances"
-map pc "duplicate file"
-
-map ma "mount all available devices"
-map mu "eject current media"
-
-# BOOKMARKS KEYBINDS
-map Ms mark-save
-map Md mark-remove
-map Ml mark-load
+map Xq "󰭌  close current tab"
+map XQ "󰭌  close current session"
+map X<left> "󰓩  open previous tab"
+map <s-left> "󰓩  open previous tab"
+map X<right> "󰓩  open next tab"
+map <s-right> "󰓩  open next tab"
+map X<s-left> "󰓩  move tab to left"
+map X<s-right> "󰓩  move tab to right"
+map X1 "󰓩  open tab 1"
+map X2 "󰓩  open tab 2"
+map X3 "󰓩  open tab 3"
+map X4 "󰓩  open tab 4"
 
 # COMMAND MODE
 cmap <tab> "command autocomplete"
@@ -229,3 +208,28 @@ cmap <down> "go to next file (filter mode)"
 cmap <up> "go to previous file (filter mode)"
 cmap <down> "go to next file (search mode)"
 cmap <up> "go to previous file (search mode)"
+
+# HELP
+map Hd "󱔗  open documentation"
+map Hm1 "  list maps"
+map Hm2 "  list command maps"
+map Hc "  list commands"
+map Hh "  list jump history"
+map Hv "  display current lf version"
+
+# MISC
+#map pS "calculate size of all directories (could take a while)"
+map ps "calculate size of directory"
+map pp "󰊢  git pull"
+map pk "󰕩  compare 2 or 4 videos simultaneously"
+map pr "󰑓  reload config file"
+map pR "󰑓  reload config file for all instances"
+map pc "duplicate file"
+
+map Ma "  mount all available devices"
+map Mu "  eject current media"
+
+# BOOKMARKS KEYBINDS
+#map Ms mark-save
+#map Md mark-remove
+#map Ml mark-load
