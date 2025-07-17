@@ -189,7 +189,7 @@ cmd "󱕇  sort by access time" &{{
     lf -remote "send $id top"
 }}
 
-cmd "󰖽 sort by extension" &{{
+cmd "󰖽  sort by extension" &{{
     lf -remote "send $id set sortby ext"
     lf -remote "send $id set info size"
     lf -remote "send $id top"
@@ -382,7 +382,7 @@ cmd "  copy path of current directory" &{{
     fi
 }}
 
-cmd "copy text in image to clipboard" %{{
+cmd "  copy text in image to clipboard" %{{
     printf "   specify the language code: "
     read -r ans
 
@@ -513,7 +513,7 @@ cmd "  change owner" %{{
     lf -remote "send $id echo '   changed owner of \"$file\" to \"$USER\"'"
 }}
 
-cmd "󰡉   change group" %{{
+cmd "󰡉  change group" %{{
     printf " 󰡉  change group: "
     read ans
 
@@ -709,14 +709,14 @@ cmd "󱀷  remove metadata" %{{
 
 # OPEN FILE IN SPECIFIED APP
 
-cmd "  open in gui app:" %{{
+cmd "  open in gui app" %{{
     printf "   open file(s) in gui app: "
     read -r ans
     $ans $fx &
 }}
 
-cmd "  open in terminal" %{{
-    printf "   open file(s) in terminal app: "
+cmd "  open in terminal" %{{
+    printf "    open file(s) in terminal app: "
     read -r ans
     $ans $fx &
 }}
@@ -738,43 +738,43 @@ cmd "󱩼  open in default editor" ${{
     $EDITOR "$f"
 }}
 
-cmd "󰷈  open in default text editor" ${{
+cmd "󰷈  open in default text editor" %{{
     $TEXT_EDITOR "$f"
 }}
 
-cmd "  open in default browser" ${{
+cmd "  open in default browser" %{{
     $BROWSER "$f"
 }}
 
-cmd "󰈦  open in default pdf reader" ${{
+cmd "󰈦  open in default pdf reader" %{{
     $PDF_READER "$f"
 }}
 
-cmd "󰈦  open in default pdf editor" ${{
+cmd "󰈦  open in default pdf editor" %{{
     $PDF_EDITOR "$f"
 }}
 
-cmd "󰋩  open in default image viewer" ${{
+cmd "󰋩  open in default image viewer" %{{
     $IMAGE_VIEWER "$f"
 }}
 
-cmd "󰋩  open in default image editor" ${{
+cmd "󰋩  open in default image editor" %{{
     $IMAGE_EDITOR "$f"
 }}
 
-cmd "󰃽  open in default video player" ${{
+cmd "󰃽  open in default video player" %{{
     $VIDEO_PLAYER "$f"
 }}
 
-cmd "󰃽  open in default video editor" ${{
+cmd "󰃽  open in default video editor" %{{
     $VIDEO_EDITOR "$f"
 }}
 
-cmd "󰎄  open in default audio player" ${{
+cmd "󰎄  open in default audio player" %{{
     $AUDIO_PLAYER "$f"
 }}
 
-cmd "󰎄  open in default audio editor" ${{
+cmd "󰎄  open in default audio editor" %{{
     $AUDIO_EDITOR "$f"
 }}
 

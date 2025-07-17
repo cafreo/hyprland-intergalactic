@@ -87,7 +87,7 @@ map Ta4 "󰾂  select all m4a files"
 # COPY FILE NAME
 map yy "  copy filename"
 map yx "  copy filename with extension"
-map ys "  show filename with extension"
+map ys "  show filename with extension"
 map yd "  copy path of current directory"
 map yp "  copy filepath"
 map yt "  copy text in image to clipboard"
@@ -106,7 +106,7 @@ map mp "󰲸  make playlist"
 # CHANGE KEYBINDS
 map Mo "  change owner"
 map Mg "󰡉  change group"
-map Mm "󰦝  change permissions"
+map Mp "󰦝  change permissions"
 
 # ZIP KEYBINDS
 map az1 "󱝣  create zipfile"
