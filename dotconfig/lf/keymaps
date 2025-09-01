@@ -64,6 +64,7 @@ map <m-down> down
 map sn "󰖽  sort by natural"
 map ss "󱎉  sort by size"
 map st "󱕇  sort by time"
+map sb "󱕇  sort by birth time"
 map sc "󱕇  sort by change time"
 map sa "󱕇  sort by access time"
 map se "󰖽  sort by extension"
@@ -120,6 +121,7 @@ map Ci1 "  convert to png"
 map Ci2 "  convert to jpg"
 map Ci3 "  convert to gif"
 map Ca1 "  convert to mp3"
+map Cd1 "  convert to pdf"
 map Crm "󱀷  remove metadata"
 
 # OPEN IN APP KEYBINDS

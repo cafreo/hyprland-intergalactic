@@ -21,8 +21,8 @@ set icons true
 set number true
 set relativenumber false
 set hiddenfiles '.*:lost+found:*.log'
-set globsearch false
-set globfilter false
+set filtermethod glob
+set searchmethod glob
 set dirfirst true
 set history true
 set mouse true
@@ -180,6 +180,12 @@ cmd "󱕇  sort by time" &{{
 cmd "󱕇  sort by change time" &{{
     lf -remote "send $id set sortby ctime"
     lf -remote "send $id set info ctime"
+    lf -remote "send $id top"
+}}
+
+cmd "󱕇  sort by birth time" &{{
+    lf -remote "send $id set sortby ctime"
+    lf -remote "send $id set info btime"
     lf -remote "send $id top"
 }}
 
@@ -698,6 +704,20 @@ cmd "  convert to mp3" &{{
     lf -remote "send $id set user_progress ''"
 }}
 
+cmd "  convert to pdf" &{{
+    for file in $fx; do
+        lf -remote "send $id set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
+        magick $file "${file%.*}.pdf"
+    done
+
+    lf -remote "send $id set user_progress '  󰈖  '"
+    lf -remote "send $id :reload;unselect"
+    lf -remote "send $id echo '   successfully converted to pdf'"
+    sleep 4
+    lf -remote "send $id set user_progress ''"
+}}
+
 # REMOVE METADATA
 
 cmd "󱀷  remove metadata" %{{
@@ -787,7 +807,7 @@ cmd trash %{{
         trash-put $fx &
         wait 
         lf -remote "send $id :reload;clear"
-        lf -remote "send $id echo '  moved to trash bin successfully'"
+        lf -remote "send $id echo '   moved to trash bin successfully'"
     else
         lf -remote "send $id echoerr 'aborted'"
     fi
@@ -811,7 +831,7 @@ cmd delete %{{
         wait
         #| pv -l -s $(find $fx | wc -l) > /dev/null
         lf -remote "send $id :reload;clear"
-        lf -remote "send $id echo '  deleted successfully'"
+        lf -remote "send $id echo '   deleted successfully'"
     else
         lf -remote "send $id echoerr 'aborted'" 
     fi
