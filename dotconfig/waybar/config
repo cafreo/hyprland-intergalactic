@@ -1,24 +1,36 @@
 {
     // BASIC SETTINGS
 
-    "layer": "top", // Waybar at top layer
-        "position": "top", // Waybar position (top|bottom|left|right)
-        "height": 46, // Waybar height (to be removed for auto height)
-                      // "width": 1280, // Waybar width
-        "spacing": 4, // Gaps between modules (4px)
+    "layer": "top",
+        "position": "top",
+        "height": 48, 
+        // "width": 1080,
+        "spacing": 8,
 
         // MODULES ORDER
 
-        "modules-left": ["image#user", "hyprland/window"],
+        "modules-left": ["user", "hyprland/window"],
         "modules-center": ["hyprland/workspaces"],
-        "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "network", "battery", "clock", "tray"],
+        "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "custom/vpn", "network", "battery", "clock", "tray"],
+
+        "mode": "dock",
+        "reload_style_on_change": true,
 
         // MODULES CONFIG
+
+        "user": {
+            "avatar": "/home/cafreo/.config/icons/user.png",
+            "icon": true,
+            "height": 32,
+            "width": 32,
+            "format": "",
+            "on-click": "wlogout -m 120 -L 240 -R 240",
+        },
 
         "image#user": {
             "exec": "echo ~/.config/icons/user.png",
             "size": 32,
-            "on-click": "wlogout -m 120 -L 240 -R 240"
+            
         },
 
         "hyprland/window": {
@@ -45,7 +57,6 @@
                 "default": ""
             }
         },
-
 
         "hyprland/submap": {
             "format": "  {}",
@@ -83,7 +94,6 @@
         },
 
         "pulseaudio": {
-            // "scroll-step": 1, // %, can be a float
             "states": {
                 "muted2": 0,
             },
@@ -107,6 +117,16 @@
             "on-click-middle": "~/.config/notify-send/scripts/notify_volumectl.sh toggle",
         },
 
+        "custom/vpn": {
+            "interval": 8,
+            "format": "{}",
+            "tooltip": false,
+            "exec": "ip add show | grep -qF wg0-mullvad && echo  || echo ",
+            "on-click": "mullvad connect",
+            "on-click-right": "mullvad disconnect",
+            "on-click-middle": "mullvad-vpn",
+        },
+
         "network": {
             // "interface": "wlp2*", // (Optional) To force the use of this interface
             "interval": 6,
@@ -126,7 +146,6 @@
 		"tooltip": true,
 		"tooltip-format": "   {time}   {power}W   {health}%",
 		"states": {
-			// "good": 95,
 			"warning": 30,
 			"critical": 15
 		},
@@ -135,13 +154,11 @@
 		"format-plugged": " {capacity}%",
 		"format-time": "{H}h {M}m",
 		"format-alt": "{icon} {time}",
-		// "format-good": "", // An empty format will hide the module
-		// "format-full": "",
 		"format-icons": ["", "", "", "", ""]
 	    },
 
         "clock": {
-            // "timezone": "America/New_York",
+            "locale": "de_DE.UTF-8",
             "interval": 60,
             "tooltip-format": "<big>Calendar</big>\n<tt><small>{calendar}</small></tt>",
             //"format-alt": "{:%d.%m.%Y}",
@@ -155,13 +172,17 @@
                     "weekdays":   "<span color='#F5B83A'><b>{}</b></span>",
                     "today":      "<span color='#D02311' ><b>{}</b></span>"
                 }
-            },    
-            "on-click-right": "kitty -e 'calcurse'"
+            },
+            "actions": {
+                "on-scroll-up": "shift_down",
+                "on-scroll-down": "shift_up",
+            },
+            "on-click-right": "kitty -e 'calcurse'",
         },
 
         "tray": {
             "icon-size": 18,
-            "spacing": 10
+            "spacing": 8
         },
 
         // WIP

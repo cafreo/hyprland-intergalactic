@@ -27,7 +27,7 @@ window#waybar {
 
 /** USER IMAGE **/
 
-#image {
+#user {
     margin: 5px;
     padding: 4px;
     border-radius: 40px;
@@ -35,7 +35,7 @@ window#waybar {
     animation: breatheimg 12s ease infinite;
 }
 
-#image:hover {
+#user:hover {
     background-color: rgba(238, 176, 23, 0.5); 
     animation-delay: 0.5s; 
 }
@@ -44,7 +44,7 @@ window#waybar {
 
 #workspaces button {
     padding: 8px 12px;
-    margin: 6px 2px;
+    margin: 6px 4px;
 }
 
 #workspaces button:hover {
@@ -71,6 +71,7 @@ window#waybar {
 
 #submap,
 #custom-gammastep,
+#custom-vpn,
 #clock,
 #battery,
 #battery.plugged,
@@ -100,6 +101,7 @@ window#waybar {
 
 #submap:hover,
 #custom-gammastep:hover,
+#custom-vpn:hover,
 #clock:hover,
 #battery:hover,
 #battery.plugged:hover,
