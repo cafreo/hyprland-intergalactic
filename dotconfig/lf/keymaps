@@ -73,6 +73,7 @@ map sr "󰒽  reverse sorting order"
 # SELECT
 map A "󰒆  select all elements"
 map TA "󰒆  select all elements"
+map <c-a> "󰒆  select all elements"
 map Td "󰒆  select all directories"
 map Tf "󰒆  select all files"
 map Tv1 "󰾂  select all mp4 files"

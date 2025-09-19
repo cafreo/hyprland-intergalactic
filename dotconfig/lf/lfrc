@@ -11,9 +11,6 @@ set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
 
-#set previewer ~/.config/lf/lf_kitty_preview
-#set cleaner ~/.config/lf/lf_kitty_clean
-
 # SETTINGS
 set hidden false
 set ignorecase true
@@ -21,8 +18,8 @@ set icons true
 set number true
 set relativenumber false
 set hiddenfiles '.*:lost+found:*.log'
-set filtermethod glob
-set searchmethod glob
+set filtermethod text
+set searchmethod text
 set dirfirst true
 set history true
 set mouse true
