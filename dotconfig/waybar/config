@@ -78,7 +78,6 @@
         "custom/gammastep": {
             "format": "{}",
             "interval": 8,
-            "on-update": "",
             "exec": "$HOME/.config/waybar/scripts/gammastep.sh",
             "on-click": "$HOME/.config/waybar/scripts/gammastep.sh toggle"
         },
