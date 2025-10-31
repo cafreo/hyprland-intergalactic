@@ -24,6 +24,7 @@ set dirfirst true
 set history true
 set mouse true
 set preview true
+set preload false
 set sortby 'natural'
 set info 'size'
 set incsearch true
@@ -287,12 +288,22 @@ cmd "paste-custom" &{{
 
     if [[ $@ != "" ]]; then
         echo "$(stat $@)"
-        lf -remote "send $id set user_progress '  󰪹  '"
+
+        indicator() {
+            while :; do
+                lf -remote "send $id set user_progress '  󰪹  '"
+                sleep 1
+            done
+        }
+        indicator &
+        IND_PID=$!
 
         case "$mode" in
             copy)
-                cp -a "$@" . &
-                wait
+                lf -remote "send $id echo ' 󰪹  copying file(s)...'"
+                cp -a "$@" . &&
+
+                kill "$IND_PID" 2>/dev/null
                 lf -remote "send $id set user_progress '  󰈖  '"
                 lf -remote "send $id :clear;reload"
                 lf -remote "send $id echo '   file(s) copied successfully'"
@@ -303,8 +314,10 @@ cmd "paste-custom" &{{
                 exit 0
                 ;;
             move)
-                mv -f "$@" . &
-                wait
+                lf -remote "send $id echo ' 󰪹  moving file(s)...'"
+                mv -f "$@" . &&
+
+                kill "$IND_PID" 2>/dev/null
                 lf -remote "send $id set user_progress '  󰈖  '"
                 lf -remote "send $id :clear;reload"
                 lf -remote "send $id echo '   file(s) moved successfully'"
@@ -321,6 +334,29 @@ cmd "paste-custom" &{{
     fi 
 #lf -remote "send $id paste"
 #notify-send "lf file manager - status" "  $pid file(s) copied successfully" -i " "
+}}
+
+# DUPLICATE FILE
+
+cmd "  duplicate file" &{{
+    for file in $fx; do
+        if [[ -f "$file" ]]; then
+            name="${file%.*}"
+            ext="${file##*.}"
+            num=1
+            new="${name} (${num}).${ext}"
+            
+            while [[ -e "$new" ]]; do   
+                num=$((num + 1))
+                new="${name} (${num}).${ext}"
+            done
+
+            cp "$file" "$new"
+        fi
+    done
+
+    lf -remote "send $id :clear;reload"
+    lf -remote "send $id echo '   file(s) duplicated successfully'"
 }}
 
 # COPY FILE NAME
@@ -586,6 +622,15 @@ cmd "󱝗  create encrypted zipfile" ${{
 #cmd zip %zip -r "$fx" "$fx"
 #cmd zipe %zip -re "$fx.zip" "$fx"
 
+cmd "󱉛  extract archive" &{{
+    for file in $fx; do
+        ouch d $file
+    done
+
+    lf -remote "send $id :reload;unselect"
+    lf -remote "send $id echo '   successfully extracted archive(s)'"
+}}
+
 cmd "old extract archive" &{{
     for file in $fx; do
         case $file in
@@ -606,24 +651,25 @@ cmd "old extract archive" &{{
     lf -remote "send $id echo '   successfully extracted archive(s)'"
 }}
 
-cmd "󱉛  extract archive" &{{
-    for file in $fx; do
-        ouch d $file
-    done
-
-    lf -remote "send $id :reload;unselect"
-    lf -remote "send $id echo '   successfully extracted archive(s)'"
-}}
-
 # CONVERT FILES
 
 cmd "  convert to mp4" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to mp4...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+    
     for file in $fx; do
-        lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp4'"
         ffmpeg -i $file -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${file%.*}.mp4"
     done
 
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to mp4'"
@@ -632,12 +678,23 @@ cmd "  convert to mp4" &{{
 }}
 
 cmd "  convert to mkv" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to mkv...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+
     for file in $fx; do
         lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mkv'"
         ffmpeg -i $file -codec copy "${file%.*}.mkv"
     done
-
+    
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to mkv'"
@@ -646,12 +703,23 @@ cmd "  convert to mkv" &{{
 }}
 
 cmd "  convert to png" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to png...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+
     for file in $fx; do
         lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
         ffmpeg -i $file "${file%.*}.png"
     done
 
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to png'"
@@ -660,12 +728,23 @@ cmd "  convert to png" &{{
 }}
 
 cmd "  convert to jpg" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to jpg...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+
     for file in $fx; do
         lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         ffmpeg -i $file "${file%.*}.jpg"
     done
 
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to jpg'"
@@ -674,12 +753,23 @@ cmd "  convert to jpg" &{{
 }}
 
 cmd "  convert to gif" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to gif...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+
     for file in $fx; do
         lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
         ffmpeg -i $file -filter_complex "fps=15, scale='max(640,iw)':'max(480,ih)'[s]; [s]split[a][b]; [a]palettegen[palette]; [b][palette]paletteuse" "${file%.*}.gif";
     done
 
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to gif'"
@@ -688,12 +778,23 @@ cmd "  convert to gif" &{{
 }}
 
 cmd "  convert to mp3" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to mp3...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+
     for file in $fx; do
         lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp3'"
         ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
     done
 
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to mp3'"
@@ -702,12 +803,23 @@ cmd "  convert to mp3" &{{
 }}
 
 cmd "  convert to pdf" &{{
+    lf -remote "send $id echo ' 󰤘  converting file(s) to pdf...'"
+    indicator() {
+        while :; do
+            lf -remote "send $id set user_progress '  󰤘   '"
+            sleep 1
+        done
+    }
+    indicator &
+    IND_PID=$!
+
     for file in $fx; do
         lf -remote "send $id set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         magick $file "${file%.*}.pdf"
     done
 
+    kill "$IND_PID" 2>/dev/null
     lf -remote "send $id set user_progress '  󰈖  '"
     lf -remote "send $id :reload;unselect"
     lf -remote "send $id echo '   successfully converted to pdf'"
@@ -989,6 +1101,10 @@ cmd "  display current lf version" %{{
     lf -remote "send $id echo '   lf version: $(lf -version)'"
 }}
 
+cmd "󱔗  open changelog" ${{
+    $PAGER ~/.local/share/lf/CHANGELOG.md
+}}
+
 # MISC
 
 cmd "󰊢  git pull" %{{
@@ -1049,6 +1165,10 @@ cmd "  eject current media" %{{
 
 on-cd
 on-focus-gained
+
+&{{
+    curl -o ~/.local/share/lf/CHANGELOG.md https://raw.githubusercontent.com/gokcehan/lf/refs/heads/master/CHANGELOG.md
+}}
 
 # WIP
 

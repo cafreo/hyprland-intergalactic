@@ -122,8 +122,9 @@ map Ci1 "  convert to png"
 map Ci2 "  convert to jpg"
 map Ci3 "  convert to gif"
 map Ca1 "  convert to mp3"
-map Cd1 "  convert to pdf"
-map Crm "󱀷  remove metadata"
+map Cp1 "  convert to pdf"
+map Cr "󱀷  remove metadata"
+map Cd "  duplicate file"
 
 # OPEN IN APP KEYBINDS
 map og "  open in gui app"
@@ -214,6 +215,7 @@ cmap <up> "go to previous file (search mode)"
 
 # HELP
 map Hd "󱔗  open documentation"
+map Hl "󱔗  open changelog"
 map Hm1 "  list maps"
 map Hm2 "  list command maps"
 map Hc "  list commands"
@@ -227,7 +229,6 @@ map pp "󰊢  git pull"
 map pk "󰕩  compare 2 or 4 videos simultaneously"
 map pr "󰑓  reload config file"
 map pR "󰑓  reload config file for all instances"
-map pc "duplicate file"
 
 map Ma "  mount all available devices"
 map Mu "  eject current media"
