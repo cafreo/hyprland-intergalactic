@@ -84,7 +84,7 @@ files:
  # to do
  - [ ] paste: ask if files should be overwritten
  - [ ] rename: autocomplete
- - [ ] archives: extract multiple archives at once
+ - [x] archives: extract multiple archives at once
  - [x] tabs: fix image preview not working in tmux (switched to kitty for tabs)
 
 # credits
