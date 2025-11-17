@@ -5,54 +5,71 @@
 #
 #
 
+
+# BASICS
+set autoquit false
+set filesep "\n"
+set mouse true
+set scrolloff 8
+set info 'size'
+set sortby 'natural'
+set hidden false
+set hiddenfiles '.*:lost+found:*.log'
+set showbinds true
+set history true
+# DIR
+set dircounts false
+set dirfirst true
+set dironly false
+set dirpreviews false
+# SEARCH / FILTER
+set ignorecase true
+set filtermethod text
+set searchmethod text
+set incsearch true
+set incfilter true
 # PREVIEW
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
 &ctpvquit $id
-
-# SETTINGS
-set hidden false
-set ignorecase true
-set icons true
-set number true
-set relativenumber false
-set hiddenfiles '.*:lost+found:*.log'
-set filtermethod text
-set searchmethod text
-set dirfirst true
-set history true
-set mouse true
 set preview true
 set preload false
-set sortby 'natural'
-set info 'size'
-set incsearch true
-set incfilter true
+# UI
 set drawbox true
 set roundbox true
 set ratios '1:2:2'
-set period 3
-set promptfmt " \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m"
-set cursorpreviewfmt "\033[7m"
-set autoquit false
+set icons true
+set number true
+set relativenumber false
+# FMT UI
+set promptfmt "\033[31;1m%u@%h\033[37;1m:\033[33;1m%d\033[0m" # see on-cd
 set borderfmt "\033[33;1m"
-set ifs "\n"
-set timefmt 'Mon 02.01.2006 15:04'
-set statfmt "   \033[33m%S\033[0m| \033[36m%p\033[0m| %u:%g| %t| -> %l"
-set errorfmt "\033[31m   \033[0m"
-set rulerfmt " %a| \033[7;33m 󰪹 %p \033[0m| \033[7;33m%{lf_user_progress}\033[0m| \033[7;34m 󰒉 %s \033[0m| \033[7;32m 󰆏 %c \033[0m| \033[7;31m 󰆐 %m \033[0m| \033[7;35m 󰈲 %f \033[0m| \033[7;36m 󰱼 %{lf_user_selected_size} \033[0m| \033[7;97m   %d \033[0m| %i/%t "
+set cursoractivefmt "\033[7m"
+set cursorparentfmt "\033[7m"
+set cursorpreviewfmt "\033[7m"
 set numberfmt "\033[33m"
 set infotimefmtnew "15:04|02.01.06"
 set infotimefmtold "02.01.06"
-set scrolloff 8
-set dircounts false
+set dupfilefmt "%f.(%n)"
+set statfmt "   \033[33m%S\033[0m| \033[31m%p\033[0m| %u:%g| %t| -> \033[36m%l\033[0m"
+set timefmt '02.01.2006 15:04'
+set errorfmt "\033[31m   \033[0m"
+set rulerfmt " %a| \033[7;33m 󰪹 %p \033[0m| \033[7;33m%{lf_user_progress}\033[0m| \033[7;34m 󰒉 %s \033[0m| \033[7;32m 󰆏 %c \033[0m| \033[7;31m 󰆐 %m \033[0m| \033[7;35m 󰈲 %f \033[0m| \033[7;36m 󰱼 %{lf_user_selected_size} \033[0m| \033[7;97m   %d \033[0m| %i/%t "
+set selectfmt "\033[7;34m"
 set copyfmt "\033[7;32m"
 set cutfmt "\033[7;31m"
-set selectfmt "\033[7;34m"
+set menufmt "\033[0m"
+set menuheaderfmt "\033[1m"
+set menuselectfmt "\033[7m"
+# MISC
+set anchorfind true
+set ifs ""
+set period 0
+set tabstop 4
 set truncatechar "~"
 set truncatepct "100"
-set showbinds true
+
 
 #
 #
@@ -76,9 +93,9 @@ cmd on-cd &{{
     GIT_PS1_SHOWUPSTREAM=auto
     GIT_PS1_COMPRESSSPARSESTATE=auto
     git=$(__git_ps1 " %s") || true
-    #version=$(echo "lf($(lf -version))")
+    version="r$(lf -version)"
     
-    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m"
+    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m %S \033[30m$version "
     lf -remote "send $id set promptfmt \"$fmt\"" 
 
     # sorting in specified directories
