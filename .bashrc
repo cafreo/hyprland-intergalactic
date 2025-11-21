@@ -44,6 +44,7 @@ export AUDIO_PLAYER=/usr/bin/mpv
 export AUDIO_EDITOR=/usr/bin/tenacity
 
 export PATH=$PATH:/usr/local/bin:/usr/bin:/usr/bin/vendor_perl
+export PATH=$PATH:$(go env GOPATH)/bin
 
 # CURSOR
 export XCURSOR_THEME=pixelfun3
@@ -61,7 +62,7 @@ alias yayf="yay -Suy --devel; flatpak update; pacclean"
 alias yayd="yay -Rns"
 alias paclist="sudo pacman -Qi | sed '/^Depends On/,/^Required By/{ s/^Required By.*$//; H; d }; /^Name/!d; /^Name/{ n;x;}'| sed '/^$/s//==================================================================================/'"
 alias paclistin="grep -i installed /var/log/pacman.log / grep -i upgraded hyprland /var/log/pacman.log"
-alias pacdep="comm -23 <(pacman -Qtq) <(pacman -Qsq base base-devel)"
+alias paclistdep="comm -23 <(pacman -Qtq) <(pacman -Qsq base base-devel)"
 # tools
 alias ls='ls -alh --color=auto --group-directories-first'
 alias grep='grep --color=auto'

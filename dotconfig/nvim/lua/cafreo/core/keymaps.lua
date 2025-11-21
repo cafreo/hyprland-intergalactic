@@ -56,20 +56,22 @@ keymap({"v"}, "<C-up>", "dkP`[V`]", opts)
 keymap({"v"}, "<C-down>", "dp`[V`]", opts)
 
 -- Insert at start of line
-keymap({"n", "i"}, "<C-j>", '<C-o>:1,1s!^!!<left>', opts)
-keymap({"n", "i"}, "<C-S-j>", '<C-o>:%s!^!!<left>', opts)
+keymap({"n", "i"}, "<C-h>", 'I', opts)
+keymap({"v"}, "<C-h>", ':normal I', opts)
 -- Insert at end of line
-keymap({"n", "i"}, "<C-k>", '<C-o>:1,1s!$!!<left>', opts)
-keymap({"n", "i"}, "<C-S-k>", '<C-o>:%s!$!!<left>', opts)
+keymap({"n", "i"}, "<C-l>", 'A', opts)
+keymap({"v"}, "<C-l>", ':normal A', opts)
 
 -- Copy to system clipboard
 keymap({"n"}, "<C-c>", '^V$"+y', opts)
 keymap({"v"}, "<C-c>", '"+y', opts)
+keymap({"v"}, "c", '"+y', opts)
 
 -- Paste from system clipboard
 keymap({"n"}, "<C-v>", ':set paste<CR>"+p<CR>:set nopaste<CR>', opts)
 keymap({"i"}, "<C-v>", '<C-r><C-o>+', opts)
 keymap({"v"}, "<C-v>", '"_dP', opts)
+keymap({"v"}, "v", '"_dP', opts)
 
 -- Cut to system clipboard
 keymap({"n"}, "<C-x>", '^V$"+x', opts)
@@ -109,3 +111,10 @@ keymap({"i"}, "<C-f>", '<C-o>:1,1s/-/-/<left><left><left><left><left><left><left
 -- Plugin Keymaps
 -- auto-save
 keymap({"n"}, "<C-F5>", '<C-o>:ASToggle<CR>', opts)
+
+-- record macro
+keymap({"n"}, "r", "q", opts)
+
+-- count up numbers in selected lines
+keymap({"v"}, "n", "g<C-a>", opts)
+
