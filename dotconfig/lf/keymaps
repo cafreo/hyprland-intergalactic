@@ -198,7 +198,7 @@ map Ga4 cd /mnt/A-POTRO-NAS/Backups
 map Gat cd /mnt/A-POTRO-NAS/.Trash-1000/files
 map Gx cd ~/Extern
 map Gm cd /mnt
-map Gu cd /run/media/cafreo
+map Gu cd /run/media
 
 # TABS
 map Xn "󰝜  open new tab"

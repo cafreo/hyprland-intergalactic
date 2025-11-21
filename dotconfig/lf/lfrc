@@ -64,8 +64,8 @@ set menuheaderfmt "\033[1m"
 set menuselectfmt "\033[7m"
 # MISC
 set anchorfind true
-set ifs ""
-set period 0
+set ifs "\n"
+set period 4
 set tabstop 4
 set truncatechar "~"
 set truncatepct "100"
