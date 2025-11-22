@@ -953,13 +953,13 @@ cmd "  duplicate file" &{{
 cmd "  open in gui app" %{{
     printf "   open file(s) in gui app: "
     read -r ans
-    $ans $fx &
+    "$ans" "$f" &> /dev/null &
 }}
 
-cmd "  open in terminal" %{{
+cmd "  open in terminal" ${{
     printf "    open file(s) in terminal app: "
     read -r ans
-    $ans $fx &
+    "$ans" "$f"
 }}
 
 cmd "󱕷  set default app to open filetype" ${{
