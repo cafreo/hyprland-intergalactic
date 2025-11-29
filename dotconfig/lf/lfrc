@@ -319,26 +319,22 @@ cmd paste-custom &{{
     shift
 
     if [[ $@ != "" ]]; then
-        echo "$(stat $@)"
-
-        indicator() {
-            while :; do
-                lf -remote "send set user_progress '  󰪹  '"
-                sleep 1
-            done
-        }
-        indicator &
-        IND_PID=$!
 
         case "$mode" in
             copy)
-                count=$(printf "%s\n" "$@" | wc -l)
+                count=$(printf "%s\n" "$@" | wc -l) 
+                cp -a "$@" . &
+                CP_PID=$!
+                lf -remote "send clear"
                 lf -remote "send echo ' 󰪹  copying $count file(s)...'"
-                cp -a "$@" . &&
 
-                kill "$IND_PID" 2>/dev/null
+                while ps -p $CP_PID > /dev/null; do
+                    lf -remote "send set user_progress '  󰪹  '"
+                    sleep 1
+                done
+
                 lf -remote "send set user_progress '  󰈖  '"
-                lf -remote "send :clear;reload"
+                lf -remote "send reload"
                 lf -remote "send echo '   copied $count file(s) successfully'"
                 #notify-send "lf file manager - status" "  file(s) copied successfully" -i " "
                 sleep 4
@@ -346,14 +342,21 @@ cmd paste-custom &{{
 
                 exit 0
                 ;;
+
             move)
                 count=$(printf "%s\n" "$@" | wc -l)
-                lf -remote "send echo ' 󰪹  moving $count file(s)...'"
-                mv -f "$@" . &&
+                mv -f "$@" . &
+                MV_PID=$!
+                lf -remote "send clear"
+                lf -remote "send echo ' 󰪹  copying $count file(s)...'"
 
-                kill "$IND_PID" 2>/dev/null
+                while ps -p $MV_PID > /dev/null; do
+                    lf -remote "send set user_progress '  󰪹  '"
+                    sleep 1
+                done
+
                 lf -remote "send set user_progress '  󰈖  '"
-                lf -remote "send :clear;reload"
+                lf -remote "send reload"
                 lf -remote "send echo '   moved $count file(s) successfully'"
                 #notify-send "lf file manager - status" "  file(s) moved successfully" -i " "
                 sleep 4
@@ -584,16 +587,18 @@ cmd "󰦝  change permissions" %{{
         perms=$(ls -l $file | awk '{print $1}')
     done
 
-    lf -remote 'send $id :unselect;reload'
+    lf -remote "send $id :unselect;reload"
     lf -remote "send $id echo ' 󰦝  set permissions of $count file(s) to $perms '"
 }}
 
 # DISPLAY DIRECTORY SIZE
 
 cmd "󰥨  display size of directories" &{{
+    lf -remote "send set user_progress '  󰱼  '"
     lf -remote "send $id set info size"
     lf -remote "send $id set dircounts false"
-    lf -remote "send calcdirsize"
+    lf -remote "send $id calcdirsize"
+    lf -remote "send set user_progress ''"
 }}
 
 # ARCHIVES
@@ -632,23 +637,22 @@ cmd "󱝗  create encrypted zipfile" ${{
 
 cmd "󱉛  extract archive" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󱉛  extracting from $count archive(s)...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󱉛   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
-
+    (
     for file in $fx; do
         ouch d $file
     done
+    ) &
+    EA_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󱉛  extracting from $count archive(s)...'"
 
-    kill "$IND_PID" 2>/dev/null
+    while ps -p $EA_PID > /dev/null; do
+        lf -remote "send set user_progress '  󱉛  '"
+        sleep 1
+    done
+
     lf -remote "send set user_progress '  󱝍  '"
-    lf -remote "send :unselect;reload"
+    lf -remote "send reload"
     lf -remote "send echo '   successfully extracted from $count archives(s)'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -658,24 +662,23 @@ cmd "󱉛  extract archive" &{{
 
 cmd "  convert to mp4" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to mp4...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
-    
+    (
     for file in $fx; do
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp4'"
         ffmpeg -i $file -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${file%.*}.mp4"
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to mp4...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send :unselect;reload"
+    lf -remote "send reload"
     lf -remote "send echo '   successfully converted $count file(s) to mp4'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -683,25 +686,24 @@ cmd "  convert to mp4" &{{
 
 cmd "  convert to mkv" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to mkv...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
-
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mkv'"
         ffmpeg -i $file -codec copy "${file%.*}.mkv"
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to mkv...'"
     
-    kill "$IND_PID" 2>/dev/null
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send :unselect;reload"
+    lf -remote "send reload"
     lf -remote "send echo '   successfully converted $count file(s) to mkv'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -709,75 +711,74 @@ cmd "  convert to mkv" &{{
 
 cmd "  convert to png" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to png...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
-
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
         ffmpeg -i $file "${file%.*}.png"
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to png...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send :unselect;reload"
+    lf -remote "send reload"
     lf -remote "send echo '   successfully converted $count file(s) to png'"
     sleep 4
     lf -remote "send set user_progress ''"
 }}
 
 cmd "  convert to jpg" &{{
-    count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to jpg...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
+    count=$(printf "%s\n" "$fx" | wc -l) 
 
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         ffmpeg -i $file "${file%.*}.jpg"
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to jpg...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id reload"
     lf -remote "send echo '   successfully converted $count file(s) to jpg'"
     sleep 4
     lf -remote "send set user_progress ''"
 }}
 
 cmd "  convert to gif" &{{
-    count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to gif...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
-
+    count=$(printf "%s\n" "$fx" | wc -l) 
+    
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
         ffmpeg -i $file -filter_complex "fps=15, scale='max(640,iw)':'max(480,ih)'[s]; [s]split[a][b]; [a]palettegen[palette]; [b][palette]paletteuse" "${file%.*}.gif";
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to gif...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
     lf -remote "send $id :unselect;reload"
     lf -remote "send echo '   successfully converted $count file(s) to gif'"
@@ -787,51 +788,51 @@ cmd "  convert to gif" &{{
 
 cmd "  convert to webp" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to webp...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
-
+    
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to webp'"
         ffmpeg -i $file -vcodec libwebp -loop 0 -an -vsync 0 "${file%.*}.webp"
     done
+    ) &    
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to webp...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id reload"
     lf -remote "send echo '   successfully converted $count file(s) to webp'"
     sleep 4
     lf -remote "send set user_progress ''"
 }}
 
 cmd "󰸪  convert to mp3" &{{
-    count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to mp3...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    ndicator &
-    IND_PID=$!
+    count=$(printf "%s\n" "$fx" | wc -l) 
 
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp3'"
         ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to mp3...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id reload"
     lf -remote "send echo '   successfully converted $count file(s) to mp3'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -839,25 +840,26 @@ cmd "󰸪  convert to mp3" &{{
 
 cmd "󰸪  convert to aac" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to aac...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    ndicator &
-    IND_PID=$!
 
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to aac'"
         ffmpeg -i $file -b:a 128k -c:a aac "${file%.*}.aac"	
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to aac...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
+
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id reload"
     lf -remote "send echo '   successfully converted $count file(s) to aac'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -865,25 +867,25 @@ cmd "󰸪  convert to aac" &{{
 
 cmd "󰸪  convert to flac" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to flac...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    ndicator &
-    IND_PID=$!
 
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to flac'"
         ffmpeg -i $file -c:a flac "${file%.*}.flac"	
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to flac...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id reload"
     lf -remote "send echo '   successfully converted $count file(s) to flac'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -891,25 +893,25 @@ cmd "󰸪  convert to flac" &{{
 
 cmd "  convert to pdf" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    lf -remote "send echo ' 󰤘  converting $count file(s) to pdf...'"
-    indicator() {
-        while :; do
-            lf -remote "send set user_progress '  󰤘   '"
-            sleep 1
-        done
-    }
-    indicator &
-    IND_PID=$!
 
+    (
     for file in $fx; do
         lf -remote "send set user_progress '  󰤘   '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         magick $file "${file%.*}.pdf"
     done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to pdf...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
 
-    kill "$IND_PID" 2>/dev/null
     lf -remote "send set user_progress '  󰈖  '"
-    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id reload"
     lf -remote "send echo '   successfully converted $count file(s) to pdf'"
     sleep 4
     lf -remote "send set user_progress ''"
@@ -926,9 +928,10 @@ cmd "󱀷  remove metadata" %{{
 
 # DUPLICATE FILE
 
-cmd "  duplicate file" &{{
+cmd "  duplicate" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
     for file in $fx; do
+
         if [[ -f "$file" ]]; then
             name="${file%.*}"
             ext="${file##*.}"
@@ -940,8 +943,27 @@ cmd "  duplicate file" &{{
                 new="${name} (${num}).${ext}"
             done
 
-            cp "$file" "$new"
+            cp -a "$file" "$new"
+            exit 0;
+
+        elif [[ -d "$file" ]]; then
+            name="${file}"
+            num=1
+            new="${name} (${num})"
+
+            while [[ -e "$new" ]]; do
+                num=$((num + 1))
+                new="${name} (${num})"
+            done
+            
+            cp -a "$file" "$new"
+            exit 0;
+
+        else
+            lf -remote "send $id echoerr 'unknown file type'"  
+            exit 1
         fi
+
     done
 
     lf -remote "send $id :unselect;reload"
@@ -1023,23 +1045,27 @@ cmd "󰎄  open in default audio editor" %{{
 
 cmd trash %{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    printf "   move $count file(s) to trash bin? [y/n] "
+    printf " 󰆴  move $count file(s) to trash bin? [y/n] "
     read -r ans
-    if [[ "$ans" =~ ^[Yy]$ ]]; then
-        trash-put $fx &
-        TRASH_PID=$!
-        lf -remote "send unselect"
-        wait $TRASH_PID
+    case "$ans" in
+        [Yy]*)
+            trash-put $fx &
+            TR_PID=$!
+            lf -remote "send unselect"
 
-        if [ $? -eq 0 ]; then
+            while ps -p $TR_PID > /dev/null; do
+                lf -remote "send set user_progress '  󰆴  '"
+                sleep 1
+            done
+
             lf -remote "send reload"
             lf -remote "send echo '   moved $count file(s) to trash bin successfully'"
-        else
-            lf -remote "send echoerr 'error'"
-        fi
-    else
-        lf -remote "send echoerr 'aborted'"
-    fi
+            lf -remote "send set user_progress ''"
+            ;;
+        *)
+            lf -remote "send echoerr 'aborted'" 
+            ;;
+    esac
 }}
 
 cmd "󰠙  restore trashed file" ${{
@@ -1054,23 +1080,27 @@ cmd "󰗨  empty trash bin" ${{
 
 cmd delete %{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    printf "   delete $count file(s) permanently? [y/n] "
+    printf " 󰗨  delete $count file(s) permanently? [y/n] "
     read -r ans
-    if [[ "$ans" =~ ^[Yy]$ ]]; then
-        rm -r $fx &
-        RM_PID=$!
-        lf -remote "send unselect"
-        wait $RM_PID
+    case "$ans" in
+        [Yy]*)
+            rm -r $fx &
+            RM_PID=$!
+            lf -remote "send unselect"
 
-        if [ $? -eq 0 ]; then
+            while ps -p $RM_PID > /dev/null; do
+                lf -remote "send set user_progress '  󰗨  '"
+                sleep 1
+            done
+
             lf -remote "send reload"
             lf -remote "send echo '   deleted $count file(s) successfully'"
-        else
-            lf -remote "send echoerr 'error'"
-        fi
-    else
-        lf -remote "send echoerr 'aborted'" 
-    fi
+            lf -remote "send set user_progress ''"
+            ;;
+        *)
+            lf -remote "send echoerr 'aborted'" 
+            ;;
+    esac
 }}
 
 # KITTY TABS

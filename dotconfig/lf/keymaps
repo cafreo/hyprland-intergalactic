@@ -136,7 +136,7 @@ map Ca1 "󰸪  convert to aac"
 map Ca1 "󰸪  convert to flac"
 map Cp1 "  convert to pdf"
 map Cr "󱀷  remove metadata"
-map Cd "  duplicate file"
+map Cd "  duplicate"
 
 # OPEN IN APP
 map og "  open in gui app"
