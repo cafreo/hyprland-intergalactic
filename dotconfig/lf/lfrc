@@ -599,6 +599,7 @@ cmd "󰥨  display size of directories" &{{
     lf -remote "send $id set dircounts false"
     lf -remote "send $id calcdirsize"
     lf -remote "send set user_progress ''"
+    lf -remote "send unselect"
 }}
 
 # ARCHIVES

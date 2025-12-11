@@ -24,13 +24,11 @@
             "height": 32,
             "width": 32,
             "format": "",
-            "on-click": "wlogout -m 120 -L 240 -R 240",
         },
 
         "image#user": {
             "exec": "echo ~/.config/icons/user.png",
             "size": 32,
-            
         },
 
         "hyprland/window": {
@@ -157,7 +155,7 @@
 	    },
 
         "clock": {
-            "locale": "de_DE.UTF-8",
+            "locale": "de_CH.UTF-8",
             "interval": 60,
             "tooltip-format": "<big>Calendar</big>\n<tt><small>{calendar}</small></tt>",
             //"format-alt": "{:%d.%m.%Y}",

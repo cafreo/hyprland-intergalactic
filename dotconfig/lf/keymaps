@@ -172,10 +172,10 @@ map gf cd ~/Flow
 map gm cd ~/Music
 map gi1 cd ~/Pictures
 map gi2 cd ~/Pictures/Screenshots
+map gi3 cd ~/Pictures/Selfmade
 map gp1 cd ~/Projects/Designing
-map gp2 cd ~/Projects/Scripting
-map gp3 cd ~/Projects/Programming
-map gp4 cd ~/Projects/Administrating
+map gp2 cd ~/Projects/Programming
+map gp3 cd ~/Projects/Composing
 map gg cd ~/Projects/Programming/Git/Repos
 map gv1 cd ~/Videos
 map gv2 cd ~/Videos/After\ Effects/cafreo

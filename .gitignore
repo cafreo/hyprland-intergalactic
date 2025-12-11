@@ -2,3 +2,4 @@
 /dotconfig/nvim/lua/cafreo/temp
 dotconfig/hypr/config/override.conf
 dotconfig/lf/test
+*.log
