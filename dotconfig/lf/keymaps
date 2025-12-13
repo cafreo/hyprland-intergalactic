@@ -74,6 +74,7 @@ map sb "󱕇  sort by birth time"
 map sc "󱕇  sort by change time"
 map sa "󱕇  sort by access time"
 map se "󰖽  sort by extension"
+map su "󱎅  sort by custom"
 map sr "󰒽  reverse sorting order"
 
 # SELECT (ADVANCED)

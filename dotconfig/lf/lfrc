@@ -55,7 +55,7 @@ set dupfilefmt "%f.(%n)"
 set statfmt "   \033[33m%S\033[0m| \033[31m%p\033[0m| %u:%g| %t| -> \033[36m%l\033[0m"
 set timefmt '02.01.2006 15:04'
 set errorfmt "\033[31m   \033[0m"
-set rulerfmt " %a| \033[7;33m 󰪹 %p \033[0m| \033[7;33m%{lf_user_progress}\033[0m| \033[7;34m 󰒉 %s \033[0m| \033[7;32m 󰆏 %c \033[0m| \033[7;31m 󰆐 %m \033[0m| \033[7;35m 󰈲 %f \033[0m| \033[7;36m 󰱼 %{lf_user_selected_size} \033[0m| \033[7;97m   %d \033[0m| %i/%t "
+set rulerfmt " %a| \033[7;33m 󰪹 %p \033[0m| \033[7;33m%{lf_user_progress}\033[0m| \033[7;34m 󰒉 %s \033[0m| \033[7;32m 󰆏 %c \033[0m| \033[7;31m 󰆐 %m \033[0m| \033[7;35m 󰈲 %f \033[0m| %{lf_user_file_infos}| \033[7;36m 󰱼 %{lf_user_selected_size} \033[0m| \033[7;97m   %d \033[0m| %i/%t "
 set selectfmt "\033[7;34m"
 set copyfmt "\033[7;32m"
 set cutfmt "\033[7;31m"
@@ -93,10 +93,11 @@ cmd on-cd &{{
     GIT_PS1_SHOWUPSTREAM=auto
     GIT_PS1_COMPRESSSPARSESTATE=auto
     git=$(__git_ps1 " %s") || true
+    # load lf version info
     version="r$(lf -version)"
     
     fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m %S \033[30m$version "
-    lf -remote "send $id set promptfmt \"$fmt\"" 
+    lf -remote "send $id set promptfmt \"$fmt\""
 
     # sorting in specified directories
     case "$PWD" in ~/.local/share/Trash/files | ~/Pictures/Screenshots | ~/Downloads | ~/Scan | ~/Flow | ~/Fonts | /mnt/A-POTRO-NAS/Library/Media/Music )
@@ -124,6 +125,32 @@ cmd on-cd &{{
     esac
 }}
 
+# ON LOADING DIRECTORY
+cmd on-load &{{
+    cd "$(dirname "$1")" || exit 1
+    [ "$(git rev-parse --is-inside-git-dir 2>/dev/null)" = false ] || exit 0
+
+    cmds=""
+
+    for file in "$@"; do
+        case "$file" in
+            */.git|*/.git/*) continue;;
+        esac
+
+        status=$(git status --porcelain --ignored -- "$file" | cut -c1-2 | head -n1)
+
+        if [ -n "$status" ]; then
+            cmds="${cmds}addcustominfo \"${file}\" \"$status\"; "
+        else
+            cmds="${cmds}addcustominfo \"${file}\" ''; "
+        fi
+    done
+
+    if [ -n "$cmds" ]; then
+        lf -remote "send $id :$cmds"
+    fi
+}}
+
 # ON REDRAWING THE WINDOW
 
 cmd on-redraw &{{
@@ -144,8 +171,25 @@ cmd on-redraw &{{
 # ON SELECT
 
 cmd on-select &{{
-    s=$(find $fx -type f -maxdepth 1 -ls | awk '{total += $7} END {print total}' | numfmt --to=iec --format='%.1fB')
-	lf -remote "send $id set user_selected_size $s"
+    size=$(find $fx -type f -maxdepth 1 -ls | awk '{total += $7} END {print total}' | numfmt --to=iec --format='%.1fB')
+	lf -remote "send $id set user_selected_size $size"
+
+    for file in "$fx"; do
+        mime=$(file --mime-type -Lb -- "$file")
+        case "$mime" in
+            image/*)
+                info=$(exiftool -s3 -imagesize "$file" | awk '{print $1}')
+                lf -remote "send $id set user_file_infos '󰲎 $info'"
+                ;;
+            video/*|audio/*)
+                info=$(exiftool -s3 -duration "$file" | awk '{print $1}')
+                lf -remote "send $id set user_file_infos '󰔚 $info'"
+                ;;
+            *)
+                lf -remote "send $id set user_file_infos ''"
+                ;;
+        esac
+    done
 }}
 
 # ON FOCUS
@@ -213,6 +257,12 @@ cmd "󱕇  sort by access time" &{{
 cmd "󰖽  sort by extension" &{{
     lf -remote "send $id set sortby ext"
     lf -remote "send $id set info size"
+    lf -remote "send $id top"
+}}
+
+cmd "󱎅  sort by custom" &{{
+    lf -remote "send $id set sortby custom"
+    lf -remote "send $id set info custom"
     lf -remote "send $id top"
 }}
 
@@ -348,7 +398,7 @@ cmd paste-custom &{{
                 mv -f "$@" . &
                 MV_PID=$!
                 lf -remote "send clear"
-                lf -remote "send echo ' 󰪹  copying $count file(s)...'"
+                lf -remote "send echo ' 󰪹  moving $count file(s)...'"
 
                 while ps -p $MV_PID > /dev/null; do
                     lf -remote "send set user_progress '  󰪹  '"
