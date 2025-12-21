@@ -1,0 +1,18 @@
+# DEPENDENCIES: udiskie
+
+# MOUNT ALL AVAILABLE DEVIVES
+
+cmd "  mount all available devices" %{{
+    udiskie-mount -ar 
+}}
+
+# EJECT MEDIA MOUNTED IN CURRENT DIRECTORY
+
+cmd "  eject current media" %{{
+    sync && udiskie-umount -f "$f"
+}}
+
+# KEYMAPS
+
+map Ma "  mount all available devices"
+map Mu "  eject current media"

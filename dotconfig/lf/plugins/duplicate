@@ -1,0 +1,47 @@
+# DUPLICATE SELECTED ELEMENTS
+
+cmd "  duplicate" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    for file in $fx; do
+
+        if [[ -f "$file" ]]; then
+            name="${file%.*}"
+            ext="${file##*.}"
+            num=1
+            new="${name} (${num}).${ext}"
+            
+            while [[ -e "$new" ]]; do   
+                num=$((num + 1))
+                new="${name} (${num}).${ext}"
+            done
+
+            cp -a "$file" "$new"
+            exit 0;
+
+        elif [[ -d "$file" ]]; then
+            name="${file}"
+            num=1
+            new="${name} (${num})"
+
+            while [[ -e "$new" ]]; do
+                num=$((num + 1))
+                new="${name} (${num})"
+            done
+            
+            cp -a "$file" "$new"
+            exit 0;
+
+        else
+            lf -remote "send $id echoerr 'unknown file type'"  
+            exit 1
+        fi
+
+    done
+
+    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id echo '   $count file(s) duplicated successfully'"
+}}
+
+# KEYMAPS
+
+map Cd "  duplicate"

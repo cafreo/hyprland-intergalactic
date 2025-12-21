@@ -1,0 +1,22 @@
+# GO TO DEFAULT USER DIRECTORIES
+map gh cd ~/
+map gb cd ~/.local/share/Trash/files
+map gt cd ~/.local/share/Trash/files
+map gd cd ~/Downloads
+map gD cd ~/Documents
+map gm cd ~/Music
+map gi1 cd ~/Pictures
+map gi2 cd ~/Pictures/Screenshots
+map gv1 cd ~/Videos
+
+# GO TO CONFIG FILES
+map gc1 cd ~/.config
+map gc2 cd ~/.config/hypr
+map gc3 cd ~/.config/rofi
+map gc4 cd ~/.config/lf
+map gc5 cd ~/.config/nvim
+map gc6 cd ~/.config/icons
+
+# GO TO EXTERNAL DRIVES
+map Gm cd /mnt
+map Gu cd /run/media

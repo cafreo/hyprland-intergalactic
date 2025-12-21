@@ -1,0 +1,6 @@
+# COMMANDS THAT ARE EXECUTED, WHEN YOU QUIT LF
+
+cmd on-quit %{{
+    ctpv -e $id
+    rm ~/.cache/ctpv/*
+}}

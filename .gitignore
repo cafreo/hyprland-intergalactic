@@ -1,5 +1,5 @@
-
-/dotconfig/nvim/lua/cafreo/temp
-dotconfig/hypr/config/override.conf
-dotconfig/lf/test
 *.log
+dotconfig/nvim/lua/cafreo/temp
+dotconfig/hypr/config/override.conf
+dotconfig/lf/wip
+dotconfig/lf/plugins/cd_custom

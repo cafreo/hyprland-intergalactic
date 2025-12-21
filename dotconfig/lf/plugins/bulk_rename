@@ -1,0 +1,28 @@
+# DEPENDENCIES: massren
+
+# RENAME MULTIPLE FILES IN EDITOR
+
+cmd bulk-rename ${{
+    if command -v massren 2>&1 >/dev/null; then
+        massren -v $(basename -a -- $fx)
+        lf -remote "send $id :unselect;reload"
+    else
+        lf -remote "send $id echoerr 'please install massren'" 
+    fi
+}}
+
+# UNDO RENAME
+
+cmd undo-bulk-rename ${{
+    if command -v massren 2>&1 >/dev/null; then
+        massren -u
+        lf -remote "send $id :unselect;reload"
+    else
+        lf -remote "send $id echoerr 'please install massren'" 
+    fi
+}}
+
+# KEYMAPS
+
+map R bulk-rename
+map Zr undo-bulk-rename

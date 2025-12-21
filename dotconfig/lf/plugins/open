@@ -1,0 +1,117 @@
+# DEPENDENCIES: perl-file-mimeinfo, dragon-drop
+
+# OPEN FILE IN GUI APP
+
+cmd "  open in gui app" %{{
+    printf "   open file(s) in gui app: "
+    read -r ans
+    "$ans" "$f" &> /dev/null &
+}}
+
+# OPEN FILE IN TERMINAL APP
+
+cmd "  open in terminal" ${{
+    printf "    open file(s) in terminal app: "
+    read -r ans
+    "$ans" "$f"
+}}
+
+# SET DEFAULT APP TO OPEN FILETYPE
+
+cmd "󱕷  set default app to open filetype" ${{
+    for file in "$fx"; do
+        mimeopen -d $file
+    done
+}}
+
+# OPEN FILE IN drag and drop menu
+
+cmd "  open in drag and drop menu" &{{
+    dragon-drop -a -x -T -i -s 96 $fx
+    lf -remote "send $id :unselect;reload"
+}}
+
+# OPEN FILE IN DEFAULT EDITOR
+
+cmd "󱩼  open in default editor" ${{
+    $EDITOR "$f"
+}}
+
+# OPEN FILE IN DEFAULT TEXT EDITOR
+
+cmd "󰷈  open in default text editor" %{{
+    $TEXT_EDITOR "$f"
+}}
+
+# OPEN FILE IN DEFAULT BROWSER
+
+cmd "  open in default browser" %{{
+    $BROWSER "$f"
+}}
+
+# OPEN FILE IN DEFAULT PDF READER
+
+cmd "󰈦  open in default pdf reader" %{{
+    $PDF_READER "$f"
+}}
+
+# OPEN FILE IN DEFAULT PDF EDITOR
+
+cmd "󰈦  open in default pdf editor" %{{
+    $PDF_EDITOR "$f"
+}}
+
+# OPEN FILE IN DEFAULT IMAGE VIEWER
+
+cmd "󰋩  open in default image viewer" %{{
+    $IMAGE_VIEWER "$f"
+}}
+
+# OPEN FILE IN DEFAULT IMAGE EDITOR
+
+cmd "󰋩  open in default image editor" %{{
+    $IMAGE_EDITOR "$f"
+}}
+
+# OPEN FILE IN DEFAULT VIDEO PLAYER
+
+cmd "󰃽  open in default video player" %{{
+    $VIDEO_PLAYER "$f"
+}}
+
+# OPEN FILE IN DEFAULT VIDEO EDITOR
+
+cmd "󰃽  open in default video editor" %{{
+    $VIDEO_EDITOR "$f"
+}}
+
+# OPEN FILE IN DEFAULT AUDIO PLAYER
+
+cmd "󰎄  open in default audio player" %{{
+    $AUDIO_PLAYER "$f"
+}}
+
+# OPEN FILE IN DEFAULT AUDIO EDITOR
+
+cmd "󰎄  open in default audio editor" %{{
+    $AUDIO_EDITOR "$f"
+}}
+
+# KEYMAPS
+
+map og "  open in gui app"
+map oc "  open in terminal"
+map oD "󱕷  set default app to open filetype"
+map od "  open in drag and drop menu"
+map oe "󱩼  open in default editor"
+map e "󱩼  open in default editor"
+map ot "󰷈  open in default text editor"
+map ob "  open in default browser"
+map op1 "󰈦  open in default pdf reader"
+map op2 "󰈦  open in default pdf editor"
+map oi1 "󰋩  open in default image viewer"
+map oi2 "󰋩  open in default image editor"
+map ov1 "󰃽  open in default video player"
+map ov2 "󰃽  open in default video editor"
+map oa1 "󰎄  open in default audio player"
+map oa2 "󰎄  open in default audio editor"

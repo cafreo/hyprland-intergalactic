@@ -1,0 +1,23 @@
+# COMMANDS THAT ARE EXECUTED, WHEN YOU SELECT A NEW ELEMENT
+
+cmd on-select &{{
+    size=$(find $fx -type f -maxdepth 1 -ls | awk '{total += $7} END {print total}' | numfmt --to=iec --format='%.1fB')
+	lf -remote "send $id set user_selected_size $size"
+
+    for file in "$fx"; do
+        mime=$(file --mime-type -Lb -- "$file")
+        case "$mime" in
+            image/*)
+                info=$(exiftool -s3 -imagesize "$file" | awk '{print $1}')
+                lf -remote "send $id set user_file_infos '󰲎 $info'"
+                ;;
+            video/*|audio/*)
+                info=$(exiftool -s3 -duration "$file" | awk '{print $1}')
+                lf -remote "send $id set user_file_infos '󰔚 $info'"
+                ;;
+            *)
+                lf -remote "send $id set user_file_infos ''"
+                ;;
+        esac
+    done
+}}

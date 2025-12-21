@@ -1,0 +1,20 @@
+# NAVIGATE TO NEXT FILE IN SEARCH MODE
+
+cmd next-file-search-mode &{{
+    if [ "$lf_mode" = "search" ]; then
+        lf -remote "send $id search-next"
+    fi
+}}
+
+# NAVIGATE TO PREVIOUS FILE IN SEARCH
+
+cmd previous-file-search-mode &{{
+    if [ "$lf_mode" = "search" ]; then
+        lf -remote "send $id search-prev"
+    fi
+}}
+
+# KEYMAPS
+
+cmap <down> next-file-search-mode
+cmap <up> previous-file-search-mode

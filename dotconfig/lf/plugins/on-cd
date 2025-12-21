@@ -1,0 +1,51 @@
+# COMMANDS THAT ARE EXECUTED, WHEN YOU CHANGE THE DIRECTORY
+
+cmd on-cd &{{
+    # set title of window
+    printf "\033]0; lf - $PWD\007" > /dev/tty
+
+    #kitten @ action set_tab_title "${PWD##*/}"
+
+    # load git infos
+    source /usr/share/git/completion/git-prompt.sh
+    GIT_PS1_SHOWDIRTYSTATE=auto
+    GIT_PS1_SHOWSTASHSTATE=auto
+    GIT_PS1_SHOWUNTRACKEDFILES=auto
+    GIT_PS1_SHOWUPSTREAM=auto
+    GIT_PS1_COMPRESSSPARSESTATE=auto
+    git=$(__git_ps1 " %s") || true
+    # load lf version info
+    version="r$(lf -version)"
+    
+    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m %S \033[30m$version "
+    lf -remote "send $id set promptfmt \"$fmt\""
+
+    # sorting in specified directories
+    case "$PWD" in ~/.local/share/Trash/files | ~/Pictures/Screenshots | ~/Downloads | ~/Scan | ~/Flow | ~/Fonts | /mnt/A-POTRO-NAS/Library/Media/Music )
+        lf -remote "send $id set user_prev_sortby $lf_sortby"
+        lf -remote "send $id set info time"
+        lf -remote "send $id set sortby time"
+        lf -remote "send $id set reverse"
+
+        lf -remote "send $id top"
+        lf -remote "send $id echo ' 󱕇  changed sort mode to time'"
+            ;;
+        *)
+
+    # restore sorting on directory exit
+        if [[ "$lf_user_prev_sortby" != "" ]]; then
+            lf -remote "send $id set sortby $lf_user_prev_sortby"
+            lf -remote "send $id set info size"
+            lf -remote "send $id set noreverse"
+
+            lf -remote "send $id echo ' 󰦛  restored sort mode to $lf_user_prev_sortby'"
+            lf -remote "send $id set user_prev_sortby ''"
+            #lf -remote "send $id top"
+        fi
+        ;;
+    esac
+}}
+
+# EXECUTE
+
+on-cd

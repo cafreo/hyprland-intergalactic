@@ -1,0 +1,69 @@
+# DEPENDENCIES: fzf
+
+# DOWNLOAD NEWEST CHANGELOG FROM LF GITHUB PAGE
+
+&{{
+    curl -o ~/.local/share/lf/CHANGELOG.md https://raw.githubusercontent.com/gokcehan/lf/refs/heads/master/CHANGELOG.md
+}}
+
+# OPEN LF DOCUMENTATION
+
+cmd "󱔗  open documentation" ${{
+    lf -doc | $PAGER
+}}
+
+# LIST ALL AVAILABLE KEYMAPS FOR NORMAL MODE
+
+cmd "  list maps" ${{
+    lf -remote "query $id maps" | $PAGER
+}}
+
+# LIST ALL AVAILABLE KEYMAPS FOR COMMAND MODE
+
+cmd "  list command maps" ${{
+    lf -remote "query $id cmaps" | $PAGER
+}}
+
+# LIST ALL COMMANDS
+
+cmd "  list commands" ${{
+    lf -remote "query $id cmds" | $PAGER
+}}
+
+# LIST HISTORY OF ALL DIRECTORIES VISITED THIS SESSION
+
+cmd "  list jump history" ${{
+    clear
+    dir=$(
+        lf -remote "query $id jumps" |
+        awk -F'\t' 'NR > 1 { print $NF}' |
+        sort -u |
+        fzf --style full --list-label='   jump to location ' --list-border --list-border=rounded --header-first --color 'list-border:#EFB038,list-label:#CB2211'
+        )
+    
+    if [ -d "$dir" ]; then
+        lf -remote "send $id cd \"$dir\""
+    fi
+}}
+
+# DISPLAY CURRENT LF VERSION
+
+cmd "  display current lf version" %{{
+    lf -remote "send $id echo '   lf version: $(lf -version)'"
+}}
+
+# OPEN LF CHANGELOG
+
+cmd "󱔗  open changelog" ${{
+    $PAGER ~/.local/share/lf/CHANGELOG.md
+}}
+
+# KEYMAPS
+
+map Hd "󱔗  open documentation"
+map Hl "󱔗  open changelog"
+map Hm1 "  list maps"
+map Hm2 "  list command maps"
+map Hc "  list commands"
+map Hh "  list jump history"
+map Hv "  display current lf version"

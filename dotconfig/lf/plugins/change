@@ -1,0 +1,50 @@
+# CHANGE OWNER OF ELEMENT
+
+cmd "  change owner" %{{
+#printf "   change owner: "
+#read ans
+    count=$(printf "%s\n" "$fx" | wc -l)
+    for file in "$fx"; do
+        chown $USER $file
+    done
+
+    lf -remote 'send $id :unselect;reload'
+    lf -remote "send $id echo '   changed owner of $count file(s) to \"$USER\"'"
+}}
+
+# CHANGE GROUP OF ELEMENT
+
+cmd "󰡉  change group" %{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    printf " 󰡉  change group: "
+    read ans
+
+    for file in "$fx"; do
+        chgrp $ans $file
+    done
+
+    lf -remote 'send $id :unselect;reload'
+    lf -remote "send $id echo ' 󰡉  changed group of $count file(s) to \"$ans\"'"
+}}
+
+# CHANGE PERMISSIONS OF ELEMENT
+
+cmd "󰦝  change permissions" %{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    printf " 󰦝  change permissions: "
+    read ans
+
+    for file in "$fx"; do
+        chmod $ans $file
+        perms=$(ls -l $file | awk '{print $1}')
+    done
+
+    lf -remote "send $id :unselect;reload"
+    lf -remote "send $id echo ' 󰦝  set permissions of $count file(s) to $perms '"
+}}
+
+# KEYMAPS
+
+map Mo "  change owner"
+map Mg "󰡉  change group"
+map Mp "󰦝  change permissions"

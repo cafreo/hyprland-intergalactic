@@ -1,0 +1,17 @@
+# COMMANDS THAT ARE EXECUTED, WHEN YOU FOCUS OR UNFOCUS THE WINDOW RUNNING LF
+
+cmd on-focus-gained :{{
+    set cursorparentfmt "\033[7m"
+    set cursoractivefmt "\033[7m"
+    set cursorpreviewfmt "\033[7m"
+}}
+
+cmd on-focus-lost :{{
+    set cursorparentfmt "\033[7m"
+    set cursoractivefmt "\033[7m"
+    set cursorpreviewfmt "\033[7m"
+}}
+
+# EXECUTE
+
+on-focus-gained

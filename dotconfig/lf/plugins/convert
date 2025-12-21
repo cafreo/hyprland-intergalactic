@@ -1,0 +1,291 @@
+# DEPENDENCIES: ffmpeg, imagemagick
+
+# CONVERT TO MP4
+
+cmd "  convert to mp4" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    (
+    for file in $fx; do
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp4'"
+        ffmpeg -i $file -c:v libx264 -pix_fmt yuv420p -b:v 12M -b:a 192k -c:a aac "${file%.*}.mp4"
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to mp4...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send reload"
+    lf -remote "send echo '   successfully converted $count file(s) to mp4'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO MKV
+
+cmd "  convert to mkv" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mkv'"
+        ffmpeg -i $file -codec copy "${file%.*}.mkv"
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to mkv...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send reload"
+    lf -remote "send echo '   successfully converted $count file(s) to mkv'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO PNG
+
+cmd "  convert to png" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
+        ffmpeg -i $file "${file%.*}.png"
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to png...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send reload"
+    lf -remote "send echo '   successfully converted $count file(s) to png'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO JPG
+
+cmd "  convert to jpg" &{{
+    count=$(printf "%s\n" "$fx" | wc -l) 
+
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
+        ffmpeg -i $file "${file%.*}.jpg"
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to jpg...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id reload"
+    lf -remote "send echo '   successfully converted $count file(s) to jpg'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO GIF
+
+cmd "  convert to gif" &{{
+    count=$(printf "%s\n" "$fx" | wc -l) 
+    
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
+        ffmpeg -i $file -filter_complex "fps=15, scale='max(640,iw)':'max(480,ih)'[s]; [s]split[a][b]; [a]palettegen[palette]; [b][palette]paletteuse" "${file%.*}.gif";
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to gif...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id :unselect;reload"
+    lf -remote "send echo '   successfully converted $count file(s) to gif'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO WEBP
+
+cmd "  convert to webp" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to webp'"
+        ffmpeg -i $file -vcodec libwebp -loop 0 -an -vsync 0 "${file%.*}.webp"
+    done
+    ) &    
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to webp...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id reload"
+    lf -remote "send echo '   successfully converted $count file(s) to webp'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO MP3
+
+cmd "󰸪  convert to mp3" &{{
+    count=$(printf "%s\n" "$fx" | wc -l) 
+
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp3'"
+        ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to mp3...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id reload"
+    lf -remote "send echo '   successfully converted $count file(s) to mp3'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO AAC
+
+cmd "󰸪  convert to aac" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to aac'"
+        ffmpeg -i $file -b:a 128k -c:a aac "${file%.*}.aac"	
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to aac...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id reload"
+    lf -remote "send echo '   successfully converted $count file(s) to aac'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO FLAC
+
+cmd "󰸪  convert to flac" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to flac'"
+        ffmpeg -i $file -c:a flac "${file%.*}.flac"	
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to flac...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id reload"
+    lf -remote "send echo '   successfully converted $count file(s) to flac'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# CONVERT TO PDF
+
+cmd "  convert to pdf" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+
+    (
+    for file in $fx; do
+        lf -remote "send set user_progress '  󰤘   '"
+        #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
+        magick $file "${file%.*}.pdf"
+    done
+    ) &
+    CT_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󰤘  converting $count file(s) to pdf...'"
+    
+    while ps -p $CT_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰤘  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󰈖  '"
+    lf -remote "send $id reload"
+    lf -remote "send echo '   successfully converted $count file(s) to pdf'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# KEYMAPS
+
+map Cv1 "  convert to mp4"
+map Cv2 "  convert to mkv"
+map Ci1 "  convert to png"
+map Ci2 "  convert to jpg"
+map Ci3 "  convert to gif"
+map Ci4 "  convert to webp"
+map Ca1 "󰸪  convert to mp3"
+map Ca1 "󰸪  convert to aac"
+map Ca1 "󰸪  convert to flac"
+map Cp1 "  convert to pdf"

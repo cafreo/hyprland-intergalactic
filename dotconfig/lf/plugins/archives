@@ -1,0 +1,68 @@
+# DEPENDENCIES: 7zip, ouch
+
+# CREATE A ZIPFILE
+
+cmd "󱝣  create zipfile" %{{
+    printf " 󱝣  create new zipfile: "
+    read ans
+    origd="$(pwd)"
+    tempd="$(mktemp -d)"
+    pushd "$tempd"
+    cp -a $fx . 
+    7z a -r -tzip "$ans" *
+    cp -a "$ans".zip "$origd/"
+    popd
+    rm -rf "$tempd" 
+    lf -remote 'send $id :unselect;reload'
+    lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
+}}
+
+# CREATE AN ENCRYPTED ZIPFILE
+
+cmd "󱝗  create encrypted zipfile" ${{
+    printf " 󱝗  create new encrypted zipfile: "
+    read ans
+    #printf " 󰯄  set password: "
+    #read psw
+    origd="$(pwd)"
+    tempd="$(mktemp -d)"
+    pushd "$tempd"
+    cp -a $fx .  
+    7z a -mem=AES256 -mx4 -tzip "$ans" -p
+    cp -a "$ans".zip "$origd/" 
+    popd
+    rm -rf "$tempd"
+    lf -remote 'send $id :unselect;reload'
+    lf -remote "send $id echo ' 󱝣 created encrypted zipfile \"$ans.zip\"'"
+}}
+
+# EXTRACT ARCHIVE
+
+cmd "󱉛  extract archive" &{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    (
+    for file in $fx; do
+        ouch d $file
+    done
+    ) &
+    EA_PID=$!
+    lf -remote "send unselect"
+    lf -remote "send echo ' 󱉛  extracting from $count archive(s)...'"
+
+    while ps -p $EA_PID > /dev/null; do
+        lf -remote "send set user_progress '  󱉛  '"
+        sleep 1
+    done
+
+    lf -remote "send set user_progress '  󱝍  '"
+    lf -remote "send reload"
+    lf -remote "send echo '   successfully extracted from $count archives(s)'"
+    sleep 4
+    lf -remote "send set user_progress ''"
+}}
+
+# KEYMAPS
+
+map ac1 "󱝣  create zipfile"
+map ac2 "󱝗  create encrypted zipfile" 
+map ae "󱉛  extract archive"

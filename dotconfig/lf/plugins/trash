@@ -1,0 +1,47 @@
+# DEPENDENCIES: trash-cli
+
+# MOVE FILES TO TRASH BIN
+
+cmd trash %{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    printf " 󰆴  move $count file(s) to trash bin? [y/n] "
+    read -r ans
+    case "$ans" in
+        [Yy]*)
+            trash-put $fx &
+            TR_PID=$!
+            lf -remote "send unselect"
+
+            while ps -p $TR_PID > /dev/null; do
+                lf -remote "send set user_progress '  󰆴  '"
+                sleep 1
+            done
+
+            lf -remote "send reload"
+            lf -remote "send echo '   moved $count file(s) to trash bin successfully'"
+            lf -remote "send set user_progress ''"
+            ;;
+        *)
+            lf -remote "send echoerr 'aborted'" 
+            ;;
+    esac
+}}
+
+# RESTORE TRASHED FILES
+
+cmd "󰠙  restore trashed files" ${{
+    trash-restore
+}}
+
+# EMPTY TRASH BIN
+
+cmd "󰗨  empty trash bin" ${{
+    trash-empty --trash-dir ~/.local/share/Trash
+}}
+
+# KEYMAPS
+
+map d trash
+map br "󰠙  restore trashed files"
+map be "󰗨  empty trash bin"
+map bg cd ~/.local/share/Trash/files

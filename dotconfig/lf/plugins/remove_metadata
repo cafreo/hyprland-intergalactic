@@ -1,0 +1,12 @@
+# REMOVE METADATA
+
+cmd "󱀷  remove metadata" %{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    exiftool -all= -overwrite_original $fx
+    lf -remote 'send :unselect;reload'	
+    lf -remote "send $id echo '   successfully removed metadata from $count file(s)"
+}}
+
+# KEYMAPS
+
+map Cr "󱀷  remove metadata"

@@ -1,0 +1,19 @@
+# DEPENDENCIES: fd, fzf
+
+# FIND ELEMENTS FROM CURRENT DIRECTORY RECURSIVELY AND CD TO THEM ON ENTER
+
+cmd fuzzy-finder ${{
+#lf -remote "send cd ~/"
+    res="$(fd --hidden --ignore-case . | fzf --style full --list-label='   jump to location ' --list-border --list-border=rounded --header-first --color 'list-border:#EFB038,list-label:#CB2211')"
+        if [ -f "$res" ]; then
+            cmd="select"
+        elif [ -d "$res" ]; then
+            cmd="cd"
+        fi
+        
+        lf -remote "send $id $cmd \"$res\""
+}}
+
+# KEYMAPS
+
+map <c-f> fuzzy-finder

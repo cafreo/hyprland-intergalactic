@@ -1,0 +1,85 @@
+# SORT BY NATURAL
+
+cmd "󰖽  sort by natural" &{{
+    lf -remote "send $id set sortby natural"
+    lf -remote "send $id set info size"
+    lf -remote "send $id set noreverse"
+    lf -remote "send $id top"
+}}
+
+# SORT BY SIZE
+
+cmd "󱎉  sort by size" &{{
+    lf -remote "send $id set sortby size"
+    lf -remote "send $id set info size"
+    lf -remote "send $id set dircounts false"
+    lf -remote "send $id top"
+}}
+
+# SORT BY TIME
+
+cmd "󱕇  sort by time" &{{
+    lf -remote "send $id set sortby time"
+    lf -remote "send $id set info time"
+    lf -remote "send $id set reverse!"
+    lf -remote "send $id top"
+}}
+
+# SORT BY CHANGE TIME
+
+cmd "󱕇  sort by change time" &{{
+    lf -remote "send $id set sortby ctime"
+    lf -remote "send $id set info ctime"
+    lf -remote "send $id top"
+}}
+
+# SORT BY BIRTH TIME
+
+cmd "󱕇  sort by birth time" &{{
+    lf -remote "send $id set sortby ctime"
+    lf -remote "send $id set info btime"
+    lf -remote "send $id top"
+}}
+
+# SORT BY ACCESS TIME
+
+cmd "󱕇  sort by access time" &{{
+    lf -remote "send $id set sortby atime"
+    lf -remote "send $id set info atime"
+    lf -remote "send $id top"
+}}
+
+# SORT BY EXTENSION
+
+cmd "󰖽  sort by extension" &{{
+    lf -remote "send $id set sortby ext"
+    lf -remote "send $id set info size"
+    lf -remote "send $id top"
+}}
+
+# SORT BY CUSTOM VALUE
+
+cmd "󱎅  sort by custom" &{{
+    lf -remote "send $id set sortby custom"
+    lf -remote "send $id set info custom"
+    lf -remote "send $id top"
+}}
+
+# REVERSE SORT ORDER
+
+cmd "󰒽  reverse sorting order" &{{
+    lf -remote "send $id set reverse!"
+    lf -remote "send $id top"
+}}
+
+# KEYMAPS
+
+map sn "󰖽  sort by natural"
+map ss "󱎉  sort by size"
+map st "󱕇  sort by time"
+map sb "󱕇  sort by birth time"
+map sc "󱕇  sort by change time"
+map sa "󱕇  sort by access time"
+map se "󰖽  sort by extension"
+map su "󱎅  sort by custom"
+map sr "󰒽  reverse sorting order"

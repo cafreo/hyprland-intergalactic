@@ -1,0 +1,39 @@
+# DEPENDENCIES: mpv
+
+# COMPARE 2 OR 4 VIDEOS
+
+cmd "󰕩  compare 2 or 4 videos simultaneously" ${{
+    tcount() {
+        echo "$#"
+    }
+    nof=$(tcount $fx)
+
+    if [ $nof == 2 ]; then
+        mapfile -t -n 2 array < <(printf '%s\n' "$fx")
+        fname1=${array[0]##*/}
+        fname2=${array[1]##*/}
+
+        lf -remote "send $id echo '   playing now: $fname1 & $fname2'"
+        mpv "${array[0]}" --external-file="${array[1]}" --lavfi-complex='[vid1] [vid2] hstack [vo]'
+        lf -remote "send $id unselect"
+
+
+    elif [ $nof == 4 ]; then
+        mapfile -t -n 4 array < <(printf '%s\n' "$fx")
+        fname1=${array[0]##*/}
+        fname2=${array[1]##*/}
+        fname3=${array[2]##*/}
+        fname4=${array[3]##*/}
+
+        lf -remote "send $id echo '   playing now: $fname1, $fname2, $fname3 & $fname4'"
+        mpv "${array[0]}" --external-file="${array[1]}" --external-file="${array[2]}" --external-file="${array[3]}" --lavfi-complex='[vid1] [vid2] hstack [t1] ; [vid3] [vid4] hstack [t2] ; [t1] [t2] vstack [vo]'
+        lf -remote "send $id unselect"
+
+    else
+        lf -remote "send $id echoerr 'invalid number of videos selected (2 or 4 allowed)'"
+    fi
+}}
+
+# KEYMAPS
+
+map pk "󰕩  compare 2 or 4 videos simultaneously"

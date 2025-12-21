@@ -1,0 +1,30 @@
+# CREATE (SOFT/HARD) LINKS
+
+cmd create-link %{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    if [ "$#" -lt 1 ]; then
+        lf -remote "send $id echoerr 'no files selected to create (soft/hard) link'"
+        exit 0
+    fi
+
+    case "$mode" in
+        copy)
+            ln -sr -t . -- "$@"
+            lf -remote "send $id :clear;reload"
+            lf -remote "send $id echo ' 󰴛  soft link created'"
+        ;;
+        move)
+            ln -t . -- "$@"
+            lf -remote "send $id :clear;reload"
+            lf -remote "send $id echo ' 󰴚  hard link created'"
+        ;;
+    esac
+     
+    rm ~/.local/share/lf/files 
+}}
+
+# KEYMAPS
+
+map V create-link

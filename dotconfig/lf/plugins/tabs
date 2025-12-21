@@ -1,0 +1,92 @@
+# DEPENDENCIES: kitty
+
+# OPEN NEW TAB
+
+cmd "󰝜  open new tab" ${{
+    kitten @ action set_tab_title "lf"
+    kitten @ launch --cwd=current --type=tab --copy-env --tab-title "lf" "lf" 
+}}
+
+# CLOSE CURRENT TAB
+
+cmd "󰭌  close current tab" ${{
+    kitten @ close-tab
+}}
+
+# CLOSE ALL TABS SESSION
+
+cmd "󰭌  close current session" ${{
+    printf " 󰭌  do you really want to close the current session? [y/n] "
+    read -r ans
+    if [[ "$ans" =~ ^[Yy]$ ]]; then
+        kitten @ close-tab -m all
+    else
+        lf -remote "send $id echoerr 'aborted'"
+        
+    fi
+}}
+
+# OPEN PREVIOUS TAB
+
+cmd "󰓩  open previous tab" ${{
+    kitten @ action previous_tab
+}}
+
+# OPEN NEXT TAB
+
+cmd "󰓩  open next tab" ${{
+    kitten @ action next_tab
+}}
+
+# MOVE TAB TO THE LEFT
+
+cmd "󰓩  move tab to left" ${{
+    kitten @ action move_tab_backward
+}}
+
+# MOVE TAB TO THE RIGHT
+
+cmd "󰓩  move tab to right" ${{
+    kitten @ action move_tab_forward
+}}
+
+# OPEN TAB 1
+
+cmd "󰓩  open tab 1" ${{
+    kitten @ action goto_tab 1
+}}
+
+# OPEN TAB 2
+
+cmd "󰓩  open tab 2" ${{
+    kitten @ action goto_tab 2
+}}
+
+# OPEN TAB 3
+
+cmd "󰓩  open tab 3" ${{
+    kitten @ action goto_tab 3
+}}
+
+# OPEN TAB 4
+
+cmd "󰓩  open tab 4" ${{
+    kitten @ action goto_tab 4
+}}
+
+# KEYMAPS
+
+map Xn "󰝜  open new tab"
+#map Xa "create new session"
+map Xq "󰭌  close current tab"
+map XQ "󰭌  close current session"
+map X<left> "󰓩  open previous tab"
+map <s-left> "󰓩  open previous tab"
+map X<right> "󰓩  open next tab"
+map <s-right> "󰓩  open next tab"
+map X<s-left> "󰓩  move tab to left"
+map X<s-right> "󰓩  move tab to right"
+map X1 "󰓩  open tab 1"
+map X2 "󰓩  open tab 2"
+map X3 "󰓩  open tab 3"
+map X4 "󰓩  open tab 4"

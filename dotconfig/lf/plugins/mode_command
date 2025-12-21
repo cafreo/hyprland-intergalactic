@@ -1,0 +1,18 @@
+cmd cmd-autocomplete &{{
+    if [ "$lf_mode" = "command" ]; then
+        lf -remote "send $id complete-cmd"
+    else
+        lf -remote "send $id cmd-enter"
+    fi
+}}
+
+cmd complete-cmd :{{
+# position cursor at the end of the first word
+#cmd-home
+    cmd-word
+# perform tab completion before running the command
+    cmd-complete
+#cmd-enter
+}}
+
+cmap <tab> cmd-autocomplete

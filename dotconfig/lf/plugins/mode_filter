@@ -1,0 +1,20 @@
+# NAVIGATE TO NEXT FILE IN FILTER MODE
+
+cmd next-file-filter-mode &{{
+    if [ "$lf_mode" = "filter" ]; then
+        lf -remote "send $id down"
+    fi
+}}
+
+# NAVIGATE TO PREVIOUS FILE IN FILTER MODE
+
+cmd previous-file-filter-mode &{{
+    if [ "$lf_mode" = "filter" ]; then
+        lf -remote "send $id up"
+    fi
+}}
+
+# KEYMAPS
+
+cmap <down> next-file-filter-mode
+cmap <up> previous-file-filter-mode

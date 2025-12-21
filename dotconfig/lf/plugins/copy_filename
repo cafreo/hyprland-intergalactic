@@ -1,0 +1,79 @@
+# DEPENDENCIES: wl-clipboard, xclip
+
+# COPY FILENAME
+
+cmd "  copy filename" &{{
+    file=${f##*/}
+    name=${file%.*}
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf $name | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf $name | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+        else
+            lf -remote "send $id echoerr 'please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
+}}
+
+# COPY FILENAME WITH EXTENSION
+
+cmd "  copy filename with extension" &{{
+    file=${f##*/}
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf $file | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$file\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf $file | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$name\" to clipboard'"
+        else
+            lf -remote "send $id echoerr 'please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
+}}
+
+# SHOW FILENAME WITH EXTENSION IN INFOBAR
+
+cmd "  show filename with extension" &{{
+    file=${f##*/}
+    lf -remote "send $id echo '   full file name: \"$file\"'"
+}}
+
+# COPY FILEPATH
+
+cmd "  copy filepath" &{{
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf "$fx" | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$fx\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf "$fx" | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$fx\" to clipboard'"
+        else
+            lf -remote "send $id echoerr 'please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
+}}
+
+# COPY PATH OF CURRENT DIRECTORY
+
+cmd "  copy path of current directory" &{{
+    if command -v wl-copy 2>&1 >/dev/null; then
+        printf $(pwd) | wl-copy
+        lf -remote "send $id echo ' 󰢨  copied \"$(pwd)\" to clipboard'"
+    else if command -v xclip 2>&1 >/dev/null; then
+        printf $(pwd) | xclip
+        lf -remote "send $id echo ' 󰢨  copied \"$(pwd)\" to clipboard'"
+        else
+            lf -remote "send $id echoerr 'please install wl-clipboard (wayland) or xclip (x11)'" 
+        fi
+    fi
+}}
+
+# KEYMAPS
+
+map yy "  copy filename"
+map yx "  copy filename with extension"
+map ys "  show filename with extension"
+map yd "  copy path of current directory"
+map yp "  copy filepath"

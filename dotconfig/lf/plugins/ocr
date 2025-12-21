@@ -1,0 +1,17 @@
+# DEPENDENCIES: TESSERACT
+
+# COPY TEXT IN IMAGE TO CLIPBOARD
+
+cmd "  copy text in image to clipboard" %{{
+    printf "   specify the language code: "
+    read -r ans
+
+    output=$(tesseract $f - -l $ans)
+    echo $output | wl-copy -o
+
+    lf -remote "send $id echo '   text copied to clipboard '"
+}}
+
+# KEYMAPS
+
+map yt "  copy text in image to clipboard"

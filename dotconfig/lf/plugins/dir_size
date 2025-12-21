@@ -1,0 +1,14 @@
+# DISPLAY SIZE OF SELECTED DIRECTORIES
+
+cmd "󰥨  display size of directories" &{{
+    lf -remote "send set user_progress '  󰱼  '"
+    lf -remote "send $id set info size"
+    lf -remote "send $id set dircounts false"
+    lf -remote "send $id calcdirsize"
+    lf -remote "send set user_progress ''"
+    lf -remote "send unselect"
+}}
+
+# KEYMAPS
+
+map ps "󰥨  display size of directories"

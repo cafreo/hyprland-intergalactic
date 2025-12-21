@@ -1,0 +1,29 @@
+# DELETE
+
+cmd delete %{{
+    count=$(printf "%s\n" "$fx" | wc -l)
+    printf " 󰗨  delete $count file(s) permanently? [y/n] "
+    read -r ans
+    case "$ans" in
+        [Yy]*)
+            rm -r $fx &
+            RM_PID=$!
+            lf -remote "send unselect"
+
+            while ps -p $RM_PID > /dev/null; do
+                lf -remote "send set user_progress '  󰗨  '"
+                sleep 1
+            done
+
+            lf -remote "send reload"
+            lf -remote "send echo '   deleted $count file(s) successfully'"
+            lf -remote "send set user_progress ''"
+            ;;
+        *)
+            lf -remote "send echoerr 'aborted'" 
+            ;;
+    esac
+}}
+# KEYMAPS
+
+map <delete> delete

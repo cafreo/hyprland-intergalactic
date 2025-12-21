@@ -1,0 +1,16 @@
+# RELOAD CONFIG FOR CURRENT LF INSTANCE
+
+cmd "󰑓  reload config file" ${{
+    lf -remote "send $id source ~/.config/lf/lfrc"
+}}
+
+# RELOAD CONFIG FOR ALL INSTANCES OF LF
+
+cmd "󰑓  reload config file for all instances" ${{
+    lf -remote "send source ~/.config/lf/lfrc"
+}}
+
+# KEYMAPS
+
+map pr "󰑓  reload config file"
+map pR "󰑓  reload config file for all instances"

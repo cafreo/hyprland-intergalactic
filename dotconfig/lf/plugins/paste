@@ -1,0 +1,65 @@
+# CUSTOM PASTE COMMAND WITH PROGRESS INDICATOR AND FORCE OVERWRITE
+
+cmd paste-custom &{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+
+    if [[ $@ != "" ]]; then
+
+        case "$mode" in
+            copy)
+                count=$(printf "%s\n" "$@" | wc -l) 
+                cp -a "$@" . &
+                CP_PID=$!
+                lf -remote "send clear"
+                lf -remote "send echo ' 󰪹  copying $count file(s)...'"
+
+                while ps -p $CP_PID > /dev/null; do
+                    lf -remote "send set user_progress '  󰪹  '"
+                    sleep 1
+                done
+
+                lf -remote "send set user_progress '  󰈖  '"
+                lf -remote "send reload"
+                lf -remote "send echo '   copied $count file(s) successfully'"
+                #notify-send "lf file manager - status" "  file(s) copied successfully" -i " "
+                sleep 4
+                lf -remote "send set user_progress ''"
+
+                exit 0
+                ;;
+
+            move)
+                count=$(printf "%s\n" "$@" | wc -l)
+                mv -f "$@" . &
+                MV_PID=$!
+                lf -remote "send clear"
+                lf -remote "send echo ' 󰪹  moving $count file(s)...'"
+
+                while ps -p $MV_PID > /dev/null; do
+                    lf -remote "send set user_progress '  󰪹  '"
+                    sleep 1
+                done
+
+                lf -remote "send set user_progress '  󰈖  '"
+                lf -remote "send reload"
+                lf -remote "send echo '   moved $count file(s) successfully'"
+                #notify-send "lf file manager - status" "  file(s) moved successfully" -i " "
+                sleep 4
+                lf -remote "send set user_progress ''"
+
+                exit 0
+                ;;
+        esac
+
+    else
+        exit 1
+    fi 
+#lf -remote "send $id paste"
+#notify-send "lf file manager - status" "  $pid file(s) copied successfully" -i " "
+}}
+
+# KEYMAPS
+
+map v paste-custom

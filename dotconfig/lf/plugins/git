@@ -1,0 +1,11 @@
+# DEPENDENCIES: git
+
+# PULL CHANGES FROM REMOTE, WHEN IN GIT DIRECTORY
+
+cmd "󰊢  git pull" %{{
+    git pull 
+}}
+
+# KEYMAPS
+
+map pp "󰊢  git pull"

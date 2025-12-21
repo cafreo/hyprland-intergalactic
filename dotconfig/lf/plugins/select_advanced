@@ -1,0 +1,137 @@
+# SELECT ALL ELEMENTS
+
+cmd "󰒆  select all elements" %{{
+    lf -remote "send $id glob-select *"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL DIRECTORIES
+
+cmd "󰒆  select all directories" %{{
+    if [ "$lf_hidden" = 'false' ]; then
+        find "$PWD" -mindepth 1 -maxdepth 1 -type d -not -name '.*' -print0
+    else
+        find "$PWD" -mindepth 1 -maxdepth 1 -type d -print0
+    fi |
+    sed 's/ /\\ /g' |
+    xargs -0 -I{} lf -remote "send $id toggle {}"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL FILES
+
+cmd "󰒆  select all files" %{{
+    if [ "$lf_hidden" = 'false' ]; then
+        find "$PWD" -mindepth 1 -maxdepth 1 -type f -not -name '.*' -print0
+    else
+        find "$PWD" -mindepth 1 -maxdepth 1 -type f -print0
+    fi |
+    sed 's/ /\\ /g' |
+    xargs -0 -I{} lf -remote "send $id toggle {}"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL ZIP FILES
+
+cmd "󰾂  select all zip files" %{{
+    lf -remote "send $id glob-select *.zip"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL MP4 FILES
+
+cmd "󰾂  select all mp4 files" %{{
+    lf -remote "send $id glob-select *.mp4"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL MKV FILES
+
+cmd "󰾂  select all mkv files" %{{
+    lf -remote "send $id glob-select *.mkv"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL PNG FILES
+
+cmd "󰾂  select all png files" %{{
+    lf -remote "send $id glob-select *.png"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL JPG FILES
+
+cmd "󰾂  select all jpg files" %{{
+    lf -remote "send $id glob-select *.jpg"
+    lf -remote "send $id glob-select *.jpeg"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL GIF FILES
+
+cmd "󰾂  select all gif files" %{{
+    lf -remote "send $id glob-select *.gif"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL WEBP FILES
+
+cmd "󰾂  select all webp files" %{{
+    lf -remote "send $id glob-select *.webp"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL MP3 FILES
+
+cmd "󰾂  select all mp3 files" %{{
+    lf -remote "send $id glob-select *.mp3"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL AAC FILES
+
+cmd "󰾂  select all aac files" %{{
+    lf -remote "send $id glob-select *.wav"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL FLAC FILES
+
+cmd "󰾂  select all flac files" %{{
+    lf -remote "send $id glob-select *.flac"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL M4A FILES
+
+cmd "󰾂  select all m4a files" %{{
+    lf -remote "send $id glob-select *.m4a"
+    lf -remote "send $id on-select"
+}}
+
+# SELECT ALL WAV FILES
+
+cmd "󰾂  select all wav files" %{{
+    lf -remote "send $id glob-select *.wav"
+    lf -remote "send $id on-select"
+}}
+
+# KEYMAPS
+
+map A "󰒆  select all elements"
+map TA "󰒆  select all elements"
+map <c-a> "󰒆  select all elements"
+map Td "󰒆  select all directories"
+map Tf "󰒆  select all files"
+map Tz "󰾂  select all zip files"
+map Tv1 "󰾂  select all mp4 files"
+map Tv2 "󰾂  select all mkv files"
+map Ti1 "󰾂  select all png files"
+map Ti2 "󰾂  select all jpg files"
+map Ti3 "󰾂  select all gif files"
+map Ti4 "󰾂  select all webp files"
+map Ta1 "󰾂  select all mp3 files"
+map Ta2 "󰾂  select all aac files"
+map Ta3 "󰾂  select all flac files"
+map Ta4 "󰾂  select all m4a files"
+map Ta5 "󰾂  select all wav files"
