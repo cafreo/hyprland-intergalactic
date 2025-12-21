@@ -23,7 +23,7 @@ bd      b       # BLK
 cd      c       # CHR
 su      u       # SETUID
 sg      g       # SETGID
-ex      󰗼       # EXEC
+ex      󰌧       # EXEC
 fi      󰈔       # FILE
 
 # file extensions (vim-devicons)
@@ -359,15 +359,47 @@ Vagrantfile             
 *.xml	󰈮
 
 # game formats
-*.gba	󱎓
-*.z64	
-*.nds	󱎓
 *.chd	
+*.cdi	
+*.ecm	
+*.fds	
+*.gcm	
+*.gcz	
+*.gdi	
+*.gen	
+*.n64	
+*.nes	
+*.rvz	
 *.sfc	
+*.smc	
+*.smd	
+*.v64	
+*.wad	
+*.xbe	
+*.xbfs	
+*.xex	
+*.z64	
+*.3ds	󱎓
+*.cia	󱎓
+*.cso	󱎓
+*.gb	󱎓
+*.gba	󱎓
+*.gbc	󱎓
+*.gg	󱎓
+*.nds	󱎓
+*.wua   󰜭
+*.nsp   󰟡
+*.xci   󰟡
 *.dsv	󰆓
+*.eep	󰆓
+*.mcr	󰆓
+*.mpk	󰆓
+*.ps2	󰆓
 *.sav	󰆓
 *.srm	󰆓
-*.state.auto 	󰠘
+*.st0 	󰠘
+*.sta 	󰠘
+*.state 	󰠘
 
 # other formats
 *.iso	
