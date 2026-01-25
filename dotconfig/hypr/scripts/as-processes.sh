@@ -8,7 +8,7 @@ mullvad disconnect
 mullvad dns set default --block-ads --block-trackers --block-malware
 mullvad tunnel set wireguard --quantum-resistant on
 mullvad lan set allow
-mullvad relay set location ch-zrh-wg-00$(echo $(( $RANDOM % 5 + 2 )))
+mullvad relay set location ch-zrh-wg-40$(echo $(( $RANDOM % 4 + 1 )))
 #mullvad relay set location no-osl-wg-00$(echo $(( $RANDOM % 6 + 1 )))
 #mullvad relay set location de-dus-wg-00$(echo $(( $RANDOM % 2 + 1 )))mullvad connect
 mullvad connect
