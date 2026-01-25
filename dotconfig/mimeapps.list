@@ -1,9 +1,19 @@
 [Added Associations]
+x-scheme-handler/http=userapp-Mullvad Browser-ROIU72.desktop;
+x-scheme-handler/https=userapp-Mullvad Browser-ROIU72.desktop;
+x-scheme-handler/chrome=userapp-Mullvad Browser-ROIU72.desktop;
+text/html=userapp-Mullvad Browser-ROIU72.desktop;
+application/x-extension-htm=userapp-Mullvad Browser-ROIU72.desktop;
+application/x-extension-html=userapp-Mullvad Browser-ROIU72.desktop;
+application/x-extension-shtml=userapp-Mullvad Browser-ROIU72.desktop;
+application/xhtml+xml=userapp-Mullvad Browser-ROIU72.desktop;
+application/x-extension-xhtml=userapp-Mullvad Browser-ROIU72.desktop;
+application/x-extension-xht=userapp-Mullvad Browser-ROIU72.desktop;
 
 [Default Applications]
 x-scheme-handler/geo=openstreetmap-geo-handler.desktop;
-x-scheme-handler/http=mullvad-browser.desktop
-x-scheme-handler/https=mullvad-browser.desktop
+x-scheme-handler/http=userapp-Mullvad Browser-ROIU72.desktop
+x-scheme-handler/https=userapp-Mullvad Browser-ROIU72.desktop
 x-scheme-handler/mailto=org.mozilla.Thunderbird.desktop;
 x-scheme-handler/ravenreader=Raven Reader.desktop;
 video/mp4=mpv.desktop;
@@ -14,7 +24,7 @@ application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-ca
 text/plain=nvim.desktop;
 application/vnd.oasis.opendocument.text=libreoffice-writer.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop;
-text/html=nvim.desktop
+text/html=userapp-Mullvad Browser-ROIU72.desktop
 audio/mpeg=mpv.desktop;
 video/vnd.avi=mpv.desktop;
 image/png=qimgv.desktop;
@@ -24,3 +34,11 @@ image/gif=qimgv.desktop;
 image/webp=qimgv.desktop;
 image/svg+xml=qimgv.desktop;
 application/xml=nvim.desktop;
+x-scheme-handler/chrome=userapp-Mullvad Browser-ROIU72.desktop
+application/x-extension-htm=userapp-Mullvad Browser-ROIU72.desktop
+application/x-extension-html=userapp-Mullvad Browser-ROIU72.desktop
+application/x-extension-shtml=userapp-Mullvad Browser-ROIU72.desktop
+application/xhtml+xml=userapp-Mullvad Browser-ROIU72.desktop
+application/x-extension-xhtml=userapp-Mullvad Browser-ROIU72.desktop
+application/x-extension-xht=userapp-Mullvad Browser-ROIU72.desktop
+x-scheme-handler/hydralauncher=hydralauncher.desktop
