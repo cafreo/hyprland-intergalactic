@@ -1,0 +1,346 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# : Manager {{{
+
+[manager]
+cwd = { fg = "#E65E19", bold = true }
+
+# Hovered
+hovered         = { reversed = true, bold = true }
+preview_hovered = { reversed = true, underline = false }
+
+# Find
+find_keyword  = { fg = "#2677D1", italic = false }
+find_position = { fg = "#C727C4", bg = "reset", italic = false }
+
+# Marker
+marker_selected = { fg = "#1F74D6",  bg = "#1F74D6" }
+marker_copied   = { fg = "#96D61F", bg = "#96D61F" }
+marker_cut      = { fg = "#CB2010",    bg = "#CB2010" }
+
+# Tab
+tab_active   = { fg = "#201c28", bg = "#EFAF39" }
+tab_inactive = { fg = "#C8CACC", bg = "#886630" }
+tab_width    = 1
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "#EFAF39" }
+
+# Highlighting
+syntect_theme = ""
+
+# : }}}
+
+
+# : Status {{{
+
+[status]
+separator_open  = ""
+separator_close = ""
+separator_style = { fg = "darkgray", bg = "darkgray" }
+
+# Mode
+mode_normal = { fg = "#201c28", bg = "#EFB038", bold = true }
+mode_select = { fg = "#201c28", bg = "#94D026", bold = true }
+mode_unset  = { fg = "#201c28", bg = "#C727C4", bold = true }
+
+# Progress
+progress_label  = { fg = "#ffffff", bg = "#000000", bold = true }
+progress_normal = { fg = "#EFB038", bg = "#C8CACC" }
+progress_error  = { fg = "#CB2211", bg = "#C8CACC" }
+
+# Permissions
+permissions_t = { fg = "#A0CE48" }
+permissions_r = { fg = "#ECBA58" }
+permissions_w = { fg = "#D04638" }
+permissions_x = { fg = "#48AAD0" }
+permissions_s = { fg = "darkgray" }
+
+# : }}}
+
+
+# : Select {{{
+
+[select]
+border   = { fg = "blue" }
+active   = { fg = "magenta" }
+inactive = {}
+
+# : }}}
+
+
+# : Input {{{
+
+[input]
+border   = { fg = "#EFB038" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+# : }}}
+
+
+# : Completion {{{
+
+[completion]
+border   = { fg = "blue" }
+active   = { bg = "darkgray" }
+inactive = {}
+
+# Icons
+icon_file    = "󰈔"
+icon_folder  = "󰉋"
+icon_command = ""
+
+# : }}}
+
+
+# : Tasks {{{
+
+[tasks]
+border  = { fg = "blue" }
+title   = {}
+hovered = { underline = true }
+
+# : }}}
+
+
+# : Which {{{
+
+[which]
+cols            = 3
+mask            = { bg = "#201c28" }
+cand            = { fg = "#EFB038" }
+rest            = { fg = "darkgray" }
+desc            = { fg = "#C8CACC" }
+separator       = " 󰁔 "
+separator_style = { fg = "#C8CACC" }
+
+# : }}}
+
+
+# : Help {{{
+
+[help]
+on      = { fg = "magenta" }
+exec    = { fg = "cyan" }
+desc    = { fg = "gray" }
+hovered = { bg = "darkgray", bold = true }
+footer  = { fg = "black", bg = "white" }
+
+# : }}}
+
+
+# : File-specific styles {{{
+
+[filetype]
+
+rules = [
+	# Images
+	{ mime = "image/*", fg = "#26A0D1" },
+
+	# Videos
+	{ mime = "video/*", fg = "#C727C4" },
+	{ mime = "audio/*", fg = "#94D026" },
+
+	# Archives
+	{ mime = "application/zip",             fg = "#2677D1" },
+	{ mime = "application/gzip",            fg = "#2677D1" },
+	{ mime = "application/x-tar",           fg = "#2677D1" },
+	{ mime = "application/x-bzip",          fg = "#2677D1" },
+	{ mime = "application/x-bzip2",         fg = "#2677D1" },
+	{ mime = "application/x-7z-compressed", fg = "#2677D1" },
+	{ mime = "application/x-rar",           fg = "#2677D1" },
+	{ mime = "application/xz",              fg = "#2677D1" },
+	{ mime = "application/x-xz-compressed-tar",              fg = "#2677D1" },
+
+	# Documents
+	{ mime = "application/doc",   fg = "#C8CACC" },
+	{ mime = "application/pdf",   fg = "#C8CACC" },
+	{ mime = "application/rtf",   fg = "#C8CACC" },
+	{ mime = "application/vnd.*", fg = "#C8CACC" },
+
+	# Fallback
+	# { name = "*", fg = "#C8CACC" },
+	{ name = "*/", fg = "#F5B73B", bold = true }
+]
+
+[icon]
+
+dirs = [
+    # Default
+    { name = "/", text = "󰉋 " },
+   	
+	{ name = "home"	, text = "󱂵 " },
+	#{ name = ".config/"    , text = "" },
+	#{ name = ".git/"       , text = "" },
+	#{ name = "Desktop/"    , text = "" },
+	#{ name = "Development/", text = "" },
+	{ name = "Documents"  , text = "󰲂 " },
+	{ name = "Downloads"  , text = "󰉍 " },
+	#{ name = "Library/"    , text = "" },
+	#{ name = "Movies/"     , text = "" },
+	{ name = "Music"      , text = "󱍙 " },
+	{ name = "Pictures"   , text = "󰉏 " },
+	#{ name = "Public/"     , text = "" },
+	#{ name = "Videos/"     , text = "" },
+	{ name = "Projects"     , text = "󱥾 " },
+	{ name = "Vault"     , text = "󰢬 " },
+
+]
+
+exts = [
+    # Default
+	{ name = "" , text = "󰈔" },
+
+	# Programming
+	{ name = "c"    , text = "" },
+	{ name = "cpp"  , text = "" },
+	{ name = "css"  , text = "" },
+	{ name = "fish" , text = "" },
+	{ name = "go"   , text = "" },
+	{ name = "h"    , text = "" },
+	{ name = "hpp"  , text = "" },
+	{ name = "html" , text = "" },
+	{ name = "java" , text = "" },
+	{ name = "js"   , text = "" },
+	{ name = "jsx"  , text = "" },
+	{ name = "lua"  , text = "" },
+	{ name = "nix"  , text = "" },
+	{ name = "php"  , text = "" },
+	{ name = "py"   , text = "" },
+	{ name = "rb"   , text = "" },
+	{ name = "rs"   , text = "" },
+	{ name = "scss" , text = "" },
+	{ name = "sh"   , text = "" },
+	{ name = "swift", text = "" },
+	{ name = "ts"   , text = "" },
+	{ name = "tsx"  , text = "" },
+	{ name = "vim"  , text = "" },
+	{ name = "vue"  , text = "󰡄" },
+
+	# Text
+	{ name = "conf", text = "" },
+	{ name = "ini" , text = "" },
+	{ name = "json", text = "" },
+	{ name = "md" ,  text = "" },
+	{ name = "toml", text = "" },
+	{ name = "txt",  text = "" },
+	{ name = "yaml", text = "" },
+	{ name = "yml" , text = "" },
+
+	# Archives
+	{ name = "7z" , text = "" },
+	{ name = "bz2", text = "" },
+	{ name = "gz" , text = "" },
+	{ name = "rar", text = "" },
+	{ name = "tar", text = "" },
+	{ name = "xz" , text = "" },
+	{ name = "zip", text = "" },
+
+	# Images
+	{ name = "HEIC", text = "󰋩 " },
+	{ name = "avif", text = "󰋩 " },
+	{ name = "bmp" , text = "󰋩 " },
+	{ name = "gif" , text = "󰋩 " },
+	{ name = "ico" , text = "󰋩 " },
+	{ name = "jpeg", text = "󰋩 " },
+	{ name = "jpg" , text = "󰋩 " },
+	{ name = "png" , text = "󰋩 " },
+	{ name = "svg" , text = "󰋩 " },
+	{ name = "webp", text = "󰋩 " },
+
+	# Movies
+	{ name = "avi" , text = "󰕧" },
+	{ name = "mkv" , text = "󰕧" },
+	{ name = "mov" , text = "󰕧" },
+	{ name = "mp4" , text = "󰕧" },
+	{ name = "webm", text = "󰕧" },
+
+	# Audio
+	{ name = "aac" , text = "󰎈" },
+	{ name = "flac", text = "󰎈" },
+	{ name = "m4a" , text = "󰎈" },
+	{ name = "mp3" , text = "󰎈" },
+	{ name = "ogg" , text = "󰎈" },
+	{ name = "wav" , text = "󰎈" },
+
+	# Documents
+	{ name = "csv" , text = "󰈛" },
+	{ name = "doc" , text = "󰈬" },
+	{ name = "doct", text = "󰈬" },
+	{ name = "docx", text = "󰈬" },
+	{ name = "dot" , text = "󰈬" },
+	{ name = "ods" , text = "󰈛" },
+	{ name = "ots" , text = "󰈛" },
+	{ name = "pdf" , text = "" },
+	{ name = "pom" , text = "󰈧" },
+	{ name = "pot" , text = "󰈧" },
+	{ name = "potx", text = "󰈧" },
+	{ name = "ppm" , text = "󰈧" },
+	{ name = "ppmx", text = "󰈧" },
+	{ name = "pps" , text = "󰈧" },
+	{ name = "ppsx", text = "󰈧" },
+	{ name = "ppt" , text = "󰈧" },
+	{ name = "pptx", text = "󰈧" },
+	{ name = "xlc" , text = "󰈛" },
+	{ name = "xlm" , text = "󰈛" },
+	{ name = "xls" , text = "󰈛" },
+	{ name = "xlsm", text = "󰈛" },
+	{ name = "xlsx", text = "󰈛" },
+	{ name = "xlt" , text = "󰈛" },
+
+	# Lockfiles
+	{ name = "lock", text = "" },
+
+	# Misc
+	{ name = "bin", text = "󰌧" },
+	{ name = "exe", text = "" },
+	{ name = "pkg", text = "󰏖" },
+
+	# Dotfiles
+	{ name = "DS_Store"     , text = "" },
+	{ name = "bashprofile"  , text = "" },
+	{ name = "bashrc"       , text = "" },
+	{ name = "gitattributes", text = "" },
+	{ name = "gitignore"    , text = "" },
+	{ name = "gitmodules"   , text = "" },
+	{ name = "vimrc"        , text = "" },
+	{ name = "zprofile"     , text = "" },
+	{ name = "zshenv"       , text = "" },
+	{ name = "zshrc"        , text = "" },
+
+	# Named files
+	{ name = "OPYING"      , text = "󰿃" },
+	{ name = "ontainerfile", text = "󰡨" },
+	{ name = "ockerfile"   , text = "󰡨" },
+	{ name = "ICENSE"      , text = "󰿃" },
+
+	# Game files
+	{ name = "gba"      , text = "󱎓" },
+	{ name = "z64"      , text = "" },
+	{ name = "nds"      , text = "󱎓" },
+	{ name = "chd"      , text = "" },
+	{ name = "sfc"      , text = "" },
+	{ name = "dsv"      , text = "󰆓" },
+	{ name = "sav"      , text = "󰆓" },
+	{ name = "srm"      , text = "󰆓" },
+	{ name = "state.auto"	, text = "󰠘" },
+
+	# Other formats
+	{ name = "iso"      , text = "" },
+	{ name = "img"      , text = "" },
+	{ name = "torrent"	, text = "󰥥" },
+	{ name = "nfo"      , text = "󰋼" },
+	{ name = "inf"      , text = "󰋼" },
+	{ name = "ttf"      , text = "" },
+	{ name = "otf"      , text = "" },
+]
+
+# : }}}
+
