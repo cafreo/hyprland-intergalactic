@@ -16,7 +16,6 @@ cmd "  duplicate" &{{
             done
 
             cp -a "$file" "$new"
-            exit 0;
 
         elif [[ -d "$file" ]]; then
             name="${file}"
@@ -29,7 +28,6 @@ cmd "  duplicate" &{{
             done
             
             cp -a "$file" "$new"
-            exit 0;
 
         else
             lf -remote "send $id echoerr 'unknown file type'"  
@@ -37,7 +35,6 @@ cmd "  duplicate" &{{
         fi
 
     done
-
     lf -remote "send $id :unselect;reload"
     lf -remote "send $id echo '   $count file(s) duplicated successfully'"
 }}

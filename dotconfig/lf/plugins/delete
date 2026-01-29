@@ -2,7 +2,8 @@
 
 cmd delete %{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    printf " 󰗨  delete $count file(s) permanently? [y/n] "
+    size=$(du -ch $fx | tail -1 | awk '{print $1}')
+    printf " 󰗨  delete $count file(s) ($size) permanently? [y/n] "
     read -r ans
     case "$ans" in
         [Yy]*)
@@ -16,7 +17,7 @@ cmd delete %{{
             done
 
             lf -remote "send reload"
-            lf -remote "send echo '   deleted $count file(s) successfully'"
+            lf -remote "send echo '   deleted $count file(s) ($size) successfully'"
             lf -remote "send set user_progress ''"
             ;;
         *)

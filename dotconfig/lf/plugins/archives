@@ -12,7 +12,7 @@ cmd "󱝣  create zipfile" %{{
     7z a -r -tzip "$ans" *
     cp -a "$ans".zip "$origd/"
     popd
-    rm -rf "$tempd" 
+    rm -rf "$tempd"
     lf -remote 'send $id :unselect;reload'
     lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
 }}

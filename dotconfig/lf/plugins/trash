@@ -4,7 +4,8 @@
 
 cmd trash %{{
     count=$(printf "%s\n" "$fx" | wc -l)
-    printf " 󰆴  move $count file(s) to trash bin? [y/n] "
+    size=$(du -ch $fx | tail -1 | awk '{print $1}')
+    printf " 󰆴  move $count file(s) ($size) to trash bin? [y/n] "
     read -r ans
     case "$ans" in
         [Yy]*)
@@ -18,7 +19,7 @@ cmd trash %{{
             done
 
             lf -remote "send reload"
-            lf -remote "send echo '   moved $count file(s) to trash bin successfully'"
+            lf -remote "send echo '   moved $count file(s) ($size) to trash bin successfully'"
             lf -remote "send set user_progress ''"
             ;;
         *)

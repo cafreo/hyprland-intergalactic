@@ -9,7 +9,7 @@ cmd paste-custom &{{
 
         case "$mode" in
             copy)
-                count=$(printf "%s\n" "$@" | wc -l) 
+                count=$(printf "%s\n" "$@" | wc -l)
                 cp -a "$@" . &
                 CP_PID=$!
                 lf -remote "send clear"
