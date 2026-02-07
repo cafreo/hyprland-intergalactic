@@ -1,7 +1,7 @@
 # COMMANDS THAT ARE EXECUTED, WHEN YOU SELECT A NEW ELEMENT
 
 cmd on-select &{{
-    size=$(find $fx -type f -maxdepth 1 -ls | awk '{total += $7} END {print total}' | numfmt --to=iec --format='%.1fB')
+    size=$(find $fx -maxdepth 1 -ls | awk '{total += $7} END {print total}' | numfmt --to=iec --format='%.1fB')
 	lf -remote "send $id set user_selected_size $size"
 
     for file in "$fx"; do

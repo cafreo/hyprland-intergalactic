@@ -17,7 +17,7 @@ cmd on-cd &{{
     # load lf version info
     version="r$(lf -version)"
     
-    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m %S \033[30m$version "
+    fmt=" \033[31;1m%u@%h\033[37;1m:\033[33;1m%w\033[0m\033[35;1m$git\033[0m %S \033[30m$version\033[0m "
     lf -remote "send $id set promptfmt \"$fmt\""
 
     # sorting in specified directories

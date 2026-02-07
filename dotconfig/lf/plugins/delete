@@ -1,6 +1,6 @@
 # DELETE
 
-cmd delete %{{
+cmd delete-custom %{{
     count=$(printf "%s\n" "$fx" | wc -l)
     size=$(du -ch $fx | tail -1 | awk '{print $1}')
     printf " 󰗨  delete $count file(s) ($size) permanently? [y/n] "
@@ -27,4 +27,4 @@ cmd delete %{{
 }}
 # KEYMAPS
 
-map <delete> delete
+map <delete> delete-custom

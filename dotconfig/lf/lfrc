@@ -41,6 +41,7 @@ set ratios '1:2:2'
 set icons true
 set number true
 set relativenumber false
+set mergeindicators false
 # FMT UI
 set promptfmt "\033[31;1m%u@%h\033[37;1m:\033[33;1m%d\033[0m" # see on-cd
 set borderfmt "\033[33;1m"
@@ -54,7 +55,8 @@ set dupfilefmt "%f.(%n)"
 set statfmt "   \033[33m%S\033[0m| \033[31m%p\033[0m| %u:%g| %t| -> \033[36m%l\033[0m"
 set timefmt '02.01.2006 15:04'
 set errorfmt "\033[31m   \033[0m"
-set rulerfmt " %a| \033[7;33m 󰪹 %p \033[0m| \033[7;33m%{lf_user_progress}\033[0m| \033[7;34m 󰒉 %s \033[0m| \033[7;32m 󰆏 %c \033[0m| \033[7;31m 󰆐 %m \033[0m| \033[7;35m 󰈲 %f \033[0m| %{lf_user_file_infos}| \033[7;36m 󰱼 %{lf_user_selected_size} \033[0m| \033[7;97m   %d \033[0m| %i/%t "
+#set rulerfmt " %a| \033[7;33m 󰪹 %p \033[0m| \033[7;33m%{lf_user_progress}\033[0m| \033[7;34m 󰒉 %s \033[0m| \033[7;32m 󰆏 %c \033[0m| \033[7;31m 󰆐 %m \033[0m| \033[7;35m 󰈲 %f \033[0m| %{lf_user_file_infos}| \033[7;36m 󰱼 %{lf_user_selected_size} \033[0m| \033[7;97m   %d \033[0m| %i/%t "
+set rulerfile "~/.config/lf/ruler"
 set selectfmt "\033[7;34m"
 set copyfmt "\033[7;32m"
 set cutfmt "\033[7;31m"
