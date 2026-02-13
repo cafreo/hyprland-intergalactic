@@ -2,7 +2,8 @@
     {{. -}}
 
 {{else -}}
-    {{.UserOptions.selected_size | printf "   \033[33m%s\033[0m" -}}
+    {{ printf "  " -}}
+    {{.UserOptions.selected_size | printf " \033[33m%s\033[0m" -}}
     {{.Stat.Permissions | printf " \033[31m%s\033[0m" -}}
     {{.Stat.User | printf " %s" -}}
     {{.Stat.Group | printf ":%s" -}} 

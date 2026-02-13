@@ -13,7 +13,7 @@ cmd "󱝣  create zipfile" %{{
     cp -a "$ans".zip "$origd/"
     popd
     rm -rf "$tempd"
-    lf -remote 'send $id :unselect;reload'
+    lf -remote 'send :unselect;reload'
     lf -remote "send $id echo ' 󱝣  created zipfile \"$ans.zip\"'"
 }}
 
@@ -32,7 +32,7 @@ cmd "󱝗  create encrypted zipfile" ${{
     cp -a "$ans".zip "$origd/" 
     popd
     rm -rf "$tempd"
-    lf -remote 'send $id :unselect;reload'
+    lf -remote 'send :unselect;reload'
     lf -remote "send $id echo ' 󱝣 created encrypted zipfile \"$ans.zip\"'"
 }}
 

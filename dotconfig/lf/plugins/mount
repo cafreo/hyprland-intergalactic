@@ -15,4 +15,4 @@ cmd "  eject current media" %{{
 # KEYMAPS
 
 map Ma "  mount all available devices"
-map Mu "  eject current media"
+map Me "  eject current media"
