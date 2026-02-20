@@ -21,6 +21,7 @@ configuration {
 	display-run:            "";
 	drun-display-format:    "{name}";
 	window-format:          "{c}";
+    scroll-method:              0;
 }
 
 /** IMPORT GLOBAL SETTINGS **/

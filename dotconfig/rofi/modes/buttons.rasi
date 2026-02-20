@@ -27,7 +27,7 @@ configuration {
 /** WINDOW **/
 
 window {
-	width:                   680px;
+	width:                   720px;
 }
 
 /** MAINBOX **/
@@ -53,7 +53,6 @@ scrollbar {
 
 element {
 	margin:                 8px;
-	padding:                20px 10px;
 	children:               [ "element-icon" ];
 }
 
@@ -70,5 +69,5 @@ element selected {
 }
 
 element-icon {
-	size:                   96px;
+	size:                   112px;
 }

@@ -17,6 +17,7 @@ configuration {
     me-accept-entry:            "MousePrimary";
 	display-drun:               "";
 	drun-display-format:        "{name}";
+    scroll-method:              1;
 }
 
 /** IMPORT GLOBAL SETTINGS **/
