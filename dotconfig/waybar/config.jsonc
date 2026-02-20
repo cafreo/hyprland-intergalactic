@@ -1,0 +1,189 @@
+{
+    // BASIC SETTINGS
+
+    "layer": "top",
+    "position": "top",
+    "height": 48, 
+    // "width": 1080,
+    "spacing": 8,
+
+    // MODULES ORDER
+
+    "modules-left": ["user", "hyprland/window"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": ["hyprland/submap", "cpu", "custom/gammastep", "pulseaudio#microphone", "pulseaudio", "custom/vpn", "network", "battery", "clock", "tray"],
+
+    "mode": "dock",
+    "reload_style_on_change": true,
+
+    // MODULES CONFIG
+
+    "user": {
+        "avatar": "/home/cafreo/.config/icons/user.png",
+        "icon": true,
+        "height": 32,
+        "width": 32,
+        "format": "",
+    },
+
+    "image#user": {
+        "exec": "echo ~/.config/icons/user.png",
+        "size": 32,
+    },
+
+    "hyprland/window": {
+        "format": " {}",
+        "separate-outputs": true
+    },
+
+    "hyprland/workspaces": {
+        "all-outputs": true,
+        "format": "{icon}",
+        "on-click": "activate",
+            // "on-click-right": "close",
+            "on-scroll-up": "hyprctl dispatch workspace e+1",
+            "on-scroll-down": "hyprctl dispatch workspace e-1",
+            "sort-by-number": true,
+            "format-icons": {
+                "1": "",
+                "2": "",
+                "3": "",
+                "4": "",
+                "5": "",
+                "6": "",		
+                "focused": "",
+                "default": ""
+            }
+    },
+
+    "hyprland/submap": {
+        "format": "  {}",
+        "max-length": 8,
+        "tooltip": false
+    },
+
+    "cpu": {
+        "format": "  {usage}%",
+        "tooltip": true,
+        "interval": 6,
+        "states": {
+            "high": 80,
+        },
+        "on-click": "~/.config/rofi/scripts/rofi-cpupower.sh",
+        "on-click-right": "kitty -e 'btop'"
+    },
+
+    "custom/gammastep": {
+        "format": "{}",
+        "interval": 8,
+        "exec": "~/.config/waybar/scripts/gammastep.sh",
+        "on-click": "~/.config/waybar/scripts/gammastep.sh toggle"
+    },
+
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "",
+        "format-source-muted": "",
+        "tooltip": true,
+        "scroll-step": 0,
+        "tooltip-format": "{format_source} {volume}%",
+        "on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    },
+
+    "pulseaudio": {
+        "states": {
+            "muted2": 0,
+        },
+        "format": "{icon}",
+        "format-muted": "",
+        "format-muted2": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "tooltip": true,
+        "tooltip-format": "{icon} {volume}%",
+        "scroll-step": 5,
+        "on-click": "~/.config/waybar/scripts/audio-output-switch.sh",
+        "on-click-right": "pavucontrol",
+        "on-click-middle": "~/.config/notify-send/scripts/notify_volumectl.sh toggle",
+    },
+
+    "custom/vpn": {
+        "interval": 8,
+        "format": "{}",
+        "tooltip": false,
+        "exec": "ip add show | grep -qF wg0-mullvad && echo  || echo ",
+        "on-click": "mullvad connect",
+        "on-click-right": "mullvad disconnect",
+        "on-click-middle": "mullvad-vpn",
+    },
+
+    "network": {
+            // "interface": "wlp2*", // (Optional) To force the use of this interface
+            "interval": 6,
+            "format-ethernet": "  {bandwidthUpBits}    {bandwidthDownBits}",
+            "format-wifi": "  {bandwidthUpBits}    {bandwidthDownBits}",
+            "tooltip-format": "  {ifname}: {ipaddr} via {gwaddr}/{cidr}",
+            "format-linked": "{ifname} (No IP) ",
+            "format-disconnected": "  down",
+            "on-click": "~/.config/rofi/scripts/rofi-networkmanager.sh",
+            "on-click-right": "kitty -e 'nethogs'"
+    },
+
+    "battery": {
+        //"bat": "BAT0",
+        //"adapter": "ucsi-source-psy-USBC000:002",
+        "interval": 8,
+        "tooltip": true,
+        "tooltip-format": "   {time}   {power}W   {health}%",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-time": "{H}h {M}m",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "clock": {
+        "locale": "de_CH.UTF-8",
+        "interval": 60,
+        "tooltip-format": "<big>Calendar</big>\n<tt><small>{calendar}</small></tt>",
+            //"format-alt": "{:%d.%m.%Y}",
+            "calendar": {
+                "mode": "month",
+                "weeks-pos": "left",
+                "format": {
+                    //"months":     "<span color='#C8CACC'><b>{}</b></span>",
+                    "days":       "<span color='#C8CACC'><b>{}</b></span>",
+                    "weeks":      "<span color='#E9862D'><b>W{}</b></span>",
+                    "weekdays":   "<span color='#F5B83A'><b>{}</b></span>",
+                    "today":      "<span color='#D02311' ><b>{}</b></span>"
+                }
+            },
+            "actions": {
+                "on-scroll-up": "shift_down",
+                "on-scroll-down": "shift_up",
+            },
+            "on-click-right": "kitty -e 'calcurse'",
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
+    },
+
+// IMPORT CONFIGS
+
+"include": ["~/.config/waybar/wip.jsonc",]
+
+}
