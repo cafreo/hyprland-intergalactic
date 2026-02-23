@@ -3,3 +3,5 @@ dotconfig/nvim/lua/cafreo/temp
 dotconfig/hypr/config/override.conf
 dotconfig/lf/wip
 dotconfig/lf/plugins/cd_custom
+/dotconfig/waybar/scripts/wip
+dotconfig/waybar/wip.jsonc
