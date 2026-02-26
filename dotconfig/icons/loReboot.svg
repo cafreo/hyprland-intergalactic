@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 640 640"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="loReboot.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="0.93822275"
+     inkscape:cx="417.81123"
+     inkscape:cy="308.56212"
+     inkscape:window-width="1868"
+     inkscape:window-height="978"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+  <path
+     d="m 320,170 c -44.375,0 -84.29688,19.29687 -111.79688,50 H 245 c 13.82812,0 25,11.17187 25,25 0,13.82812 -11.17188,25 -25,25 H 145 c -13.82813,0 -25,-11.17188 -25,-25 V 145 c 0,-13.82813 11.17187,-25 25,-25 13.82813,0 25,11.17187 25,25 v 42.73437 C 206.64062,146.25 260.23437,120 320,120 c 110.46875,0 200,89.53125 200,200 0,110.46875 -89.53125,200 -200,200 -67.96875,0 -128.04688,-33.90625 -164.14063,-85.70313 -7.89062,-11.32812 -5.15625,-26.875 6.17188,-34.84375 11.32813,-7.96875 26.875,-5.15625 34.84375,6.17188 27.1875,38.90625 72.1875,64.29687 123.125,64.29687 82.8125,0 150,-67.1875 150,-150 C 470,237.10937 402.8125,170 320,170 Z"
+     id="path1"
+     style="stroke-width:0.78125;fill:#c8cacc;fill-opacity:1" />
+</svg>

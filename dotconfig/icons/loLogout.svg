@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 640 640"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="loLogout.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="0.71660224"
+     inkscape:cx="182.80713"
+     inkscape:cy="360.73011"
+     inkscape:window-width="1868"
+     inkscape:window-height="978"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+  <path
+     d="m 245.0061,194.9939 c 13.8288,0 25.00122,-11.17242 25.00122,-25.00122 0,-13.8288 -11.17242,-25.00122 -25.00122,-25.00122 H 195.00366 C 153.59539,144.99146 120,178.58685 120,219.99512 v 200.00976 c 0,41.40828 33.59539,75.00366 75.00366,75.00366 h 50.00244 c 13.8288,0 25.00122,-11.17242 25.00122,-25.00122 0,-13.8288 -11.17242,-25.00122 -25.00122,-25.00122 h -50.00244 c -13.8288,0 -25.00122,-11.17242 -25.00122,-25.00122 V 219.99512 c 0,-13.8288 11.17242,-25.00122 25.00122,-25.00122 z m 267.66932,142.66322 c 9.76611,-9.7661 9.76611,-25.62626 0,-35.39236 L 412.67054,202.25988 c -9.7661,-9.7661 -25.62625,-9.7661 -35.39235,0 -9.7661,9.7661 -9.7661,25.62625 0,35.39235 l 57.34655,57.34655 H 270.00732 c -13.8288,0 -25.00122,11.17243 -25.00122,25.00123 0,13.8288 11.17242,25.00122 25.00122,25.00122 h 164.61742 l -57.34655,57.34655 c -9.7661,9.76609 -9.7661,25.62625 0,35.39235 9.7661,9.7661 25.62625,9.7661 35.39235,0 L 512.67542,337.73525 Z"
+     id="path1"
+     style="stroke-width:0.781288;fill:#c8cacc;fill-opacity:1" />
+</svg>

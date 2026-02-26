@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 640 640"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="loShutdown.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="0.2203125"
+     inkscape:cx="317.7305"
+     inkscape:cy="320"
+     inkscape:window-width="1868"
+     inkscape:window-height="978"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+  <path
+     d="M 343.52941,143.52941 C 343.52941,130.51471 333.0147,120 320,120 c -13.01471,0 -23.52941,10.51471 -23.52941,23.52941 v 188.2353 c 0,13.0147 10.5147,23.52941 23.52941,23.52941 13.0147,0 23.52942,-10.51471 23.52942,-23.52941 z m -104.19118,72.35294 c 10.66176,-7.42647 13.23529,-22.13235 5.80882,-32.79412 -7.42647,-10.66176 -22.13235,-13.23529 -32.79411,-5.80882 C 163.67647,211.25 131.7647,267.79412 131.7647,331.76471 131.7647,435.73529 216.02941,520 320,520 c 103.97058,0 188.23529,-84.26471 188.23529,-188.23529 0,-63.97059 -31.91176,-120.51471 -80.66176,-154.4853 -10.66177,-7.42647 -25.29411,-4.85294 -32.79411,5.80882 -7.5,10.66177 -4.85296,25.29412 5.80882,32.79412 36.61765,25.58824 60.51471,67.94118 60.51471,115.88236 0,77.94117 -63.2353,141.17647 -141.17649,141.17647 -77.94116,0 -141.10293,-63.2353 -141.10293,-141.17647 0,-47.94118 23.89706,-90.36765 60.5147,-115.88236 z"
+     id="path1"
+     style="stroke-width:0.735294;fill:#c8cacc;fill-opacity:1" />
+</svg>
