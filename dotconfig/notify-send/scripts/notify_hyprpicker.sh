@@ -1,15 +1,11 @@
 #!/bin/bash
 
-cache=$(echo ~/.cache/notify-send)
+cache=~/.cache/notify-send
+img="$cache/hyprpicker.jpg"
 
 mkdir -p $cache
 
-hyprpicker -f hex -a &&
-
-value=$(wl-paste)
-img="$cache/hyprpicker.jpg"
-
-touch $img
+value=$(hyprpicker -a -f hex)
 
 if [[ $value =~ ^#.* ]]; then
     magick -define jpeg:size=80x80 xc:"$value" -resize 80x $img &&
