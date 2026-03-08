@@ -4,7 +4,7 @@ powersave='powersave\0icon\x1f~/.config/icons/cpPowersave.svg'
 conservative='conservative\0icon\x1f~/.config/icons/cpConservative.svg'
 performance='performance\0icon\x1f~/.config/icons/cpPerformance.svg'
 
-chosen=$(printf "$powersave;$conservative;$performance" | rofi -dmenu -p 'cpupower' -sep ';' -show-icons -theme ~/.config/rofi/modes/buttons.rasi -theme-str 'listview {columns: 3;}' -theme-str 'window {width: 500px;}' )
+chosen=$(printf "$powersave;$conservative;$performance" | rofi -dmenu -p 'cpupower' -sep ';' -show-icons -theme ~/.config/rofi/modes/buttons.rasi -theme-str 'listview {columns: 3;}' -theme-str 'window {width: 530px;}' )
 
 case "$chosen" in
     "powersave")
