@@ -3,7 +3,9 @@
 cache=~/.cache/notify-send
 img="$cache/hyprpicker.jpg"
 
-mkdir -p $cache
+if [ ! -d ~/.cache/notify-send ]; then
+    mkdir -p $cache
+fi
 
 value=$(hyprpicker -a -f hex)
 

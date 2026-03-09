@@ -32,7 +32,7 @@ cmd "  convert to mkv" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mkv'"
         ffmpeg -i $file -codec copy "${file%.*}.mkv"
     done
@@ -59,7 +59,7 @@ cmd "  convert to png" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to png'"
         ffmpeg -i $file "${file%.*}.png"
     done
@@ -87,7 +87,7 @@ cmd "  convert to jpg" &{{
 
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         ffmpeg -i $file "${file%.*}.jpg"
     done
@@ -115,7 +115,7 @@ cmd "  convert to gif" &{{
     
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to gif'"
         ffmpeg -i $file -filter_complex "fps=15, scale='max(640,iw)':'max(480,ih)'[s]; [s]split[a][b]; [a]palettegen[palette]; [b][palette]paletteuse" "${file%.*}.gif";
     done
@@ -143,7 +143,7 @@ cmd "  convert to webp" &{{
     
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to webp'"
         ffmpeg -i $file -vcodec libwebp -loop 0 -an -vsync 0 "${file%.*}.webp"
     done
@@ -171,7 +171,7 @@ cmd "󰸪  convert to mp3" &{{
 
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to mp3'"
         ffmpeg -i $file -vn -ar 44100 -ac 2 -b:a 320k "${file%.*}.mp3"	
     done
@@ -199,7 +199,7 @@ cmd "󰸪  convert to aac" &{{
 
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to aac'"
         ffmpeg -i $file -b:a 128k -c:a aac "${file%.*}.aac"	
     done
@@ -228,7 +228,7 @@ cmd "󰸪  convert to flac" &{{
 
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to flac'"
         ffmpeg -i $file -c:a flac "${file%.*}.flac"	
     done
@@ -256,7 +256,7 @@ cmd "  convert to pdf" &{{
 
     (
     for file in $fx; do
-        lf -remote "send set user_progress '  󰤘   '"
+        lf -remote "send set user_progress '  󰤘  '"
         #lf -remote "send $id echo ' 󱥸  converting file $(basename $file) to jpg'"
         magick $file "${file%.*}.pdf"
     done

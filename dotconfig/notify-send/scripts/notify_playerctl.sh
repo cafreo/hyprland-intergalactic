@@ -1,13 +1,11 @@
 #!/bin/bash
 
-cache=$(echo ~/.cache/notify-send)
+cache=~/.cache/notify-send
 
-if [ ! -d ~/.cache/notify-send ]; then
+if [ ! -d $cache ]; then
     mkdir -p $cache
 fi
 
-sleep 0.2
-msgTag="playerctl"
 csTitle=$(playerctl metadata title)
 csArtist=$(playerctl metadata artist)
 csCoverUrl=$(playerctl metadata mpris:artUrl)
