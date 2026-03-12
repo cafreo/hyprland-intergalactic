@@ -1,15 +1,18 @@
+{{$root := . -}}
 {{with .Message -}}
     {{. -}}
 
+{{else with .Stat -}}
+    {{printf "  " -}}
+    {{$root.UserOptions.selected_size | printf " \033[33m%s\033[0m" -}}
+    {{with .Permissions -}} {{printf " \033[31m%s\033[0m" .}}{{end -}}
+    {{with .User -}} {{printf " %s" .}}{{end -}}
+    {{with .Group -}} {{printf ":%s" .}}{{end -}}
+    {{with .ModTime -}} {{printf " %s" .}}{{end -}}
+    {{with .Target -}} {{printf " -> \033[36m%s\033[0m" .}}{{end -}}
+
 {{else -}}
-    {{ printf "  " -}}
-    {{.UserOptions.selected_size | printf " \033[33m%s\033[0m" -}}
-    {{.Stat.Permissions | printf " \033[31m%s\033[0m" -}}
-    {{.Stat.User | printf " %s" -}}
-    {{.Stat.Group | printf ":%s" -}} 
-    {{.Stat.ModTime | printf " %s" -}}
-    {{with .Stat.CustomInfo}}  {{printf "\033[35m%s\033[0m" .}}{{end -}}
-    {{with .Stat.Target}} {{printf "-> \033[36m%s\033[0m" .}}{{end -}}
+    {{printf "   empty" -}}
 
 {{end -}}
 
@@ -17,16 +20,22 @@
 
 {{with .Keys}}  {{.}}{{end -}}
 
-{{with .Progress}}  {{join . " "}}{{end -}}
-{{with .UserOptions.progress}}  {{printf "\033[7;33m%s\033[0m" .}}{{end -}}
+{{with .Progress}} {{join . " "}}{{end -}}
+{{with .UserOptions.progress}} {{printf "\033[7;33m%s\033[0m" .}}{{end -}}
 
-{{with .Copy}}  {{len . | printf "%s 󰆏 %d \033[0m" $.Options.copyfmt}}{{end -}}
-{{with .Cut}}  {{len . | printf "%s 󰆐 %d \033[0m" $.Options.cutfmt}}{{end -}}
-{{with .Select}}  {{len . | printf "%s 󰒉 %d \033[0m" $.Options.selectfmt}}{{end -}}
+{{with .Copy}} {{len . | printf "%s 󰆏 %d \033[0m" $.Options.copyfmt}}{{end -}}
+{{with .Cut}} {{len . | printf "%s 󰆐 %d \033[0m" $.Options.cutfmt}}{{end -}}
+{{with .Select}} {{len . | printf "%s 󰒉 %d \033[0m" $.Options.selectfmt}}{{end -}}
 
-{{with .Visual}}  {{len . | printf "%s %d \033[0m" $.Options.visualfmt}}{{end -}}
-{{with .Filter}}  {{join . " " | printf "\033[7;35m 󰈲 %s \033[0m"}}{{end -}}
+{{with .Visual}} {{len . | printf "%s %d \033[0m" $.Options.visualfmt}}{{end -}}
+{{with .Filter}} {{join . " " | printf "\033[7;35m 󰈲 %s \033[0m"}}{{end -}}
 
-{{with .UserOptions.file_infos}}  {{printf "\033[7;36m %s \033[0m" .}}{{end -}}
+{{with .UserOptions.file_infos}} {{printf "\033[7;36m %s \033[0m" .}}{{end -}}
 {{printf " \033[7;97m   %sB \033[0m" df}}
-{{printf " %d/%d \033[30m(%d)\033[0m " .Index .Total .Hidden}}
+
+{{printf " %d/%d " .Index .Total -}}
+{{if eq .Options.hidden "true" -}}
+    {{else if .Hidden -}}
+        {{printf "\033[30m(%d) \033[0m" $.Hidden -}}
+    {{else -}}
+{{end -}}
