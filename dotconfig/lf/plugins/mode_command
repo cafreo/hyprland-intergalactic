@@ -1,3 +1,5 @@
+# USE AUTOCOMPLETION
+
 cmd cmd-autocomplete &{{
     if [ "$lf_mode" = "command" ]; then
         lf -remote "send $id complete-cmd"

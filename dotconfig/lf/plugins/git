@@ -6,6 +6,20 @@ cmd "󰊢  git pull" %{{
     git pull 
 }}
 
+cmd "󰊢  git push" %{{
+    git push 
+}}
+
+cmd "󰊢  git push new version for aur package" %{{
+    printf " 󰍦  commit message: "
+    read -r ans
+    git add PKGBUILD .SRCINFO
+    git commit -m "$ans"
+    git push
+}}
+
 # KEYMAPS
 
-map pp "󰊢  git pull"
+map pgd "󰊢  git pull"
+map pgu "󰊢  git push"
+map pga "󰊢  git push new version for aur package"

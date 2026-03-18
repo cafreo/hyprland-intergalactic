@@ -4,7 +4,7 @@
 
 cmd "󱝣  create zipfile" %{{
     printf " 󱝣  create new zipfile: "
-    read ans
+    read -r ans
     origd="$(pwd)"
     tempd="$(mktemp -d)"
     pushd "$tempd"
@@ -21,7 +21,7 @@ cmd "󱝣  create zipfile" %{{
 
 cmd "󱝗  create encrypted zipfile" ${{
     printf " 󱝗  create new encrypted zipfile: "
-    read ans
+    read -r ans
     #printf " 󰯄  set password: "
     #read psw
     origd="$(pwd)"
@@ -42,7 +42,8 @@ cmd "󱉛  extract archive" &{{
     count=$(printf "%s\n" "$fx" | wc -l)
     (
     for file in $fx; do
-        ouch d $file
+        name=${file%.*}
+        ouch d -d $name $file
     done
     ) &
     EA_PID=$!

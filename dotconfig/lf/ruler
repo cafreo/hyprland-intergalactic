@@ -12,7 +12,7 @@
     {{with .Target -}} {{printf " -> \033[36m%s\033[0m" .}}{{end -}}
 
 {{else -}}
-    {{printf "   empty" -}}
+    {{printf "   no data" -}}
 
 {{end -}}
 

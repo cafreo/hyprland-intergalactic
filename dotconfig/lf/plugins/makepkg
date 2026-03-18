@@ -1,0 +1,20 @@
+# DEPENDENCIES: makepkg
+
+# CREATE NEW AUR PACKAGE
+
+cmd "󰏗  make aur package" &{{
+    lf -remote "send echo ' 󰏗  creating package...'"
+    makepkg -c -s > /dev/null 2>&1 &
+    MAKE_PID=$!
+    while ps -p $MAKE_PID > /dev/null; do
+        lf -remote "send set user_progress '  󰏗  '"
+        sleep 1
+    done
+    makepkg --printsrcinfo > .SRCINFO
+    lf -remote "send echo ' 󰏗  created package successfully'"
+    lf -remote "send set user_progress ''"
+}}
+
+# KEYMAPS
+
+map pma "󰏗  make aur package"

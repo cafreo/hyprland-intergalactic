@@ -201,6 +201,10 @@ source ~/.config/lf/plugins/mode_search
 
 source ~/.config/lf/plugins/mount
 
+# MAKEPKG
+
+source ~/.config/lf/plugins/makepkg
+
 # GIT
 
 source ~/.config/lf/plugins/git
