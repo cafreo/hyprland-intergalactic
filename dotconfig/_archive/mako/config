@@ -1,0 +1,26 @@
+max-history=10
+sort=-time
+
+font=ubuntu 12
+background-color=#7d3d15f2
+text-color=#bcbcbc
+width=280
+height=100
+outer-margin=4
+margin=10
+padding=10
+border-size=0
+border-color=#d02311
+border-radius=4
+progress-color=source #f5b83a
+icons=1
+max-icon-size=64
+icon-location=left
+
+history=1
+text-alignment=left
+default-timeout=6000
+ignore-timeout=1
+max-visible=3
+layer=top
+anchor=top-right
