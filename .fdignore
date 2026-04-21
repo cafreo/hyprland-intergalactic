@@ -1,0 +1,13 @@
+*.git
+/root/**
+/cache/**
+/srv/**
+/export/**
+/dev/**
+/proc/**
+/sys/**
+/tmp/*
+/run/**
+/mnt/**
+/media/**
+**/lost+found/**
