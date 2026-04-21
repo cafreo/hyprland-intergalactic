@@ -6,7 +6,7 @@
 	enabled:		true;
 	dynamic:		false;
 	border:			0px solid;
-	border-radius:		14px;
+	border-radius:		20px;
 	border-color:		transparent;
 	margin:			0;
 	padding: 		0;
@@ -32,7 +32,7 @@ window {
 
 mainbox {
 	padding:		6px;
-	border-radius:          0px 0px 14px 14px;
+	border-radius:          0px 0px 20px 20px;
 	background-image:	@frame;
 	children:		[ "horibox", "inputbar", "listview" ];
 }
@@ -59,13 +59,13 @@ prompt {
 /** INPUTBAR **/
 
 inputbar {
-	border-radius:		14px 14px 0px 0px;
+	border-radius:		20px 20px 0px 0px;
 	spacing:		10px;
 	children:		[ "entry" ];
 }
 
 entry {
-	border-radius:          14px 14px 0px 0px;
+	border-radius:          20px 20px 0px 0px;
 	padding:		16px;
 	background-color:	@background2;
 	cursor:			text;
@@ -77,7 +77,7 @@ entry {
 
 message {
 	enabled:		true;
-	border-radius:		0px 0px 14px 14px;
+	border-radius:		0px 0px 20px 20px;
 	padding:		16px;
 	margin:			0px 0px 6px 0px;
 }
@@ -85,7 +85,7 @@ message {
 /** LISTVIEW **/
 
 listview {
-	border-radius:		0px 0px 14px 14px;
+	border-radius:		0px 0px 20px 20px;
 	spacing:		6px;
 	cycle:			false;
 	scrollbar:		false;
@@ -104,6 +104,7 @@ element {
 	spacing:		0px;
 	padding:		14px;
 	orientation:		vertical;
+	border-radius:      12px;
 	background-color:       transparent;
 	cursor: 		pointer;
 }

@@ -51,6 +51,7 @@ scrollbar {
 
 element {
 	margin:                 8px;
+	border-radius:		20px;
 	children:               [ "element-icon" ];
 }
 

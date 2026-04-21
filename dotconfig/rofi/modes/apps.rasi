@@ -60,6 +60,7 @@ listview {
 element {
 	margin:                 8px;
 	padding:                14px 12px;
+	border-radius:		20px;
 	orientation:		vertical;
 }
 
