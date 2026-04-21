@@ -1,15 +1,3 @@
-[Added Associations]
-x-scheme-handler/http=userapp-Mullvad Browser-ROIU72.desktop;
-x-scheme-handler/https=userapp-Mullvad Browser-ROIU72.desktop;
-x-scheme-handler/chrome=userapp-Mullvad Browser-ROIU72.desktop;
-text/html=userapp-Mullvad Browser-ROIU72.desktop;
-application/x-extension-htm=userapp-Mullvad Browser-ROIU72.desktop;
-application/x-extension-html=userapp-Mullvad Browser-ROIU72.desktop;
-application/x-extension-shtml=userapp-Mullvad Browser-ROIU72.desktop;
-application/xhtml+xml=userapp-Mullvad Browser-ROIU72.desktop;
-application/x-extension-xhtml=userapp-Mullvad Browser-ROIU72.desktop;
-application/x-extension-xht=userapp-Mullvad Browser-ROIU72.desktop;
-
 [Default Applications]
 x-scheme-handler/geo=openstreetmap-geo-handler.desktop;
 x-scheme-handler/http=userapp-Mullvad Browser-ROIU72.desktop
@@ -41,4 +29,7 @@ application/x-extension-shtml=userapp-Mullvad Browser-ROIU72.desktop
 application/xhtml+xml=userapp-Mullvad Browser-ROIU72.desktop
 application/x-extension-xhtml=userapp-Mullvad Browser-ROIU72.desktop
 application/x-extension-xht=userapp-Mullvad Browser-ROIU72.desktop
-x-scheme-handler/hydralauncher=hydralauncher.desktop
+x-scheme-handler/discord-455712169795780630=discord-455712169795780630.desktop
+x-scheme-handler/sgnl=signal.desktop
+x-scheme-handler/signalcaptcha=signal.desktop
+x-scheme-handler/freetube=freetube.desktop

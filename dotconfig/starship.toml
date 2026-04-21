@@ -96,6 +96,7 @@ $time\
 right_format = """
 
 """
+scan_timeout = 2000
 
 # You can also replace your username with a neat symbol like  to save some space
 [username]
@@ -124,7 +125,6 @@ read_only = " "
 "Scripts" = " 󰯂  "
 "Synct" = "   "
 "Vault" = "   "
-
 
 [aws]
 symbol = "  "
