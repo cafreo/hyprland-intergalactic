@@ -1,0 +1,130 @@
+theme = "intergalactic"
+
+[editor]
+scrolloff = 8
+mouse = true
+default-yank-register = "+"
+middle-click-paste = false
+scroll-lines = 4
+line-number = "relative"
+auto-completion = true
+path-completion = true
+auto-format = true
+idle-timeout = 300
+completion-timeout = 300
+preview-completion-insert = true
+completion-trigger-len = 1
+completion-replace = true
+auto-info = true
+true-color = true
+bufferline = "always"
+color-modes = true
+
+atomic-save = true
+popup-border = "all"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-type", "file-modification-indicator", "read-only-indicator"]
+center = []
+right = ["diagnostics", "selections", "position"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+diagnostics = ["warning", "error"]
+workspace-diagnostics = ["warning", "error"]
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "block"
+
+[editor.auto-pairs]
+'(' = ')'
+'{' = '}'
+'[' = ']'
+'"' = '"'
+'`' = '`'
+'<' = '>'
+
+[editor.auto-save]
+after-delay.enable = true
+after-delay.timeout = 1500
+
+[editor.indent-guides]
+render = true
+character = "▏"
+skip-levels = 0
+
+[editor.soft-wrap]
+enable = true
+
+[keys.normal]
+q = ":wbc"
+C-q = [":wbc", ":q"]
+C-Q = ":q!"
+esc = ["collapse_selection", "keep_primary_selection"]
+C-a = "select_all"
+C-i = "indent"
+C-I = "unindent"
+c = "yank"
+C-c = "yank_to_clipboard"
+v = "paste_before"
+C-v = "paste_clipboard_before"
+x = "delete_selection"
+C-x = ["yank_to_clipboard", "delete_selection"]
+backspace = "delete_selection_noyank"
+del = "delete_selection_noyank"
+C-z = "earlier"
+C-Z = "later"
+f = "search"
+C-f = ["select_all", "select_regex"]
+S-right = "move_next_word_end"
+S-left = "move_prev_word_start"
+pageup = "page_cursor_half_up"
+pagedown = "page_cursor_half_down"
+S-pageup = "goto_file_start"
+S-pagedown = "goto_last_line"
+C-pageup = "goto_next_buffer"
+C-pagedown = "goto_previous_buffer"
+"+" = "increment"
+"-" = "decrement"
+S-r = "record_macro"
+C-r = "replay_macro"
+r = "change_selection"
+L = "extend_line_below"
+s = "select_mode"
+"#" = "toggle_comments"
+"C" = "copy_selection_on_next_line"
+"C-left" = "jump_view_left"
+"C-right" = "jump_view_right"
+
+[keys.insert]
+C-q = ":wq"
+C-Q = ":q!"
+C-a = "select_all"
+C-i = "indent"
+C-I = "unindent"
+C-c = "yank_to_clipboard"
+C-v = "paste_clipboard_before"
+C-x = ["yank_to_clipboard", "delete_selection"]
+backspace = "delete_char_backward"
+del = "delete_selection_noyank"
+C-z = "earlier"
+C-Z = "later"
+S-right = "move_next_word_end"
+S-left = "move_prev_word_start"
+C-right = "find_till_char"
+C-left = "till_prev_char"
+pageup = "page_up"
+pagedown = "page_down"
+S-pageup = "goto_file_start"
+S-pagedown = "goto_last_line"
+
+[keys.select]
+esc = ["collapse_selection", "normal_mode"]
+C-v = "replace_selections_with_clipboard"
+backspace = "delete_selection_noyank"
+del = "delete_selection_noyank"
+C-i = "indent"
+C-I = "unindent"
