@@ -1,0 +1,9 @@
+" load settings
+source ~/.config/vim/settings.vim
+
+" load keybinds
+source ~/.config/vim/keymaps.vim
+
+" load plugins
+source ~/.config/vim/plugins.vim
+
