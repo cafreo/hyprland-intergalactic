@@ -16,6 +16,8 @@ inoremap <C-l> <C-o>^<C-o>V$
 " current paragraph
 nnoremap <C-p> vip
 inoremap <C-p> <C-o>vip
+" current word
+nnoremap <C-right> viw
 
 " INDENTATION
 " auto all

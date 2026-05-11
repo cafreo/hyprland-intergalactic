@@ -7,3 +7,6 @@ source ~/.config/vim/keymaps.vim
 " load plugins
 source ~/.config/vim/plugins.vim
 
+" load theme
+source ~/.config/vim/theme.vim
+

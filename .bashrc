@@ -24,7 +24,7 @@ export FZF_DEFAULT_OPTS='--color=fg:#c8cacc,bg:#201c28,hl:#de5f21 --color=fg+:#c
 # DEFAULT APPS
 export OPENER=/usr/bin/xdg-open
 export TERMINAL=/usr/bin/kitty
-export EDITOR=/usr/bin/helix
+export EDITOR=/usr/bin/nvim
 export PAGER=/usr/bin/bat
 export BROWSER=/usr/bin/mullvad-browser
 export PDF_READER=/usr/bin/zathura

@@ -117,4 +117,3 @@ keymap({"n"}, "r", "q", opts)
 
 -- count up numbers in selected lines
 keymap({"v"}, "n", "g<C-a>", opts)
-
