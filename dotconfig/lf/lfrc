@@ -6,6 +6,7 @@
 #
 
 # BASICS
+set shell bash
 set autoquit false
 set filesep "\n" # changing this can break custom file operations
 set mouse true
