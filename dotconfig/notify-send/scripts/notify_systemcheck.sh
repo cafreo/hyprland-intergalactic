@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 element1="󰔚 $(uptime -p | cut -d' ' -f2-)"
 element2="󰠠 $(cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor | head -n 1 | sed 's/.*/\u&/')"

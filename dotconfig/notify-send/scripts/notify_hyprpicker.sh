@@ -1,4 +1,14 @@
-#!/bin/bash
+#!/bin/sh
+
+if ! command -v notify-send &> /dev/null; then
+    echo "error: notify-send (libnotify) is not installed."
+    exit 1
+fi
+
+if ! command -v hyprpicker &> /dev/null; then
+    echo "error: hyprpicker is not installed."
+    exit 1
+fi
 
 cache=~/.cache/notify-send
 img="$cache/hyprpicker.jpg"
