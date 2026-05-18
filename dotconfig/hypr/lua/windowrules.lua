@@ -103,7 +103,7 @@ hl.window_rule({
     match = {
         class = "KeeWeb",
     },
-    float = false,
+    float = true,
     workspace = "special:1 silent",
     size = {820, 980},
     move = {"monitor_w - window_w - 24", "76"},
@@ -251,6 +251,18 @@ hl.window_rule({
 
 })
 
+-- dragon-drop
+
+hl.window_rule({
+
+    match = {
+        class = "dragon-drop",
+    },
+    float = true,
+    center = true,
+
+})
+
 -- steam
 
 hl.window_rule({
@@ -343,6 +355,212 @@ hl.window_rule({
     center = true,
     stay_focused = true,
     min_size = {560, 500},
+
+})
+
+-- libreoffice
+
+hl.window_rule({
+
+    match = {
+        title = "LibreOffice",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+-- obs studio
+
+hl.window_rule({
+
+    match = {
+        class = "com.obsproject.Studio",
+        title = "Missing Files",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+hl.window_rule({
+
+    match = {
+        class = "com.obsproject.Studio",
+        title = "Script Log",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+-- handbrake
+
+hl.window_rule({
+
+    match = {
+        class = "fr.handbrake.ghb",
+        title = "HandBrake Queue",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+hl.window_rule({
+
+    match = {
+        class = "fr.handbrake.ghb",
+        title = "Presets",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+hl.window_rule({
+
+    match = {
+        class = "fr.handbrake.ghb",
+        title = "Activity Log",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+-- qimgv
+
+hl.window_rule({
+
+    match = {
+        class = "qimgv",
+        title = "Edit",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+hl.window_rule({
+
+    match = {
+        class = "qimgv",
+        title = "Edit script:",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+hl.window_rule({
+
+    match = {
+        class = "qimgv",
+        title = "New application/script",
+    },
+    float = true,
+    center = true,
+    min_size = {560, 500},
+
+})
+
+-- usbimager
+
+hl.window_rule({
+
+    match = {
+        class = "usbimager",
+    },
+    float = true,
+    center = true,
+
+})
+
+-- floating dialogs
+
+hl.window_rule({
+
+    match = {
+        title = "Open File",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
+
+})
+
+hl.window_rule({
+
+    match = {
+        title = "Open:",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
+
+})
+
+hl.window_rule({
+
+    match = {
+        title = "Open File.*",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
+
+})
+
+hl.window_rule({
+
+    match = {
+        title = "Open.*",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
+
+})
+
+hl.window_rule({
+
+    match = {
+        title = "Save As",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
+
+})
+
+hl.window_rule({
+
+    match = {
+        title = "Save file...",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
+
+})
+
+hl.window_rule({
+
+    match = {
+        title = "Save file.*",
+    },
+    float = true,
+    center = true,
+    min_size = {800, 480},
 
 })
 
