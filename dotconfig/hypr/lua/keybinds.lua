@@ -137,3 +137,7 @@ hl.bind(mainMod .. " + XF86AUDIORAISEVOLUME", hl.dsp.exec_cmd("playerctl next &&
 hl.bind(mainMod .. " + XF86AUDIOLOWERVOLUME", hl.dsp.exec_cmd("playerctl previous && sleep 0.4 && " .. shell .. " ~/.config/notify-send/scripts/notify_playerctl.sh"), {locked = true})
 hl.bind("XF86TOOLS", hl.dsp.exec_cmd("sh ~/.config/notify-send/scripts/notify_playerctl.sh"))
 
+-- misc
+
+hl.bind(mainMod .. " + O", hl.dsp.exec_cmd(shell .. "~/.config/vm/winvm.sh"))
+hl.bind(mainMod .. " + F12", hl.dsp.exec_cmd(terminal .. " -e --title 'Mouse Connection' ~/.config/sh/scripts/system/mouse-connection.sh"))
