@@ -409,13 +409,13 @@ hl.window_rule({
 
 -- floating dialogs
 
-hl.window_rule({
-    match = {
-        float = true,
-    },
-    max_size = {"monitor_w * 0.8", "monitor_h * 0.9"},
-    center = true,
-})
+--hl.window_rule({
+--    match = {
+--        float = true,
+--    },
+--    max_size = {"monitor_w * 0.8", "monitor_h * 0.9"},
+--    center = true,
+--})
 
 hl.window_rule({
     match = {

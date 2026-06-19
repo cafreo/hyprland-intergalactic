@@ -1,0 +1,30 @@
+# GENERAL OPTIONS
+--no-abort-on-error
+--color always
+--default-search auto
+--live-from-start
+
+# NETWORK OPTIONS
+--force-ipv4
+
+# VIDEO SELECTION
+--no-playlist
+
+# DOWNLOAD OPTIONS
+--retries 4
+
+# FILESYSTEM OPTIONS
+--paths "~/Music/YouTube/Download/"
+--output "%(playlist)s/%(title)s.%(ext)s"
+
+# VERBOSITY AND SIMULATION OPTIONS
+--progress
+
+# POST PROCESSING OPTIONS
+--extract-audio
+--audio-format mp3
+--audio-quality 0
+--embed-thumbnail
+--embed-metadata
+--convert-thumbnails jpg
+

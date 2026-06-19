@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # wait for the script to start
 sleep 2
@@ -21,3 +21,6 @@ sleep 2
 pactl set-source-mute @DEFAULT_SOURCE@ 1
 # set default output to speakers
 pactl set-sink-port 0 analog-output-lineout
+
+# start break reminder
+sh /home/$(whoami)/.config/notify-send/scripts/notify_break.sh &

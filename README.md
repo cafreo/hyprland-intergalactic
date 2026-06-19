@@ -34,13 +34,11 @@
  - not: [dunst](https://github.com/dunst-project/dunst)
  - font: [ubuntu nerd](https://www.nerdfonts.com/font-downloads) / [ubuntu mono nerd](https://www.nerdfonts.com/font-downloads)
  - lock: [hyprlock](https://github.com/hyprwm/hyprlock)
- - power: [wlogout](https://github.com/ArtsyMacaw/wlogout)
  - night: [gammastep](https://gitlab.com/chinstrap/gammastep)
  - files: [lf](https://github.com/gokcehan/lf)
 
  # scripts
- - rofi: [file-selector](https://gitlab.com/matclab/rofi-file-selector/-/tree/master/), [screenshot](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-screenshot.sh), [networkmanager](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-networkmanager.sh)
- - notify: [hyprpicker](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_hyprpicker.sh), [playerctl](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_playerctl.sh), [volumectl](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_volumectl.sh)
+ - rofi: [file-selector](https://gitlab.com/matclab/rofi-file-selector/-/tree/master/), [screenshot](https://github.com/cafreo/hyprland-intergalactic/blob/main/scripts/rofi/rofi-screenshot.sh) - notify: [hyprpicker](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_hyprpicker.sh), [playerctl](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_playerctl.sh), [volumectl](https://github.com/cafreo/hyprland-intergalactic/blob/main/dotconfig/notify-send/scripts/notify_volumectl.sh)
 
  # misc
 
@@ -51,7 +49,7 @@
  - [ ] eww/ags bar
  - [x] switch from micro to neovim
  - [x] dolphin rice
- - [ ] combine rofi themes into one file (sorta kinda done)
+ - [x] combine rofi themes into one file
  - [x] screenshot menu
  - [ ] hyprdots port
 
