@@ -13,7 +13,7 @@ case "$chosen" in
     "lock")
         hyprlock;;
 	"logout")
-        hyprctl dispatch exit 0;;
+        loginctl terminate-user $USER;;
     "shutdown")
         systemctl poweroff;;
     "suspend")
