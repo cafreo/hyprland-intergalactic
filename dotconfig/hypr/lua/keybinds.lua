@@ -15,6 +15,7 @@ local menu = "rofi"
 -- basics
 
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("hyprctl kill"))
 hl.bind(mainMod .. " + B", hl.dsp.window.fullscreen({mode = "fullscreen"}))
 hl.bind(mainMod .. " + Y", hl.dsp.window.fullscreen({mode = "maximized"} ))
 hl.bind(mainMod .. " + H", hl.dsp.window.float())
@@ -81,14 +82,13 @@ hl.bind("switch:off:[switch name]", hl.dsp.exec_cmd("hyprctl dispatch dpms on"),
 -- apps
 
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd("librewolf"))
-hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("qutebrowser"))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("codium"))
+hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("github-desktop"))
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("waterfox"))
 hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("keeweb"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("flatpak run dev.vencord.Vesktop"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("feishin"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("raven-reader"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("flatpak run com.prof18.feedflow"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("freetube"))
 hl.bind(mainMod .. " + J", hl.dsp.exec_cmd("joplin"))
 
