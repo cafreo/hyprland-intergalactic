@@ -107,7 +107,7 @@ hl.bind(mainMod .. " + I", hl.dsp.exec_cmd("sleep 4 && hyprshot -m output -z -o 
 hl.bind("XF86CALCULATOR", hl.dsp.exec_cmd("pkill " .. menu .. " || " ..  menu .. " -show calc -modi calc -no-show-match -no-sort -calc- command 'echo {result} | wl-copy' -theme ~/.config/rofi/modes/calc.rasi"))
 hl.bind("SHIFT + XF86CALCULATOR", hl.dsp.exec_cmd("pkill " .. menu .. " || " ..  menu .. " -show calc -modi calc -no-show-match -no-sort -calc- command 'echo {result} | wl-copy' -theme ~/.config/rofi/modes/calc.rasi -theme-str 'window {location: east;}'"))
 
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("pkill " .. menu .. " || " ..  menu .. " -modi emoji -show emoji -theme ~/.config/rofi/modes/list.rasi"))
+hl.bind(mainMod .. " + PERIOD", hl.dsp.exec_cmd("pkill " .. menu .. " || " ..  menu .. " -modi emoji -show emoji -theme ~/.config/rofi/modes/list.rasi"))
 
 -- notifications
 

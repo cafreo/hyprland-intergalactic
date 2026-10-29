@@ -34,5 +34,5 @@ hl.env("OZONE_PLATFORM_HINT", "wayland")
 -- misc
 
 hl.env("_JAVA_AWT_WM_NONREPEATING", "1")
-
+hl.env("PASSWORD_STORE_TYPE", "gnome-libsecret")
 

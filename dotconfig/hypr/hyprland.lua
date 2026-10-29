@@ -68,7 +68,6 @@ hl.config({
 
     master = {
         
-        special_scale_factor = 0.4,
         mfact = 0.58,
         new_status = "slave",
 
